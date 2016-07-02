@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.woofer.activity.storydegitalActivity">
+
+    <com.woofer.titlebar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#198E7B"
+
+        android:id="@+id/degital_act_titlebar"
+        >
+    </com.woofer.titlebar.TitleBar>
+
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/degital_act_titlebar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/img_defaultavatar"
+
+        android:id="@+id/degital_act_avater"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/degital_act_avater"
+        android:layout_toRightOf="@id/degital_act_avater"
+        android:textSize="16dp"
+        android:textColor="#000000"
+        android:layout_marginLeft="4dp"
+        android:text="Helen"
+
+        android:id="@+id/degital_act_writer"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_height="wrap_content"
+        android:text="作者的签名可以很长但是只能显示一行"
+        android:id="@+id/degital_act_signaure"
+        android:layout_toRightOf="@id/degital_act_avater"
+        android:layout_alignBottom="@id/degital_act_avater"
+        android:layout_marginBottom="6dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#A9E3DD"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="200"
+
+        android:id="@+id/degital_act_thumbNUM"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+
+        android:layout_alignBottom="@id/degital_act_writer"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#A9E3DD"
+        android:paddingTop="2dp"
+        android:layout_alignLeft="@id/degital_act_avater"
+        android:paddingBottom="2dp"
+        android:paddingLeft="4dp"
+        android:layout_marginTop="10dp"
+        android:paddingRight="4dp"
+        android:layout_below="@id/degital_act_avater"
+        android:text="标签"
+        android:id="@+id/degital_act_lable"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/degital_act_content"
+        />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+            <ImageButton
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_transmit"
+                />
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="转发"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            android:gravity="top|center">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:background="#FFFFFF"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/img_favour"
+                />
+            <TextView
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="赞"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            android:gravity="top|center">
+            <ImageButton
+                android:layout_marginLeft="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_collect"/>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收藏"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+            <ImageButton
+                android:layout_gravity="center"
+                android:layout_width="40dp"
+
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_comment"
+                />
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评论"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,23 @@
+body {
+	background-color:#CDC9C9;
+	color:#222;
+	font-family:Helvetica;
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+	background: #FFFFFF url(index.png) no-repeat center 120px;
+}
+
+#div1 {position:fixed; width:360px; height:300px; margin: 0px auto 0; }
+#div1 a {position:fixed; top:300px; left:300px; font-family: Microsoft YaHei; color:#fff; font-weight:bold; text-decoration:none; padding: 0px 0px; }
+
+#div1 a:hover {border: 1px solid #eee; background: #000; }
+#div1 .blue {color:blue;}
+#div1 .red {color:red;}
+#div1 .yellow {color:yellow;}
+#div1 .gray   {color:#94A2A6}
+#div1 .graydarker {color:#849296}
+
+p { font: 16px Microsoft YaHei; text-align: center; color: #ba0c0c; }
+p a { font-size: 14px; color: #ba0c0c; }
+p a:hover { color: red; }

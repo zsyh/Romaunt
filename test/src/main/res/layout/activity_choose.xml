@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.woofer.activity.chooseActivity">
+<ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:scaleX="0.4"
+    android:scaleY="0.4"
+
+    android:src="@drawable/icon_cancel"
+    android:id="@+id/imageButton" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:src="@drawable/img"
+        android:layout_below="@+id/imageButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
+
+        android:id="@+id/activity_choose_IV1"
+        />
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="1"
+        android:gravity="center"
+        android:layout_below="@id/activity_choose_IV1"
+
+        android:id="@+id/activity_choose_Li1"
+        >
+        <Button
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_weight="0.8"
+        android:text="立即注册"
+        android:textSize="20dp"
+        android:background="@drawable/btnstyle2"
+        android:textColor="#FFFFFF"
+        android:id="@+id/acticity_choose_btn1" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="1"
+        android:layout_below="@id/activity_choose_Li1"
+        android:gravity="center"
+        android:id="@+id/activity_choose_Li2"
+        >
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="0.8"
+            android:text="手机号登录"
+            android:textSize="20dp"
+            android:background="@drawable/btnstyle3"
+            android:textColor="#198E7B"
+            android:id="@+id/acticity_choose_btn2"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_choose_Li2"
+        android:gravity="center"
+
+        android:id="@+id/activity_choose_Li3">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="---------其他账号登录--------" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/activity_choose_Li3"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:id="@+id/acticity_four_Lin4">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.04"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.2"
+            android:background="#61C64E"
+            >
+            <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_height="40dp"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:src="@drawable/icon_weichat"
+            android:background="#61C64E"
+            ></ImageButton>
+        </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.005"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.2"
+            android:background="#5081C4"
+            >
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_qq"
+            android:background="#5081C4"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            />
+    </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.005"
+            />
+        <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="0.2"
+        android:background="#E43949"
+        >
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_weibo"
+            android:background="#E43949"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            />
+        </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.005"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="0.2"
+        android:background="#269836"
+        >
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_douban"
+            android:background="#269836"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            />
+        </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.04"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@null"
+        android:textColor="#6DBDE3"
+        android:textSize="12sp"
+        android:text="《Romuant软件许可及服务协议》"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/activity_choose_btn1"
+        />
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:text="登录和注册，即表示你同意"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/activity_choose_btn1"
+
+        android:id="@+id/activity_choose_TV1"
+        />
+
+
+</RelativeLayout>

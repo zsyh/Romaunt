@@ -1,0 +1,170 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hint="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.woofer.activity.MainActivity"
+    android:focusableInTouchMode="true" >
+
+    <com.woofer.titlebar.TitleBar
+        android:id="@+id/editactionbar1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#198E7B"
+        android:clickable="true"
+        hint:titlesize="20sp"
+        hint:titletcolor="#FFFFFF"
+        hint:leftwidth="36dp"
+        hint:titletext="Romaunt" />
+
+
+    <ImageButton
+        android:layout_marginTop="3dp"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:background="#198E7B"
+        android:scaleType="fitXY"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/img_sign"
+
+        android:id="@+id/act_editnote_label"
+        />
+
+    <TextView
+        android:id="@+id/edittV1_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editactionbar1"
+        android:background="#FFFFFF"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="主题"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/editeT1_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittV1_1"
+        android:background="#FFFFFF"
+        android:hint="键入主题"
+        android:maxLength="24"
+        android:paddingLeft="24dp"
+        android:singleLine="true" />
+
+    <ImageButton
+
+        android:id="@+id/editnote_imgbtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+            android:src="@drawable/img_public"
+        android:background="#FFFFFF"
+        android:layout_alignRight="@id/editeT1_1"
+        android:layout_alignBottom="@id/editeT1_1"
+        android:layout_marginBottom="10dp"
+
+        />
+
+    <TextView
+        android:id="@+id/edittV1_2"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_below="@+id/editeT1_1"
+        android:background="@drawable/textviewcolor" />
+
+    <TextView
+        android:id="@+id/edittV1_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edittV1_2"
+        android:background="#FFFFFF"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="键入内容"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:id="@+id/tempTV"
+        />
+
+    <TextView
+
+        android:id="@+id/edittV1_4"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="right|bottom"
+        android:layout_above="@id/tempTV"
+        android:background="@drawable/textviewcolor" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/edittV1_4"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="18dp"
+        android:layout_marginRight="4dp"
+        android:background="#A9E3DD"
+        android:textSize="16dp"
+        android:textColor="#89C3BD"
+
+        android:id="@+id/editnote_lable"
+
+        />
+
+    <com.woofer.ui.StringSpanEdit
+        android:id="@+id/SpanediteT1_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittV1_3"
+        android:layout_above="@id/edittV1_4"
+        android:background="#FFFFFF"
+        android:gravity="top"
+        android:hint="详情"
+        android:paddingLeft="24dp"
+        android:scrollbars="vertical"
+        />
+
+
+    <ImageButton
+        android:id="@+id/editimgbtn1_1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:layout_marginLeft="55dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/imgsrc"
+        android:layout_marginStart="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp">
+
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/editimgbtn1_2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/icon_camera"
+        android:layout_alignBottom="@+id/tempTV"
+        android:layout_toRightOf="@+id/editimgbtn1_1"
+        android:layout_toEndOf="@+id/editimgbtn1_1"
+        android:layout_marginLeft="41dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginBottom="10dp"></ImageButton>
+
+
+
+</RelativeLayout>

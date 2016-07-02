@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colortitlebar">#3CB3A6</color>
+    <color name="colorPrimary">#32B9AA</color>
+    <color name="colorPrimaryDark">#22A99A</color>
+    <color name="colorAccent">#22A99A</color>
+    <color name="zangqing">#198E7B</color>
+    <color name="colorwrite">#FFFFFF</color>
+    <color name="colorgray">#97A2A8</color>
+    <color name="colorbule">#145895</color>
+    <color name="colororange">#FC8737</color>
+
+</resources>

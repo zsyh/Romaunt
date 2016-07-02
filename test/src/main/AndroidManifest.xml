@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="woofer.com.test">
+
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.woofer.refreshlayout.App"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.woofer.activity.MainActivity" />
+        <activity android:name="com.woofer.activity.Activity_one" />
+        <activity android:name="com.woofer.activity.Activity_three" />
+        <activity android:name="com.woofer.activity.Activity_two" />
+        <activity android:name="com.woofer.activity.Activity_four" />
+        <activity
+            android:name="com.woofer.activity.EditNoteActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.woofer.activity.welcomeActivyty">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.woofer.activity.LoginActivity" />
+        <activity android:name="com.woofer.activity.signinActivity" />
+        <activity android:name="com.woofer.activity.chooseActivity" />
+        <activity android:name="com.woofer.activity.UserInfoActivity" />
+        <activity android:name="com.woofer.activity.configActivity" />
+        <activity android:name="com.woofer.activity.aboutusActivity" />
+        <activity android:name="com.woofer.activity.personHomeActivity" />
+        <activity android:name="com.woofer.activity.signatureActivity" />
+        <activity android:name="com.woofer.activity.InformActivity" />
+        <activity android:name="com.woofer.activity.PrivateLetterActivity" />
+        <activity android:name="com.woofer.activity.storydegitalActivity"></activity>
+    </application>
+
+</manifest>

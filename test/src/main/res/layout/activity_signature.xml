@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:hint="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.woofer.activity.signatureActivity">
+    <woofer.com.romaunt.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#3CB3A6"
+        android:id="@+id/actionbar_sinature"
+        hint:titletcolor="#FFFFFF"
+        hint:titlesize="20sp"
+        hint:titletext="编辑签名"
+        hint:leftwidth="30dp"
+        android:clickable="true">
+
+    </woofer.com.romaunt.TitleBar>
+
+</RelativeLayout>

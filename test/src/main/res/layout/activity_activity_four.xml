@@ -1,0 +1,230 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:hint="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.woofer.activity.MainActivity"
+    android:background="#FFFFFF"
+    >
+    <com.woofer.titlebar.TitleBar
+        android:id="@+id/actionbar4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#198E7B"
+        hint:titletcolor="#FFFFFF"
+        hint:titlesize="20sp"
+        hint:titletext="我的"
+        android:clickable="true"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_below="@id/actionbar4"
+        android:background="#EDEDEE"
+        
+        android:id="@+id/tV4_1"
+        />
+    <RelativeLayout
+        android:layout_below="@id/tV4_1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/activity_four_Rel1">
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/img_portrait_130px"
+
+            android:id="@+id/activity_four_img1"
+            />
+        <Button
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:text="   点此登录"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:layout_height="48dp"
+            android:layout_toRightOf="@id/activity_four_img1"
+            android:id="@+id/activity_four_btn1"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:text="    登录后，享受私人订制的阅读服务"
+            android:layout_toRightOf="@id/activity_four_img1"
+            android:layout_below="@id/activity_four_btn1"
+
+            android:id="@+id/activity_four_tV2"
+            />
+    </RelativeLayout>
+
+    <!--必须用LinearLayout实现平分屏幕-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/activity_four_Lin1"
+        android:layout_below="@id/activity_four_Rel1"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+
+                android:id="@+id/act_four_followingNUM"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btnstyle"
+                android:text="关注"
+                android:layout_gravity="center"
+            />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+
+                android:id="@+id/act_four_followerNUM"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btnstyle"
+                android:text="粉丝"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/acticity_four_Lin2"
+        android:layout_below="@id/activity_four_Lin1"
+        android:gravity="center"
+        android:background="#EDEDEE"
+        android:weightSum="1"
+        >
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="0.9"
+            android:text="写个故事"
+            android:textSize="20dp"
+            android:background="@drawable/btnstyle2"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/activity_four_Rel2"
+        android:layout_below="@id/acticity_four_Lin2"
+        >
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_night"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+
+            android:id="@+id/imgbtnlayout_btn1"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="夜间模式"
+            android:layout_toRightOf="@id/imgbtnlayout_btn1"
+            />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#EDEDEE"
+        android:layout_below="@id/activity_four_Rel2"
+        android:id="@+id/activity_four_tV1"
+        />
+<!--
+<com.woofer.ui.imagetextimage
+    android:layout_marginTop="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_below="@id/activity_four_Rel2"
+
+    android:id="@+id/act_four_tit_one"
+    ></com.woofer.ui.imagetextimage>
+    <com.woofer.ui.imagetextimage
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/act_four_tit_one"
+
+        android:id="@+id/act_four_tit_two"
+        ></com.woofer.ui.imagetextimage>
+    <com.woofer.ui.imagetextimage
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/act_four_tit_two"
+
+        android:id="@+id/act_four_tit_three"
+        ></com.woofer.ui.imagetextimage>
+    <com.woofer.ui.imagetextimage
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/act_four_tit_three"
+
+        android:id="@+id/act_four_tit_four"
+        ></com.woofer.ui.imagetextimage>
+    <com.woofer.ui.imagetextimage
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/act_four_tit_four"
+
+        android:id="@+id/act_four_tit_five"
+        ></com.woofer.ui.imagetextimage>
+    <com.woofer.ui.imagetextimage
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/act_four_tit_five"
+
+        android:id="@+id/act_four_tit_six"
+        ></com.woofer.ui.imagetextimage>-->
+
+    <WebView
+
+        android:layout_below="@id/activity_four_Rel2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView"
+        >
+
+    </WebView>
+
+</RelativeLayout>
