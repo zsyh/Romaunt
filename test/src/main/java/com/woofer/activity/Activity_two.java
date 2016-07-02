@@ -1,5 +1,6 @@
 package com.woofer.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -114,9 +115,9 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                     final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) response;
                     listLogic = new ArrayList<>();
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-
                         listLogic.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
                                 publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
+
                     }
 
 
@@ -170,12 +171,21 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast("点击了条目--Activity_there" + mAdapter.getItem(position).title);
+        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
+                mAdapter.getItem(position).userID);
+        Intent intent = new Intent(Activity_two.this, storydegitalActivity.class);
+        intent.putExtra("USERID", mAdapter.getItem(position).userID);
+        intent.putExtra("ID", mAdapter.getItem(position).id);
+        intent.putExtra("LoginToken", loginToken);
+        startActivity(intent);
+
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast("长按了条目Activity_there" + mAdapter.getItem(position).title);
+        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
+                mAdapter.getItem(position).userID);
+
         return true;
     }
 
@@ -284,7 +294,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                             }
 
                             for (int i = 0; i < count; i++) {
-
                                 listNewData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
                                         publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
                             }
@@ -389,7 +398,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                     listMoreData = new ArrayList<>();
 
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-
                         listMoreData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
                                 publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
                     }
