@@ -80,26 +80,20 @@ public class MainActivity extends Activity {
         if(logintoken.equals("")){
 
         }else{
-            final RomauntNetWork romauntNetWork = new RomauntNetWork();
-            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+
+            //启动新线程！
+            new Thread(new Runnable() {
                 @Override
-                public void onResponse(Object response) {
+                public void run() {
+
+                    final RomauntNetWork romauntNetWork = new RomauntNetWork();
+
+                    Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
                     if (response instanceof UserInfoResponse) {
-                            /*获取到用户信息*/
                         UserInfoResponse userInfoResponse = (UserInfoResponse) response;
                         Log.e("Romaunt", userInfoResponse.msg.user.mobile);
                         signature = userInfoResponse.msg.user.sign;
                         avaterurl = userInfoResponse.msg.user.avatar;
-                        // followerNUM = userInfoResponse.msg.user.follower.size();
-                        //followingNUM = userInfoResponse.msg.user.following.size();
-                            /*num1 = userInfoResponse.msg.user.follower.size()+"";
-                            if(num1.equals("")){
-                                num1 = "无";
-                            }
-                            num2 = userInfoResponse.msg.user.follower.size()+"";
-                            if(num2.equals("")){
-                                num2 = "无";
-                            }*/
                         String username = userInfoResponse.msg.user.userName;
                         int sex = userInfoResponse.msg.user.sex;
 
@@ -114,80 +108,87 @@ public class MainActivity extends Activity {
 
                         editor.apply();
                         Log.e("AVA", avaterurl);
+                    }
+                    else if(response instanceof StatusFalseResponse && ((StatusFalseResponse) response).msg.equals("LoginToken"))
+                    {
+                        Object response1 =romauntNetWork.getTokenSync(token);
+                        if (response1 instanceof LoginResponse) {
+                            LoginResponse loginResponse =(LoginResponse)response1;
 
-                    } else {
-                        StatusFalseResponse statusFalseResponse = (StatusFalseResponse) response;
-                        if (statusFalseResponse.msg.equals("LoginToken")) {
-                            RomauntNetWork romauntNetWork1 = new RomauntNetWork();
-                            romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                            logintoken = loginResponse.msg.LoginToken;
+                            token = loginResponse.msg.token;
+                            userID = loginResponse.msg.userID;
+
+                            SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                            userInfo.status = 1;
+                            editor = sp.edit();
+                            editor.putString("LOGINTOKEN", logintoken);
+                            editor.putString("TOKEN", token);
+
+                            editor.apply();
+
+                            Object response2 = romauntNetWork.getUserInfoSync(logintoken, userID);
+                            if(response2 instanceof UserInfoResponse){
+                                UserInfoResponse userInfoResponse = (UserInfoResponse) response2;
+                                Log.e("Romaunt", userInfoResponse.msg.user.mobile);
+                                signature = userInfoResponse.msg.user.sign;
+                                avaterurl = userInfoResponse.msg.user.avatar;
+                                String username = userInfoResponse.msg.user.userName;
+                                int sex = userInfoResponse.msg.user.sex;
+
+                                sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                                editor = sp.edit();
+                            /*editor.putString("FOLLOWERNUM",num1);
+                            editor.putString("FOLLOWINGNUM", num2);*/
+                                editor.putString("NICHENG",username);
+                                editor.putInt("SEX",sex);
+                                editor.putString("AVATERURL", avaterurl);
+                                editor.putString("USERSIGN", signature);
+
+                                editor.apply();
+                                Log.e("AVA", avaterurl);
+
+                            }
+                            else{
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT);
+                                    }
+                                });
+                            }
+
+
+
+
+                        }
+                        else if(response instanceof StatusFalseResponse)
+                        {
+                            //网络无连接
+                            runOnUiThread(new Runnable() {
                                 @Override
-                                public void onResponse(Object response) {
-
-                                    LoginResponse loginResponse = (LoginResponse) response;
-//                                        Log.e("Romaunt","status:" + loginResponse.status);
-//                                        Log.e("Romaunt",loginResponse.msg.userID);
-//                                        Log.e("","LoginToken:" + loginResponse.msg.LoginToken);
-//                                        Log.e("Token","token:" + loginResponse.msg.token);
-                                    logintoken = loginResponse.msg.LoginToken;
-                                    token = loginResponse.msg.token;
-                                    userID = loginResponse.msg.userID;
-
-                                    SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-                                    userInfo.status = 1;
-                                    editor = sp.edit();
-                                    editor.putString("LOGINTOKEN", logintoken);
-                                    editor.putString("TOKEN", token);
-
-                                    editor.apply();
-
-                                    RomauntNetWork romauntNetWork2 = new RomauntNetWork();
-                                    romauntNetWork2.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                        @Override
-                                        public void onResponse(Object response) {
-                                            UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-                                            signature = userInfoResponse.msg.user.sign;
-                                            avaterurl = userInfoResponse.msg.user.avatar;
-                                            int sex = userInfoResponse.msg.user.sex;
-                                            String username = userInfoResponse.msg.user.userName;
-                                            SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-                                            editor = sp.edit();
-                                            editor.putInt("SEX",sex);
-                                            editor.putString("NICHENG",username);
-                                            editor.putString("AVATERURL", avaterurl);
-                                            editor.putString("USERSIGN", signature);
-                                            editor.apply();
-                                            Log.e("AVA", avaterurl);
-
-                                            Log.e("Romaunt", userInfoResponse.msg.user.mobile);
-
-                                        }
-
-                                        @Override
-                                        public void onError(Object error) {
-
-                                        }
-                                    });
-                                    romauntNetWork2.getUserInfo(logintoken, userID);
-
-                                }
-
-                                @Override
-                                public void onError(Object error) {
-
+                                public void run() {
+                                    Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT);
                                 }
                             });
-                            romauntNetWork1.getToken(token);
                         }
-                        Log.e("Romaunt", statusFalseResponse.msg);
+
+
                     }
-                }
+                    else
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT);
+                            }
+                        });
+                    }
 
-                @Override
-                public void onError(Object error) {
 
                 }
-            });
-            romauntNetWork.getUserInfo(logintoken, userID);
+            }).start();
+
             Log.e("LOGINTOKEN", logintoken);
 
 

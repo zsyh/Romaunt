@@ -556,7 +556,7 @@ public class RomauntNetWork {
         Gson gson = new Gson();
 
         if(status==true){
-            java.lang.reflect.Type type = new TypeToken<UserInfoResponse>() {}.getType();
+            java.lang.reflect.Type type = new TypeToken<LoginResponse>() {}.getType();
             LoginResponse loginResponse = gson.fromJson(s, type);
 
             return loginResponse;
