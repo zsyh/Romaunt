@@ -1,6 +1,6 @@
 上传-web
 	可以考虑ui的圆环刷新效果
-	上传完毕在activity_one中标签显已上传
+	上传完毕在activity_one中标签显已上传--OK
 
 activity_four
 	去掉webview 改成button
@@ -22,3 +22,6 @@ activity_three中
 个人信息的更新-web
 DegitalInfoActivity
 	重写回退事件 跳转之前先对用户信息上传
+
+网络：
+如何正确地自动更新LoginToken的问题
