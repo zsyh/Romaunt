@@ -1,12 +1,15 @@
 package com.woofer.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import woofer.com.test.R;
 
@@ -14,7 +17,11 @@ import com.woofer.net.GetStoryResponse;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
+import com.woofer.refreshlayout.util.Utils;
 import com.woofer.titlebar.TitleBar;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class storydegitalActivity extends AppCompatActivity {
     private TitleBar titleBar;
@@ -29,6 +36,7 @@ public class storydegitalActivity extends AppCompatActivity {
     private String LoginToken;
     private String avaterurl;
     private String Signature;
+    private URL url;
 
 
     @Override
@@ -38,12 +46,61 @@ public class storydegitalActivity extends AppCompatActivity {
 
         Initcompement();
 
-        Intent intent  = getIntent();
+        final Intent intent  = getIntent();
         Id = intent.getStringExtra("ID");
         UserId = intent.getIntExtra("USERID", 0);
         LoginToken =intent.getStringExtra("LoginToken");
         setStoryInfo();
 
+        /*SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+        avaterurl = sp.getString("AVATERURL", "");*/
+        /*if(!avaterurl.equals("")){
+            try {
+                url = new URL(avaterurl);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
+                @Override
+                public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
+                    if (bitmap != null) {
+                        avater.setImageBitmap(bitmap);
+                    }
+                }
+            });
+        }*/
+
+        avater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp  = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+
+                String token= sp.getString("TOKEN", "");
+                Intent intent1 = new Intent(storydegitalActivity.this,OtherUserHomePage.class );
+                intent1.putExtra("Token", token);
+                intent1.putExtra("UserID", UserId);
+                startActivity(intent1);
+            }
+        });
+
+    }
+    private void  Initcompement(){
+        titleBar =(TitleBar)findViewById(R.id.degital_act_titlebar);
+
+        titleBar.leftButton.setImageResource(R.drawable.icon_return_white);
+        titleBar.leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storydegitalActivity.this.finish();
+            }
+        });
+
+        avater  = (ImageView)findViewById(R.id.degital_act_avater);
+        username = (TextView)findViewById(R.id.degital_act_writer);
+        signatrue = (TextView)findViewById(R.id.degital_act_signaure);
+        thumbNUM = (TextView)findViewById(R.id.degital_act_thumbNUM);
+        lable = (TextView)findViewById(R.id.degital_act_lable);
+        Content = (EditText)findViewById(R.id.degital_act_content);
     }
     private void setStoryInfo(){
         RomauntNetWork romauntNetWork = new RomauntNetWork();
@@ -79,10 +136,10 @@ public class storydegitalActivity extends AppCompatActivity {
                 UserInfoResponse userInfoResponse = (UserInfoResponse) response;
                 String UserName = userInfoResponse.msg.user.userName;
                 avaterurl = userInfoResponse.msg.user.avatar;
+                Toast.makeText(storydegitalActivity.this, avaterurl, Toast.LENGTH_SHORT).show();
                 Signature = userInfoResponse.msg.user.sign;
                 username.setText(UserName);
                 signatrue.setText(Signature);
-
             }
 
             @Override
@@ -94,24 +151,5 @@ public class storydegitalActivity extends AppCompatActivity {
     }
 
 
-    private void  Initcompement(){
-        titleBar =(TitleBar)findViewById(R.id.degital_act_titlebar);
 
-        titleBar.leftButton.setImageResource(R.drawable.icon_return_white);
-        titleBar.leftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                storydegitalActivity.this.finish();
-            }
-        });
-
-        avater  = (ImageView)findViewById(R.id.degital_act_avater);
-        username = (TextView)findViewById(R.id.degital_act_writer);
-        signatrue = (TextView)findViewById(R.id.degital_act_signaure);
-        thumbNUM = (TextView)findViewById(R.id.degital_act_thumbNUM);
-        lable = (TextView)findViewById(R.id.degital_act_lable);
-        Content = (EditText)findViewById(R.id.degital_act_content);
-
-
-    }
 }

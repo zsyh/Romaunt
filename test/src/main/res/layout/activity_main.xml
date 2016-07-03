@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
 
     tools:context="com.woofer.activity.MainActivity"
-    android:background="#198E7B"
     >
 
     <com.woofer.titlebar.TitleBar

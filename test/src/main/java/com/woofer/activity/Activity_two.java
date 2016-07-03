@@ -63,8 +63,8 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     }
 
 
-
     private List<RefreshModel> listLogic;
+
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         /**
@@ -103,12 +103,12 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 //        mAdapter.setDatas(list);
 
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp  = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN","");
-        token = sp.getString("TOKEN","");
+        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+        loginToken = sp.getString("LOGINTOKEN", "");
+        token = sp.getString("TOKEN", "");
 //
 //
-        if(!loginToken.equals("")) {
+        if (!loginToken.equals("")) {
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
@@ -165,8 +165,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 //        Log.e("Romaunt",time);
 
 
-
-
     }
 
     @Override
@@ -208,7 +206,9 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     public void onClick(View v) {
 
     }
+
     private List<RefreshModel> listNewData;
+
     /*手向下拉*/
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
@@ -256,12 +256,12 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
         //若没有一致的，说明新信息多于10条，把列表清空，并把最新的10条加到list里
 
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp  = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN","");
-        token = sp.getString("TOKEN","");
+        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+        loginToken = sp.getString("LOGINTOKEN", "");
+        token = sp.getString("TOKEN", "");
 
 
-        if(!loginToken.equals("")) {
+        if (!loginToken.equals("")) {
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
@@ -279,7 +279,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                             listNewData = new ArrayList<>();
 
                             boolean hasSame = false;
-                            int count =  publicStoryListResponse.msg.size();
+                            int count = publicStoryListResponse.msg.size();
                             for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
 
                                 if (publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
@@ -354,6 +354,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     }
 
     private List<RefreshModel> listMoreData;
+
     /*手向上拉*/
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
@@ -382,14 +383,11 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 //        });
 
 
-
-
-
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp  = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN","");
-        token = sp.getString("TOKEN","");
-        if(!loginToken.equals("")) {
+        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+        loginToken = sp.getString("LOGINTOKEN", "");
+        token = sp.getString("TOKEN", "");
+        if (!loginToken.equals("")) {
 
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
@@ -443,7 +441,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
             });
             romauntNetWork.getPublicStoryList(loginToken, Long.toString(new Date().getTime()), Integer.toString(userInfo.nowPage++), "10");
         }
-
 
 
         return true;

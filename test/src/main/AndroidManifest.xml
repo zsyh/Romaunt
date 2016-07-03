@@ -41,7 +41,8 @@
         <activity android:name="com.woofer.activity.signatureActivity" />
         <activity android:name="com.woofer.activity.InformActivity" />
         <activity android:name="com.woofer.activity.PrivateLetterActivity" />
-        <activity android:name="com.woofer.activity.storydegitalActivity"></activity>
+        <activity android:name="com.woofer.activity.storydegitalActivity" />
+        <activity android:name="com.woofer.activity.OtherUserHomePage"></activity>
     </application>
 
 </manifest>
