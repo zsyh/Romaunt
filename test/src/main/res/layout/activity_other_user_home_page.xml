@@ -88,6 +88,7 @@
 
                 android:id="@+id/OT_home_tv1"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -197,17 +198,14 @@
         android:layout_alignBottom="@id/OT_home_item"
         android:background="#198E7B"
         android:layout_height="30dp" />
-    <com.woofer.viewpager.IndexViewPager
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
-        android:flipInterval="30"
-        android:persistentDrawingCache="animation"
         android:layout_below="@id/OT_home_item"
 
         android:id="@+id/OT_home_viewpager"
         >
-    </com.woofer.viewpager.IndexViewPager>
+    </android.support.v4.view.ViewPager>
 
 
 

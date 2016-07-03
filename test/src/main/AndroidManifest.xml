@@ -42,7 +42,10 @@
         <activity android:name="com.woofer.activity.InformActivity" />
         <activity android:name="com.woofer.activity.PrivateLetterActivity" />
         <activity android:name="com.woofer.activity.storydegitalActivity" />
-        <activity android:name="com.woofer.activity.OtherUserHomePage"></activity>
+        <activity android:name="com.woofer.activity.OtherUserHomePage" />
+        <activity android:name="com.woofer.activity.userhomepage.FansActivity" />
+        <activity android:name="com.woofer.activity.userhomepage.FollowersActivity" />
+        <activity android:name="com.woofer.activity.userhomepage.ParhsActivity"></activity>
     </application>
 
 </manifest>

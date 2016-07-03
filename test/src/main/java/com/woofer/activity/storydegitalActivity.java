@@ -37,6 +37,8 @@ public class storydegitalActivity extends AppCompatActivity {
     private String avaterurl;
     private String Signature;
     private URL url;
+    private String UserName;
+    private int sex;
 
 
     @Override
@@ -79,6 +81,10 @@ public class storydegitalActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(storydegitalActivity.this,OtherUserHomePage.class );
                 intent1.putExtra("Token", token);
                 intent1.putExtra("UserID", UserId);
+                intent1.putExtra("Avater", avaterurl);
+                intent1.putExtra("Sign", Signature);
+                intent1.putExtra("Username", UserName);
+                intent1.putExtra("Sex",sex);
                 startActivity(intent1);
             }
         });
@@ -134,8 +140,9 @@ public class storydegitalActivity extends AppCompatActivity {
             @Override
             public void onResponse(Object response) {
                 UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-                String UserName = userInfoResponse.msg.user.userName;
+                 UserName = userInfoResponse.msg.user.userName;
                 avaterurl = userInfoResponse.msg.user.avatar;
+                sex = userInfoResponse.msg.user.sex;
                 Toast.makeText(storydegitalActivity.this, avaterurl, Toast.LENGTH_SHORT).show();
                 Signature = userInfoResponse.msg.user.sign;
                 username.setText(UserName);
