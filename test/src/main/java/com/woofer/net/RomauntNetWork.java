@@ -7,7 +7,10 @@ import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.IOException;
+
 import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/6/25.
@@ -476,6 +479,98 @@ public class RomauntNetWork {
                     }
 
                 });
+    }
+
+    public Object getUserInfoSync(String LoginToken, String AuthorID){
+        String url ="http://139.129.131.240:3000/api/token/userinfo";
+
+        Response response;
+        String s;
+        try {
+            response =OkHttpUtils
+                    .post()
+                    .url(url)
+                    .addHeader("LoginToken",LoginToken)
+                    .addParams("AuthorID",AuthorID)
+                    .build()
+                    .execute();
+            s =response.body().string();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
+
+        Log.e("NetWorkTest","SyncResponse:"+s);
+        Boolean status=StatusRecognize.getStatus(s);
+        Gson gson = new Gson();
+
+        if(status==true){
+            java.lang.reflect.Type type = new TypeToken<UserInfoResponse>() {}.getType();
+            UserInfoResponse userInfoResponse = gson.fromJson(s, type);
+
+            return userInfoResponse;
+
+        }
+        else
+        {
+            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+            return statusFalseResponse;
+
+        }
+
+
+
+
+    }
+    public Object getTokenSync(String token){
+        String url ="http://139.129.131.240:3000/api/getToken";
+        Response response;
+        String s;
+        try {
+            response =OkHttpUtils
+                    .post()
+                    .url(url)
+                    .addParams("token", token)
+                    .build()
+                    .execute();
+            s =response.body().string();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
+
+        Log.e("NetWorkTest","SyncResponse:"+s);
+        Boolean status=StatusRecognize.getStatus(s);
+        Gson gson = new Gson();
+
+        if(status==true){
+            java.lang.reflect.Type type = new TypeToken<UserInfoResponse>() {}.getType();
+            LoginResponse loginResponse = gson.fromJson(s, type);
+
+            return loginResponse;
+
+        }
+        else
+        {
+            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+            return statusFalseResponse;
+
+        }
+
     }
 }
 
