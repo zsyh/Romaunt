@@ -2,9 +2,11 @@ package com.woofer.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.woofer.adapter.ActivityoneAdapter;
 import com.woofer.database.DatabaseManager;
+import com.woofer.database.Note;
 import com.woofer.database.NoteData;
 import com.woofer.SwipeMenu.SwipeMenu;
 import com.woofer.SwipeMenu.SwipeMenuCreator;
@@ -23,7 +26,14 @@ import com.woofer.SwipeMenu.SwipeMenuListView;
 import com.woofer.SwipeMenu.SwipeMenuListView.OnMenuItemClickListener;
 
 import woofer.com.test.R;
+
+import com.woofer.net.GetStoryResponse;
+import com.woofer.net.RomauntNetWork;
+import com.woofer.net.RomauntNetworkCallback;
+import com.woofer.net.UploadStoryResponse;
 import com.woofer.titlebar.TitleBar;
+
+import java.util.List;
 
 public class Activity_one extends Activity {
     private TitleBar act1;
@@ -67,7 +77,58 @@ public class Activity_one extends Activity {
         act1.leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Activity_one.this, "上传所有公开笔记", Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(Activity_one.this, "上传所有公开笔记", Toast.LENGTH_SHORT).show();
+                List<Note> noteDataList=notedata.getNoteDataList();
+                RomauntNetWork romauntNetWork=new RomauntNetWork();
+                for(int i = 0 ;i<noteDataList.size();i++){
+                    if(noteDataList.get(i).getPublicstatus()==1 && (noteDataList.get(i).getUploadflag()==0))//上传要上传但未上传的
+                    {
+                        final int ID=  noteDataList.get(i).getID();
+                        final String title = noteDataList.get(i).getTheme();
+                        final String flags= noteDataList.get(i).getLable();
+                        final String content= noteDataList.get(i).getNoteData();
+
+
+
+                        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                            @Override
+                            public void onResponse(Object response) {
+
+                                if (response instanceof UploadStoryResponse) {
+                                    UploadStoryResponse uploadStoryResponse= (UploadStoryResponse)response;
+                                    if(uploadStoryResponse.status.equals("true"));
+                                    {
+                                        databaseManager.Reuploadflag(ID,1);
+
+                                    }
+
+                                }
+                                else{
+                                    Log.e("Romaunt","upload story status false");
+
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onError(Object error) {
+
+                            }
+                        });
+                        SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+                        String logintoken = sp.getString("LOGINTOKEN","");
+                        romauntNetWork.uploadStory(logintoken,title,flags,content,"1");
+
+
+
+                    }
+
+                }
+
+
+
 
             }
         });
