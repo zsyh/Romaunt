@@ -1,9 +1,14 @@
 package com.woofer.net;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.woofer.activity.MainActivity;
+import com.woofer.activity.signinActivity;
+import com.woofer.userInfo;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -556,7 +561,7 @@ public class RomauntNetWork {
         Gson gson = new Gson();
 
         if(status==true){
-            java.lang.reflect.Type type = new TypeToken<UserInfoResponse>() {}.getType();
+            java.lang.reflect.Type type = new TypeToken<LoginResponse>() {}.getType();
             LoginResponse loginResponse = gson.fromJson(s, type);
 
             return loginResponse;
@@ -572,5 +577,83 @@ public class RomauntNetWork {
         }
 
     }
+
+//    public Object getUserInfoSyncToken(String LoginToken, String AuthorID, String token, Context context){
+//        String url ="http://139.129.131.240:3000/api/token/userinfo";
+//
+//        Response response;
+//        String s;
+//        try {
+//            response =OkHttpUtils
+//                    .post()
+//                    .url(url)
+//                    .addHeader("LoginToken",LoginToken)
+//                    .addParams("AuthorID",AuthorID)
+//                    .build()
+//                    .execute();
+//            s =response.body().string();
+//
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//
+//            return null;
+//        }
+//
+//
+//        Log.e("NetWorkTest","SyncResponse:"+s);
+//        Boolean status=StatusRecognize.getStatus(s);
+//        Gson gson = new Gson();
+//
+//        if(status==true){
+//            java.lang.reflect.Type type = new TypeToken<UserInfoResponse>() {}.getType();
+//            UserInfoResponse userInfoResponse = gson.fromJson(s, type);
+//
+//            return userInfoResponse;
+//
+//        }
+//        else
+//        {
+//            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+//            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+//
+//            if(statusFalseResponse.msg.equals("LoginToken")) {
+//                Object response1 = getTokenSync(token);
+//                if (response1 instanceof LoginResponse) {
+//                    LoginResponse loginResponse =(LoginResponse)response1;
+//
+//                    String newLoginToken = loginResponse.msg.LoginToken;
+//                    String newToken = loginResponse.msg.token;
+//                    String userID = loginResponse.msg.userID;
+//
+//                    SharedPreferences sp = context.getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor;
+//                    userInfo.status = 1;
+//                    editor = sp.edit();
+//                    editor.putString("LOGINTOKEN", newLoginToken);
+//                    editor.putString("TOKEN", newToken);
+//
+//                    editor.apply();
+//
+//
+//
+//            }
+//                else {
+//                    return response1;
+//                }
+//            }
+//            else{
+//                return statusFalseResponse;
+//            }
+//
+//
+//
+//        }
+//
+//
+//
+//
+//    }
 }
 

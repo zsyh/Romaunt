@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ import com.woofer.adapter.ViewPagerAdapter;
 import woofer.com.test.R;
 
 public class OtherUserHomePage extends AppCompatActivity {
-    private ImageView img1,img2 ,img3;
+    private TextView fans,followers ,parhs;
     private TextView tv1 ,tv2 ,tv3;
     private ViewPager vp;
 
@@ -36,14 +37,17 @@ public class OtherUserHomePage extends AppCompatActivity {
         vp = (ViewPager) findViewById(R.id.OT_home_viewpager);
         String Id = intent.getStringExtra("ID");
         int UserId = intent.getIntExtra("USERID", 0);
+        tv1 = (TextView)findViewById(R.id.OT_home_tv1);
+        tv2 = (TextView)findViewById(R.id.OT_home_tv2);
+        tv3 = (TextView)findViewById(R.id.OT_home_tv3);
         InitView();
 
     }
     private void InitView() {
         // TODO Auto-generated method stub
-        img1 = (ImageView) findViewById(R.id.main_img1);
-        img2 = (ImageView) findViewById(R.id.main_img2);
-        img3 = (ImageView) findViewById(R.id.main_img3);
+        fans = (TextView) findViewById(R.id.OT_home_tv_fans);
+        followers = (TextView) findViewById(R.id.OT_home_tv_following);
+        parhs = (TextView) findViewById(R.id.OT_home_tv_parhs);
         clickListener = new View.OnClickListener() {
 
             @Override
@@ -51,22 +55,51 @@ public class OtherUserHomePage extends AppCompatActivity {
                 // TODO Auto-generated method stub
 
                 switch (v.getId()) {
-                    case R.id.main_img1:
+                    case R.id.OT_home_tv_fans:
                         /*设置转场效果
                         * params two*/
-                        vp.setCurrentItem(0,true);
+                        vp.setCurrentItem(0, true);
                         break;
-                    case R.id.main_img2:
-                        vp.setCurrentItem(1,true);
+                    case R.id.OT_home_tv_following:
+                        vp.setCurrentItem(1, true);
                         break;
-                    case R.id.main_img3:
-                        vp.setCurrentItem(2,true);
-                        break;
-                    case R.id.main_img4:
-                        vp.setCurrentItem(3,true);
+                    case R.id.OT_home_tv_parhs:
+                        vp.setCurrentItem(2, true);
                         break;
                 }
             }
         };
+        fans.setOnClickListener(clickListener);
+        followers.setOnClickListener(clickListener);
+        parhs.setOnClickListener(clickListener);
+        InitPager();
+    }
+
+    private void InitPager(){
+        pageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        tv1.setBackgroundColor(rgb.);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        }
+    }
 
 }

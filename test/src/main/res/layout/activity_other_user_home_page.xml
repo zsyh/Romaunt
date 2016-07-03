@@ -71,18 +71,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="粉丝"></TextView>
-            <Button
+            <TextView
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:text="100"
+                android:gravity="center"
 
-                android:id="@+id/OT_home_btn_fans"></Button>
+                android:id="@+id/OT_home_tv_fans">
+
+            </TextView>
             <TextView
                 android:layout_gravity="center"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="#198E7B"/>
+
+                android:id="@+id/OT_home_tv1"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,17 +100,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="关注"/>
-            <Button
+            <TextView
+                android:gravity="center"
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:text="100"
+
+                android:id="@+id/OT_home_tv_following"
                 />
             <TextView
                 android:layout_gravity="center"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="#198E7B"/>
+
+                android:id="@+id/OT_home_tv2"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,18 +128,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="文章"/>
-            <Button
+            <TextView
+                android:gravity="center"
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:text="100"
 
-                android:id="@+id/OT_home_btn_following"/>
+                android:id="@+id/OT_home_tv_parhs"/>
             <TextView
                 android:layout_gravity="center"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="#198E7B"/>
+
+                android:id="@+id/OT_home_tv3"/>
         </LinearLayout>
 
 
