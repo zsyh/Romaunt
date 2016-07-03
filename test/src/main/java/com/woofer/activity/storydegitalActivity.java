@@ -34,7 +34,7 @@ public class storydegitalActivity extends AppCompatActivity {
     private String Id;
     private int UserId;
     private String LoginToken;
-    private String avaterurl="";
+    private String avaterurl;
     private String Signature;
     private URL url;
     private String UserName;

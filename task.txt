@@ -4,7 +4,7 @@
 
 activity_four
 	去掉webview 改成button
-	改关注和粉丝的数目拿到为空的bug
+	改关注和粉丝的数目拿到为空的bug--很难解决，是UserInfoResponse解析的问题
 
 故事详情页面中
 	点赞 评论后面弄

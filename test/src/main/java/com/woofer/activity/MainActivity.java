@@ -68,7 +68,8 @@ public class MainActivity extends Activity {
         SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         logintoken = sp.getString("LOGINTOKEN","");
 
-        Toast.makeText(MainActivity.this, logintoken, Toast.LENGTH_SHORT).show();
+        Log.e("Romaunt", "LoginToken:" + logintoken);
+
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
 
@@ -96,6 +97,8 @@ public class MainActivity extends Activity {
                         avaterurl = userInfoResponse.msg.user.avatar;
                         String username = userInfoResponse.msg.user.userName;
                         int sex = userInfoResponse.msg.user.sex;
+                        Log.e("Romaunt", "&&&&&&&&&&&&&&&&&&&&&&&");
+                        //int follower  = userInfoResponse.msg.user.follower.size();
 
                         SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
                         editor = sp.edit();
