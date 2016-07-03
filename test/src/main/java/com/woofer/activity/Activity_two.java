@@ -1,5 +1,6 @@
 package com.woofer.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,8 +63,8 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     }
 
 
-
     private List<RefreshModel> listLogic;
+
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         /**
@@ -102,21 +103,21 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 //        mAdapter.setDatas(list);
 
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp  = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN","");
-        token = sp.getString("TOKEN","");
+        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+        loginToken = sp.getString("LOGINTOKEN", "");
+        token = sp.getString("TOKEN", "");
 //
 //
-        if(!loginToken.equals("")) {
+        if (!loginToken.equals("")) {
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
                     final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) response;
                     listLogic = new ArrayList<>();
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-
                         listLogic.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
                                 publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
+
                     }
 
 
@@ -164,18 +165,25 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 //        Log.e("Romaunt",time);
 
 
-
-
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast("点击了条目--Activity_there" + mAdapter.getItem(position).title);
+        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
+                mAdapter.getItem(position).userID);
+        Intent intent = new Intent(Activity_two.this, storydegitalActivity.class);
+        intent.putExtra("USERID", mAdapter.getItem(position).userID);
+        intent.putExtra("ID", mAdapter.getItem(position).id);
+        intent.putExtra("LoginToken", loginToken);
+        startActivity(intent);
+
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast("长按了条目Activity_there" + mAdapter.getItem(position).title);
+        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
+                mAdapter.getItem(position).userID);
+
         return true;
     }
 
@@ -198,7 +206,9 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     public void onClick(View v) {
 
     }
+
     private List<RefreshModel> listNewData;
+
     /*手向下拉*/
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
@@ -246,12 +256,12 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
         //若没有一致的，说明新信息多于10条，把列表清空，并把最新的10条加到list里
 
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp  = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN","");
-        token = sp.getString("TOKEN","");
+        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+        loginToken = sp.getString("LOGINTOKEN", "");
+        token = sp.getString("TOKEN", "");
 
 
-        if(!loginToken.equals("")) {
+        if (!loginToken.equals("")) {
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
@@ -269,7 +279,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                             listNewData = new ArrayList<>();
 
                             boolean hasSame = false;
-                            int count =  publicStoryListResponse.msg.size();
+                            int count = publicStoryListResponse.msg.size();
                             for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
 
                                 if (publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
@@ -284,7 +294,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                             }
 
                             for (int i = 0; i < count; i++) {
-
                                 listNewData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
                                         publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
                             }
@@ -345,6 +354,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     }
 
     private List<RefreshModel> listMoreData;
+
     /*手向上拉*/
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
@@ -373,14 +383,11 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 //        });
 
 
-
-
-
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp  = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN","");
-        token = sp.getString("TOKEN","");
-        if(!loginToken.equals("")) {
+        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+        loginToken = sp.getString("LOGINTOKEN", "");
+        token = sp.getString("TOKEN", "");
+        if (!loginToken.equals("")) {
 
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
@@ -389,7 +396,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                     listMoreData = new ArrayList<>();
 
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-
                         listMoreData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
                                 publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
                     }
@@ -435,7 +441,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
             });
             romauntNetWork.getPublicStoryList(loginToken, Long.toString(new Date().getTime()), Integer.toString(userInfo.nowPage++), "10");
         }
-
 
 
         return true;

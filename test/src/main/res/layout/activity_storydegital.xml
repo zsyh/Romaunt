@@ -33,15 +33,12 @@
         android:textSize="16dp"
         android:textColor="#000000"
         android:layout_marginLeft="4dp"
-        android:text="Helen"
-
         android:id="@+id/degital_act_writer"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_height="wrap_content"
-        android:text="作者的签名可以很长但是只能显示一行"
         android:id="@+id/degital_act_signaure"
         android:layout_toRightOf="@id/degital_act_avater"
         android:layout_alignBottom="@id/degital_act_avater"
@@ -55,7 +52,6 @@
         android:paddingRight="4dp"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
-        android:text="200"
 
         android:id="@+id/degital_act_thumbNUM"
         android:layout_alignParentRight="true"
@@ -75,13 +71,7 @@
         android:layout_marginTop="10dp"
         android:paddingRight="4dp"
         android:layout_below="@id/degital_act_avater"
-        android:text="标签"
         android:id="@+id/degital_act_lable"
-        />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/degital_act_content"
         />
 
     <LinearLayout
@@ -90,7 +80,9 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+
+        android:id="@+id/degital_act_munu">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -181,5 +173,13 @@
 
     </LinearLayout>
 
+    <EditText
+        android:layout_below="@id/degital_act_lable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/degital_act_content"
+        android:layout_above="@id/degital_act_munu"
+        android:editable="false"
+        />
 
 </RelativeLayout>
