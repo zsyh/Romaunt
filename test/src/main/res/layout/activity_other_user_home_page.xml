@@ -32,16 +32,18 @@
         android:layout_height="20dp"
         android:layout_alignBottom="@id/OT_home_avater"
         android:layout_alignRight="@id/OT_home_avater"
-        android:src="@drawable/img_small_male"/>
+
+        android:id="@+id/OT_home_sex"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="用户名"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/OT_home_avater"
         android:textStyle="bold"
         android:textSize="18dp"
         android:layout_alignTop="@id/OT_home_avater"
+
+        android:id="@+id/OT_home_username"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -49,7 +51,9 @@
         android:layout_toRightOf="@id/OT_home_avater"
         android:layout_alignBottom="@id/OT_home_avater"
         android:layout_marginLeft="10dp"
-        android:text="用户签名可以很长很长很长很长，但是只能显示两行"/>
+
+        android:id="@+id/OT_home_sign"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"

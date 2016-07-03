@@ -34,7 +34,7 @@ public class storydegitalActivity extends AppCompatActivity {
     private String Id;
     private int UserId;
     private String LoginToken;
-    private String avaterurl;
+    private String avaterurl="";
     private String Signature;
     private URL url;
     private String UserName;
@@ -56,35 +56,21 @@ public class storydegitalActivity extends AppCompatActivity {
 
         /*SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         avaterurl = sp.getString("AVATERURL", "");*/
-        /*if(!avaterurl.equals("")){
-            try {
-                url = new URL(avaterurl);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
-                @Override
-                public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
-                    if (bitmap != null) {
-                        avater.setImageBitmap(bitmap);
-                    }
-                }
-            });
-        }*/
+
 
         avater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp  = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
 
-                String token= sp.getString("TOKEN", "");
-                Intent intent1 = new Intent(storydegitalActivity.this,OtherUserHomePage.class );
-                intent1.putExtra("Token", token);
+                String LoginToken = sp.getString("LOGINTOKEN", "");
+                Intent intent1 = new Intent(storydegitalActivity.this, OtherUserHomePage.class);
+                intent1.putExtra("LoginToken", LoginToken);
                 intent1.putExtra("UserID", UserId);
                 intent1.putExtra("Avater", avaterurl);
                 intent1.putExtra("Sign", Signature);
                 intent1.putExtra("Username", UserName);
-                intent1.putExtra("Sex",sex);
+                intent1.putExtra("Sex", sex);
                 startActivity(intent1);
             }
         });
@@ -147,6 +133,25 @@ public class storydegitalActivity extends AppCompatActivity {
                 Signature = userInfoResponse.msg.user.sign;
                 username.setText(UserName);
                 signatrue.setText(Signature);
+
+                if(!avaterurl.equals("")) {
+                    try {
+                        url = new URL(avaterurl);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                        return ;
+                    }
+                    Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
+                        @Override
+                        public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
+                            if (bitmap != null) {
+                                avater.setImageBitmap(bitmap);
+                            }
+                        }
+                    });
+                }
+
+
             }
 
             @Override
@@ -154,7 +159,7 @@ public class storydegitalActivity extends AppCompatActivity {
 
             }
         });
-        romauntNetWork1.getUserInfo(LoginToken,Integer.toString(UserId));
+        romauntNetWork1.getUserInfo(LoginToken, Integer.toString(UserId));
     }
 
 
