@@ -158,9 +158,6 @@ public class MainActivity extends Activity {
                                 });
                             }
 
-
-
-
                         }
                         else if(response instanceof StatusFalseResponse)
                         {
