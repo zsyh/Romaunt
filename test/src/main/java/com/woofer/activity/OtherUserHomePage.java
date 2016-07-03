@@ -164,6 +164,6 @@ public class OtherUserHomePage extends Activity {
 
     }
     private void getuserInfo(){
-   
+
     }
 }

@@ -486,6 +486,494 @@ public class RomauntNetWork {
                 });
     }
 
+    public void addFollow(String LoginToken,String starID){
+        String url="http://139.129.131.240:3000/api/token/userinfo/addfollow";
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("starID", starID)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+
+                        Boolean status=StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if(status==true){
+                            java.lang.reflect.Type type = new TypeToken<AddFollowResponse>() {}.getType();
+                            AddFollowResponse addFollowResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(addFollowResponse);
+                            }
+
+                        }
+                        else
+                        {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+
+
+                    }
+
+                });
+
+    }
+
+    public void delFollow(String LoginToken,String starID){
+        String url="http://139.129.131.240:3000/api/token/userinfo/delfollow";
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("starID", starID)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+
+                        Boolean status=StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if(status==true){
+                            java.lang.reflect.Type type = new TypeToken<AddFollowResponse>() {}.getType();
+                            AddFollowResponse addFollowResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(addFollowResponse);
+                            }
+
+                        }
+                        else
+                        {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+                    }
+
+                });
+
+    }
+
+
+    public void getChat(String LoginToken,String revID){
+        String url="http://139.129.131.240:3000/api/token/chat/get";
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("revID", revID)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+
+                        Boolean status=StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if(status==true){
+                            java.lang.reflect.Type type = new TypeToken<GetChatResponse>() {}.getType();
+                            GetChatResponse getChatResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(getChatResponse);
+                            }
+
+                        }
+                        else
+                        {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+
+
+                    }
+
+                });
+
+    }
+
+    public void sendChat(String LoginToken,String revID,String content){
+        String url="http://139.129.131.240:3000/api/token/chat/send";
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("revID", revID)
+                .addParams("content", content)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+
+                        Boolean status=StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if(status==true){
+                            java.lang.reflect.Type type = new TypeToken<SendChatResponse>() {}.getType();
+                            SendChatResponse sendChatResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(sendChatResponse);
+                            }
+
+                        }
+                        else
+                        {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+
+
+                    }
+
+                });
+
+    }
+
+    /**
+     * @param isLike 数字0代表取消赞，1代表点赞*/
+
+    public void storyLike(String LoginToken,String storyID,String isLike){
+        String url="http://139.129.131.240:3000/api/token/story/like";
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("storyID", storyID)
+                .addParams("isLike", isLike)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+                        Gson gson = new Gson();
+
+
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+
+
+
+
+                    }
+
+                });
+
+    }
+
+    /**
+     * @param isCollect 数字0代表取消收藏，1代表收藏*/
+    public void storyCollect(String LoginToken,String storyID,String isCollect){
+        String url="http://139.129.131.240:3000/api/token/story/collect";
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("storyID", storyID)
+                .addParams("isCollect", isCollect)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+                        Gson gson = new Gson();
+
+
+                        java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                        StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onResponse(statusFalseResponse);
+                        }
+
+
+
+
+
+                    }
+
+                });
+
+    }
+
+    public void getCommentlist(String LoginToken,String storyID){
+        String url="http://139.129.131.240:3000/api/token/commentlist/"+storyID;
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("storyID", storyID)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+
+                        Boolean status=StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if(status==true){
+                            java.lang.reflect.Type type = new TypeToken<GetCommentlistResponse>() {}.getType();
+                            GetCommentlistResponse getCommentlistResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(getCommentlistResponse);
+                            }
+
+                        }
+                        else
+                        {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+
+
+                    }
+
+                });
+
+    }
+
+    public void comment(String LoginToken,String storyID,String commentContent){
+        String url="http://139.129.131.240:3000/api/token/comment/"+storyID;
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("commentContent", commentContent)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+
+                        Boolean status=StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if(status==true){
+                            java.lang.reflect.Type type = new TypeToken<CommentResponse>() {}.getType();
+                            CommentResponse commentResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(commentResponse);
+                            }
+
+                        }
+                        else
+                        {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+
+
+                    }
+
+                });
+
+    }
+
+    public void commentReply(String LoginToken,String storyID,String replyContent){
+        String url="http://139.129.131.240:3000/api/token/reply/"+storyID;
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken",LoginToken)
+                .addParams("replyContent", replyContent)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest","Error:"+e.getMessage());
+
+                        if(romauntNetworkCallback!=null){
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest","onResponse:"+s);
+
+
+                        Boolean status=StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if(status==true){
+                            java.lang.reflect.Type type = new TypeToken<CommentResponse>() {}.getType();
+                            CommentResponse commentResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(commentResponse);
+                            }
+
+                        }
+                        else
+                        {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if(romauntNetworkCallback!=null){
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+
+
+                    }
+
+                });
+
+    }
+
+
     public Object getUserInfoSync(String LoginToken, String AuthorID){
         String url ="http://139.129.131.240:3000/api/token/userinfo";
 
@@ -578,82 +1066,8 @@ public class RomauntNetWork {
 
     }
 
-//    public Object getUserInfoSyncToken(String LoginToken, String AuthorID, String token, Context context){
-//        String url ="http://139.129.131.240:3000/api/token/userinfo";
-//
-//        Response response;
-//        String s;
-//        try {
-//            response =OkHttpUtils
-//                    .post()
-//                    .url(url)
-//                    .addHeader("LoginToken",LoginToken)
-//                    .addParams("AuthorID",AuthorID)
-//                    .build()
-//                    .execute();
-//            s =response.body().string();
-//
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//
-//            return null;
-//        }
-//
-//
-//        Log.e("NetWorkTest","SyncResponse:"+s);
-//        Boolean status=StatusRecognize.getStatus(s);
-//        Gson gson = new Gson();
-//
-//        if(status==true){
-//            java.lang.reflect.Type type = new TypeToken<UserInfoResponse>() {}.getType();
-//            UserInfoResponse userInfoResponse = gson.fromJson(s, type);
-//
-//            return userInfoResponse;
-//
-//        }
-//        else
-//        {
-//            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {}.getType();
-//            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
-//
-//            if(statusFalseResponse.msg.equals("LoginToken")) {
-//                Object response1 = getTokenSync(token);
-//                if (response1 instanceof LoginResponse) {
-//                    LoginResponse loginResponse =(LoginResponse)response1;
-//
-//                    String newLoginToken = loginResponse.msg.LoginToken;
-//                    String newToken = loginResponse.msg.token;
-//                    String userID = loginResponse.msg.userID;
-//
-//                    SharedPreferences sp = context.getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor;
-//                    userInfo.status = 1;
-//                    editor = sp.edit();
-//                    editor.putString("LOGINTOKEN", newLoginToken);
-//                    editor.putString("TOKEN", newToken);
-//
-//                    editor.apply();
-//
-//
-//
-//            }
-//                else {
-//                    return response1;
-//                }
-//            }
-//            else{
-//                return statusFalseResponse;
-//            }
-//
-//
-//
-//        }
-//
-//
-//
-//
-//    }
+
+
+
 }
 
