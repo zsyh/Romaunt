@@ -164,18 +164,6 @@ public class OtherUserHomePage extends Activity {
 
     }
     private void getuserInfo(){
-        RomauntNetWork romauntNetWork = new RomauntNetWork();
-        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-            @Override
-            public void onResponse(Object response) {
-
-            }
-
-            @Override
-            public void onError(Object error) {
-
-            }
-        });
-        romauntNetWork.getUserInfo();
+   
     }
 }
