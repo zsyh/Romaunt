@@ -241,6 +241,21 @@ public class EditNoteActivity extends Activity {
         edittitleBar.rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if( themeeditTX.getText().toString().equals("") ){
+                    Toast.makeText(EditNoteActivity.this,"题目不能为空!",Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                if(stringSpanEdit.getText().toString().equals("")){
+                    Toast.makeText(EditNoteActivity.this,"内容不能为空!",Toast.LENGTH_SHORT).show();
+
+                    return ;
+                }
+
+                if( editText_lable.getText().toString().equals("")){
+                    Toast.makeText(EditNoteActivity.this,"标签不能为空!",Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
                 if (noteID == -1) {
                     saveNote(stringSpanEdit.getText().toString(), themeeditTX.getText().toString(),editText_lable.getText().toString(),flag,uploadflag);
                 } else {
