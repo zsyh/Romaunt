@@ -79,30 +79,41 @@ public class Activity_one extends Activity {
             public void onClick(View v) {
 
                 //Toast.makeText(Activity_one.this, "上传所有公开笔记", Toast.LENGTH_SHORT).show();
-                List<Note> noteDataList=notedata.getNoteDataList();
 
 
-                RomauntNetWork romauntNetWork=new RomauntNetWork();
-                for(int i = 0 ;i<noteDataList.size();i++){
-                    if(noteDataList.get(i).getPublicstatus()==1 && (noteDataList.get(i).getUploadflag()==0))//上传要上传但未上传的
-                    {
-                        final int ID=  noteDataList.get(i).getID();
-                        final String title = noteDataList.get(i).getTheme();
-                        final String flags= noteDataList.get(i).getLable();
-                        final String content= noteDataList.get(i).getNoteData();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        List<Note> noteDataList=notedata.getNoteDataList();
 
+                        RomauntNetWork romauntNetWork=new RomauntNetWork();
+                        for(int i = 0 ;i<noteDataList.size();i++){
+                            if(noteDataList.get(i).getPublicstatus()==1 && (noteDataList.get(i).getUploadflag()==0))//上传要上传但未上传的
+                            {
+                                final int ID=  noteDataList.get(i).getID();
+                                final String title = noteDataList.get(i).getTheme();
+                                final String flags= noteDataList.get(i).getLable();
+                                final String content= noteDataList.get(i).getNoteData();
 
-                        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                            @Override
-                            public void onResponse(Object response) {
+                                SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+                                String logintoken = sp.getString("LOGINTOKEN","");
 
+                                Object response =romauntNetWork.uploadStorySync(logintoken,title,flags,content,"1"); if(response==null){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(Activity_one.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return ;
+                            }
                                 if (response instanceof UploadStoryResponse) {
                                     UploadStoryResponse uploadStoryResponse= (UploadStoryResponse)response;
                                     if(uploadStoryResponse.status.equals("true"));
                                     {
                                         databaseManager.Reuploadflag(ID,1);
-                                        //madapeter.getView(i,null,null);
+                                        madapeter.getView(i,null,null);
                                     }
 
                                 }
@@ -114,23 +125,14 @@ public class Activity_one extends Activity {
 
                             }
 
-                            @Override
-                            public void onError(Object error) {
-
-                            }
-                        });
-                        SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
-                        String logintoken = sp.getString("LOGINTOKEN","");
-                        romauntNetWork.uploadStory(logintoken,title,flags,content,"1");
 
 
+                        }
 
                     }
 
-                }
 
-
-
+                }).start();
 
             }
         });
