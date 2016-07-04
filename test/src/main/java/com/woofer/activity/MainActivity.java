@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
                         String username = userInfoResponse.msg.user.userName;
                         int sex = userInfoResponse.msg.user.sex;
                         Log.e("Romaunt", "&&&&&&&&&&&&&&&&&&&&&&&");
-                        //int follower  = userInfoResponse.msg.user.follower.size();
+                        //int follower  = userInfoResponse.msg.follower.size();
 
                         SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
                         editor = sp.edit();

@@ -10,8 +10,12 @@ public class UserInfoResponse {
     public Msg msg;
 
 
+
     public static class Msg{
         public User user;
+        public List<Follower> follower;
+        public List<Following> following;
+        public int collectedStoriesCount;
     }
 
     public static class User{
@@ -27,9 +31,6 @@ public class UserInfoResponse {
         public int followerEnable;
         public int aboutNotice;
         public int updateNotice;
-        public List<Follower> follower;
-        public List<Following> following;
-        public int collectedStoriesCount;
 
 
     }
