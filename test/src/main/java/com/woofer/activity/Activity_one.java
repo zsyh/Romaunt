@@ -80,6 +80,8 @@ public class Activity_one extends Activity {
 
                 //Toast.makeText(Activity_one.this, "上传所有公开笔记", Toast.LENGTH_SHORT).show();
                 List<Note> noteDataList=notedata.getNoteDataList();
+
+
                 RomauntNetWork romauntNetWork=new RomauntNetWork();
                 for(int i = 0 ;i<noteDataList.size();i++){
                     if(noteDataList.get(i).getPublicstatus()==1 && (noteDataList.get(i).getUploadflag()==0))//上传要上传但未上传的
@@ -100,7 +102,7 @@ public class Activity_one extends Activity {
                                     if(uploadStoryResponse.status.equals("true"));
                                     {
                                         databaseManager.Reuploadflag(ID,1);
-
+                                        //madapeter.getView(i,null,null);
                                     }
 
                                 }

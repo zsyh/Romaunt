@@ -219,6 +219,15 @@ public class OtherUserHomePage extends Activity {
                 final RomauntNetWork romauntNetWork = new RomauntNetWork();
 
                 Object response = romauntNetWork.getUserInfoSync(LoginToken, Integer.toString(UserId));
+                if(response==null){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(OtherUserHomePage.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return ;
+                }
                 if (response instanceof UserInfoResponse) {
                     UserInfoResponse userInfoResponse = (UserInfoResponse) response;
 
