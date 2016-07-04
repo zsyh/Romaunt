@@ -2,7 +2,7 @@
 	可以考虑ui的圆环刷新效果
 	上传完毕在activity_one中标签显已上传--OK
 	待修复bug："已上传"状态不能及时更新到UI
-	待修复bug：向本地添加故事时，应该要判断是否为空
+	已修复bug：向本地添加故事时，判断是否为空
 
 activity_four
 	去掉webview 改成button

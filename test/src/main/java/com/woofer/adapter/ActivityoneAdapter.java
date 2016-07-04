@@ -98,7 +98,7 @@ public class ActivityoneAdapter extends BaseAdapter{
                 viewHolder.uploadflag.setText("未上传");
             }
             else{
-                viewHolder.uploadflag.setText("已上传");
+                viewHolder.uploadflag.setText("");
             }
         }
 

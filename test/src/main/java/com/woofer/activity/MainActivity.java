@@ -90,6 +90,15 @@ public class MainActivity extends Activity {
                     final RomauntNetWork romauntNetWork = new RomauntNetWork();
 
                     Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
+                    if(response==null){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return ;
+                    }
                     if (response instanceof UserInfoResponse) {
                         UserInfoResponse userInfoResponse = (UserInfoResponse) response;
                         Log.e("Romaunt", userInfoResponse.msg.user.mobile);
@@ -115,6 +124,15 @@ public class MainActivity extends Activity {
                     else if(response instanceof StatusFalseResponse && ((StatusFalseResponse) response).msg.equals("LoginToken"))
                     {
                         Object response1 =romauntNetWork.getTokenSync(token);
+                        if(response1==null){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            return ;
+                        }
                         if (response1 instanceof LoginResponse) {
                             LoginResponse loginResponse =(LoginResponse)response1;
 
@@ -131,6 +149,15 @@ public class MainActivity extends Activity {
                             editor.apply();
 
                             Object response2 = romauntNetWork.getUserInfoSync(logintoken, userID);
+                            if(response2==null){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return ;
+                            }
                             if(response2 instanceof UserInfoResponse){
                                 UserInfoResponse userInfoResponse = (UserInfoResponse) response2;
                                 Log.e("Romaunt", userInfoResponse.msg.user.mobile);
