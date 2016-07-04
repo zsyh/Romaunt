@@ -83,24 +83,7 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
 
         mDataLV.setAdapter(mAdapter);
 
-//        mEngine.loadInitDatas().enqueue(new Callback<List<RefreshModel>>() {
-//            @Override
-//            public void onResponse(Call<List<RefreshModel>> call, Response<List<RefreshModel>> response) {
-//                mAdapter.setDatas(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
-//
-//            }
-//        });
 
-
-//        List<RefreshModel> list = new ArrayList<>();
-//        list.add(new RefreshModel("nihao"," mAdapter.setDatas(list);"));
-//        list.add(new RefreshModel("nihao"," mAdapter.setDatas(list);"));
-//
-//        mAdapter.setDatas(list);
 
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
@@ -159,10 +142,6 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
             });
             romauntNetWork.getPublicStoryList(loginToken, Long.toString(new Date().getTime()), "1", "10");
         }
-        //"1467033214"
-
-//        long time=new Date().getTime();
-//        Log.e("Romaunt",time);
 
 
     }
@@ -213,42 +192,6 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         showLoadingDialog();
-
-
-//        mEngine.loadNewData(mNewPageNumber).enqueue(new Callback<List<RefreshModel>>() {
-//            @Override
-//            public void onResponse(Call<List<RefreshModel>> call, final Response<List<RefreshModel>> response) {
-//                ThreadUtil.runInUIThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mRefreshLayout.endRefreshing();
-//                        dismissLoadingDialog();
-//                        mAdapter.addNewDatas(response.body());
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//                            mDataLV.deferNotifyDataSetChanged();
-//                        }
-//                    }
-//                }, 2000);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
-//                mRefreshLayout.endRefreshing();
-//                dismissLoadingDialog();
-//            }
-//        });
-
-
-//        mRefreshLayout.endRefreshing();
-//        dismissLoadingDialog();
-//        List<RefreshModel> list = new ArrayList<>();
-//        list.add(new RefreshModel("nihao","mAdapter.addNewDatas(list);"));
-//        list.add(new RefreshModel("nihao","mAdapter.addNewDatas(list);"));
-//
-//        mAdapter.addNewDatas(list);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//            mDataLV.deferNotifyDataSetChanged();
-//        }
 
         //上拉获取10条信息
         //比较10条信息的ID与列表中的是否有一致的
@@ -359,30 +302,7 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         mMorePageNumber++;
-
         showLoadingDialog();
-
-
-//        mEngine.loadMoreData(mMorePageNumber).enqueue(new Callback<List<RefreshModel>>() {
-//            @Override
-//            public void onResponse(Call<List<RefreshModel>> call, final Response<List<RefreshModel>> response) {
-//                ThreadUtil.runInUIThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mRefreshLayout.endLoadingMore();
-//                        dismissLoadingDialog();
-//                        mAdapter.addMoreDatas(response.body());
-//                    }
-//                }, 1000);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<RefreshModel>> call, Throwable t) {
-//                mRefreshLayout.endLoadingMore();
-//            }
-//        });
-
-
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
         loginToken = sp.getString("LOGINTOKEN", "");
