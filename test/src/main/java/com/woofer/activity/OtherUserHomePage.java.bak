@@ -210,6 +210,7 @@ public class OtherUserHomePage extends Activity {
 
     }
     private void getuserInfo(){
+<<<<<<< HEAD
 
         //启动新线程！
         new Thread(new Runnable() {
@@ -233,6 +234,8 @@ public class OtherUserHomePage extends Activity {
 
             }
         }).start();
+=======
 
+>>>>>>> upstream/develop
     }
 }

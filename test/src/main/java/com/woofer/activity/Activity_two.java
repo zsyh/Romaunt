@@ -117,7 +117,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
                         listLogic.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
                                 publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
-
+                                Log.e("storyID",  publicStoryListResponse.msg.get(i).id);
                     }
 
 
