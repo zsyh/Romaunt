@@ -126,12 +126,24 @@ public class OtherUserHomePage extends Activity {
                     case R.id.OT_home_tv_parhs:
                         vp.setCurrentItem(2);
                         break;
+                    case R.id.OT_home_tv1:
+                        vp.setCurrentItem(0);
+                        break;
+                    case R.id.OT_home_tv2:
+                        vp.setCurrentItem(1);
+                        break;
+                    case R.id.OT_home_tv3:
+                        vp.setCurrentItem(2);
+                        break;
                 }
             }
         };
         fans.setOnClickListener(clickListener);
         followers.setOnClickListener(clickListener);
         parhs.setOnClickListener(clickListener);
+        tv1.setOnClickListener(clickListener);
+        tv2.setOnClickListener(clickListener);
+        tv3.setOnClickListener(clickListener);
         InitPager();
         getuserInfo();
     }

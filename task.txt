@@ -21,4 +21,4 @@ activity_three中
 
 个人信息的更新-web
 DegitalInfoActivity
-	重写回退事件 跳转之前先对用户信息上传
+	用户信息更新（弹出对话框）确定与取消

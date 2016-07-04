@@ -6,5 +6,41 @@
     android:background="#123f23"
     tools:context="com.woofer.activity.userhomepage.FansActivity">
 
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/refreshLayout"
+        android:layout_below="@id/actionbar2">
 
+
+        <cn.bingoogolapple.refreshlayout.BGAStickyNavLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <ListView
+                android:id="@+id/data"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="0dp"
+
+                android:layout_marginTop="0dp"
+                android:background="@android:color/white"
+                android:divider="@mipmap/list_divider"
+                android:overScrollMode="never"
+                android:paddingBottom="50dp"
+                android:paddingTop="0dp"
+                android:scrollbars="none"
+                tools:listitem="@layout/item"
+                />
+
+        </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 </RelativeLayout>
