@@ -99,7 +99,8 @@ public class Activity_one extends Activity {
                                 SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
                                 String logintoken = sp.getString("LOGINTOKEN","");
 
-                                Object response =romauntNetWork.uploadStorySync(logintoken,title,flags,content,"1"); if(response==null){
+                                Object response =romauntNetWork.uploadStorySync(logintoken,title,flags,content,"1");
+                                if(response==null){
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -113,7 +114,17 @@ public class Activity_one extends Activity {
                                     if(uploadStoryResponse.status.equals("true"));
                                     {
                                         databaseManager.Reuploadflag(ID,1);
-                                        madapeter.getView(i,null,null);
+                                        noteDataList.get(i).setUploadflag(1);
+
+                                       runOnUiThread(new Runnable() {
+                                           @Override
+                                           public void run() {
+
+                                               madapeter.notifyDataSetChanged();
+                                           }
+                                       });
+
+
                                     }
 
                                 }

@@ -284,7 +284,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
                                 if (publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
                                     hasSame = true;
-                                    count = i - 1;
+                                    count = i;
                                 }
 
                             }
