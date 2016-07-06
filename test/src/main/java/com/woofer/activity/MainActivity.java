@@ -77,7 +77,9 @@ public class MainActivity extends Activity {
 
 
         token = sp.getString("TOKEN","");
+        Log.e("Romaunt","token:"+token);
         userID = sp.getString("USERID", "");
+
         if(logintoken.equals("")){
 
         }else{

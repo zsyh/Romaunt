@@ -112,6 +112,12 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
+
+                    if(! (response instanceof PublicStoryListResponse)) {//
+                        Log.e("Romaunt","初次加载广场故事列表时返回结果非正确，为防止崩溃直接取消初次加载");
+                        return;
+                    }
+
                     final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) response;
                     listLogic = new ArrayList<>();
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
