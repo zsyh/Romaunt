@@ -30,7 +30,7 @@ import java.util.List;
 import woofer.com.test.R;
 
 public class OtherUserHomePage extends Activity {
-    private TextView fans,followers ,parhs;
+    private TextView fans, followings,parhs;
     private TextView tv1 ,tv2 ,tv3;
     private ViewPager vp;
     private TitleBar titleBar;
@@ -48,6 +48,10 @@ public class OtherUserHomePage extends Activity {
     private TextView Toptv2;
     private TextView Toptv3;
     private TextView buttomtv;
+
+    private int followinsNUM;
+    private int fansNUM;
+    private int prahsNUM;
 
     private LocalActivityManager manager;
     private ViewPagerAdapter viewPageAdapter;
@@ -124,7 +128,7 @@ public class OtherUserHomePage extends Activity {
         Toptv2 = (TextView)findViewById(R.id.OT_home_following);
         Toptv3 = (TextView)findViewById(R.id.OT_home_parhs);
         fans = (TextView) findViewById(R.id.OT_home_tv_fans);
-        followers = (TextView) findViewById(R.id.OT_home_tv_following);
+        followings = (TextView) findViewById(R.id.OT_home_tv_following);
         parhs = (TextView) findViewById(R.id.OT_home_tv_parhs);
         fans.setTextColor(Color.rgb(25, 142, 123));
         tv1.setBackgroundColor(Color.rgb(25, 142, 123));
@@ -160,13 +164,15 @@ public class OtherUserHomePage extends Activity {
             }
         };
         fans.setOnClickListener(clickListener);
-        followers.setOnClickListener(clickListener);
+        followings.setOnClickListener(clickListener);
         parhs.setOnClickListener(clickListener);
         tv1.setOnClickListener(clickListener);
         tv2.setOnClickListener(clickListener);
         tv3.setOnClickListener(clickListener);
         InitPager();
         getuserInfo();
+        followings.setText(Integer.toString(followinsNUM));
+        fans.setText(Integer.toString(fansNUM));
     }
 
     private void InitPager(){
@@ -186,7 +192,7 @@ public class OtherUserHomePage extends Activity {
                         fans.setTextColor(Color.rgb(25, 142, 123));
                         buttomtv.setText("粉丝");
                         tv1.setBackgroundColor(Color.rgb(25, 142, 123));
-                        followers.setTextColor(Color.rgb(139, 139, 139));
+                        followings.setTextColor(Color.rgb(139, 139, 139));
                         tv2.setBackgroundColor(Color.rgb(255, 255, 255));
                         parhs.setTextColor(Color.rgb(139, 139, 139));
                         tv3.setBackgroundColor(Color.rgb(255,255,255));
@@ -198,7 +204,7 @@ public class OtherUserHomePage extends Activity {
                         fans.setTextColor(Color.rgb(139, 139, 139));
                         buttomtv.setText("关注");
                         tv1.setBackgroundColor(Color.rgb(255, 255, 255));
-                        followers.setTextColor(Color.rgb(25, 142, 123));
+                        followings.setTextColor(Color.rgb(25, 142, 123));
                         tv2.setBackgroundColor(Color.rgb(25, 142, 123));
                         tv3.setBackgroundColor(Color.rgb(255, 255, 255));
                         parhs.setTextColor(Color.rgb(139, 139, 139));
@@ -209,7 +215,7 @@ public class OtherUserHomePage extends Activity {
                         Toptv2.setTextColor(Color.rgb(139, 139, 139));
                         Toptv3.setTextColor(Color.rgb(25, 142, 123));
                         parhs.setTextColor(Color.rgb(25, 142, 123));
-                        followers.setTextColor(Color.rgb(139, 139, 139));
+                        followings.setTextColor(Color.rgb(139, 139, 139));
                         fans.setTextColor(Color.rgb(139, 139, 139));
                         buttomtv.setText("文章");
                         tv3.setBackgroundColor(Color.rgb(25,142,123));
@@ -253,7 +259,6 @@ public class OtherUserHomePage extends Activity {
 
     }
     private void getuserInfo(){
-
         //启动新线程！
         new Thread(new Runnable() {
             @Override
@@ -272,10 +277,18 @@ public class OtherUserHomePage extends Activity {
                     return ;
                 }
                 if (response instanceof UserInfoResponse) {
-                    UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                    final UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                    if(userInfoResponse.msg.following!=null){
+                        followinsNUM = userInfoResponse.msg.following.size();
+                        fansNUM = userInfoResponse.msg.follower.size();
+                    }else{
+                        followinsNUM = 0;
+                        fansNUM  = 0;
+                    }
 
                     String username = userInfoResponse.msg.user.userName;
                     int sex = userInfoResponse.msg.user.sex;
+
                 }
                 else
                 {
@@ -285,6 +298,5 @@ public class OtherUserHomePage extends Activity {
 
             }
         }).start();
-
     }
 }

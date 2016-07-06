@@ -6,6 +6,7 @@
     tools:context="com.woofer.activity.userhomepage.FollowingsActivity">
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:layout_width="match_parent"
+        android:background="@drawable/backup"
         android:layout_height="match_parent"
         android:id="@+id/OT_fans_refreshLayout"
         >

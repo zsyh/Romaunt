@@ -2,13 +2,8 @@ package com.woofer.refreshlayout.adapter;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.annotation.IdRes;
-import android.widget.ImageView;
 
-import com.woofer.refreshlayout.fansinfoModel;
-
-import java.net.URL;
+import com.woofer.refreshlayout.model.fansinfoModel;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;

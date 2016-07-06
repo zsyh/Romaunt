@@ -4,9 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.woofer.activity.userhomepage.ParhsActivity">
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:src="@drawable/zhuge"
-    />
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/backup"
+        android:layout_height="match_parent"
+        android:id="@+id/OT_parhs_refreshLayout"
+        >
+
+
+        <cn.bingoogolapple.refreshlayout.BGAStickyNavLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <ListView
+                android:id="@+id/OT_parhs_data"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="0dp"
+
+                android:layout_marginTop="0dp"
+                android:background="@android:color/white"
+                android:divider="@mipmap/list_divider"
+                android:overScrollMode="never"
+                android:paddingBottom="0dp"
+                android:paddingTop="0dp"
+                android:scrollbars="none"
+                tools:listitem="@layout/parhsitem"
+                />
+
+        </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 </RelativeLayout>

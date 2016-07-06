@@ -2,8 +2,6 @@ package com.woofer.activity.userhomepage;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +10,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.woofer.activity.BaseActivity;
-import com.woofer.activity.storydegitalActivity;
-import com.woofer.net.PublicStoryListResponse;
+import com.woofer.activity.OtherUserHomePage;
+import com.woofer.activity.signinActivity;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
-import com.woofer.refreshlayout.adapter.NormalAdapterViewAdapter;
-import com.woofer.refreshlayout.model.RefreshModel;
-import com.woofer.userInfo;
+import com.woofer.refreshlayout.adapter.fansAdapter;
+import com.woofer.refreshlayout.model.fansinfoModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
@@ -34,105 +30,59 @@ import woofer.com.test.R;
 public class FansActivity extends BaseActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, BGAOnItemChildClickListener, BGAOnItemChildLongClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
     private BGARefreshLayout mRefreshLayout;
     private ListView mDataLV;
-    private NormalAdapterViewAdapter mAdapter;
+    private fansAdapter mAdapter;
     private int mNewPageNumber = 0;
     private int mMorePageNumber = 0;
     private long firstbacktime = 0;
     private String loginToken;
-    private String Authorsign;
-    private String Authorname;
     private String token;
+    private  int userid;
 
     @Override
     protected void initView(Bundle saveInstanceState) {
         setContentView(R.layout.activity_fans);
         mRefreshLayout = getViewById(R.id.refreshLayout);
         mDataLV = getViewById(R.id.data);
+        SharedPreferences sp  = getSharedPreferences("USERID",OtherUserHomePage.MODE_PRIVATE);
+        userid = sp.getInt("USERID", 0);
     }
 
     @Override
     protected void setListener() {
         mRefreshLayout.setDelegate(this);
 
-        // mDataLV.setOnClickListener(this);
         mDataLV.setOnItemClickListener(this);
 
-        mAdapter = new NormalAdapterViewAdapter(this);
+        mAdapter = new fansAdapter(this);
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnItemChildLongClickListener(this);
     }
 
-
-    private List<RefreshModel> listLogic;
-
+    private List<fansinfoModel> listLogic;
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        /**
-         *设置广告
-         */
-        //mRefreshLayout.setCustomHeaderView(DataEngine.getCustomHeaderView(mApp),false);
-
-        /**水滴刷新效果
-         * 头部刷新
-         */
         BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(mApp, true);
         stickinessRefreshViewHolder.setStickinessColor(R.color.colorgray);
         stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
 
         mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
-
         mDataLV.setAdapter(mAdapter);
-
-
-
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
         loginToken = sp.getString("LOGINTOKEN", "");
         token = sp.getString("TOKEN", "");
-//
-//
-        if (!loginToken.equals("")) {
+
+        if(!loginToken.equals("")){
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
-                    final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) response;
+                    final UserInfoResponse userInfoResponse =(UserInfoResponse)response;
                     listLogic = new ArrayList<>();
-                    for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-                        listLogic.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
-                                publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
-                        Log.e("storyID", publicStoryListResponse.msg.get(i).id);
+                    for(int i = 0 ;i <userInfoResponse.msg.follower.size();i++){
+                        listLogic.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id,userInfoResponse.msg.follower.get(i).userName,
+                                userInfoResponse.msg.follower.get(i).sign,userInfoResponse.msg.follower.get(i).sex,userInfoResponse.msg.
+                                follower.get(i).avatar));
                     }
-
-
-                    for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-                        RomauntNetWork romauntNetWork1 = new RomauntNetWork();
-                        romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                            @Override
-                            public void onResponse(Object response) {
-                                UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-
-                                for (int j = 0; j < listLogic.size(); j++) {
-                                    if (listLogic.get(j).userID == userInfoResponse.msg.user.id) {
-                                        listLogic.get(j).authorname = userInfoResponse.msg.user.userName;
-                                        listLogic.get(j).sign = userInfoResponse.msg.user.sign;
-                                    }
-                                }
-
-                            }
-
-                            @Override
-                            public void onError(Object error) {
-
-                            }
-                        });
-
-
-                        romauntNetWork1.getUserInfo(loginToken, Integer.toString(publicStoryListResponse.msg.get(i).AuthorID));
-
-                    }
-
-
-                    mAdapter.setDatas(listLogic);
                 }
 
                 @Override
@@ -140,229 +90,121 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 }
             });
-            romauntNetWork.getPublicStoryList(loginToken, Long.toString(new Date().getTime()), "1", "10");
+            romauntNetWork.getUserInfo(loginToken,Integer.toString(userid));
         }
+        mAdapter.setDatas(listLogic);
 
+    }
+
+
+    @Override
+    public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
 
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
-                mAdapter.getItem(position).userID);
-        Intent intent = new Intent(FansActivity.this, storydegitalActivity.class);
-        intent.putExtra("USERID", mAdapter.getItem(position).userID);
-        intent.putExtra("ID", mAdapter.getItem(position).id);
-        intent.putExtra("LoginToken", loginToken);
-        startActivity(intent);
-
-    }
-
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
-                mAdapter.getItem(position).userID);
-
-        return true;
-    }
-
-    @Override
-    public void onItemChildClick(ViewGroup viewGroup, View childView, int position) {
-        if (childView.getId() == R.id.itemTV5)
-            mAdapter.removeItem(position);
-    }
-
-    @Override
-    public boolean onItemChildLongClick(ViewGroup viewGroup, View childview, int position) {
-        if (childview.getId() == R.id.itemTV5) {
-            showToast("长按了删除" + mAdapter.getItem(position).title);
-            return true;
-        }
+    public boolean onItemChildLongClick(ViewGroup viewGroup, View view, int i) {
         return false;
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    private List<RefreshModel> listNewData;
-
-    /*手向下拉*/
+    private List<fansinfoModel> listNewData;
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         showLoadingDialog();
-
-        //上拉获取10条信息
-        //比较10条信息的ID与列表中的是否有一致的
-        //若有一致的，说明新信息少于10条，把不一致的部分加到list里
-        //若没有一致的，说明新信息多于10条，把列表清空，并把最新的10条加到list里
-
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN", "");
-        token = sp.getString("TOKEN", "");
-
-
-        if (!loginToken.equals("")) {
+        if(!loginToken.equals("")) {
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
-                public void onResponse(Object response) {
-
-                    final Object finalResponse = response;
-
+                public void onResponse(final Object response) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
-
                             mRefreshLayout.endRefreshing();
                             dismissLoadingDialog();
-                            final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) finalResponse;
+                            final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
                             listNewData = new ArrayList<>();
 
-                            boolean hasSame = false;
-                            int count = publicStoryListResponse.msg.size();
-                            for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-
-                                if (publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
-                                    hasSame = true;
-                                    count = i - 1;
-                                }
-
+                            boolean hassame = false;
+                            int count = userInfoResponse.msg.follower.size();
+                            for(int i = 0;i<userInfoResponse.msg.follower.size();i++){
+                                if(userInfoResponse.msg.follower.get(i).userName.equals(mAdapter.getItem(0).username));
+                                hassame = true;
+                                count = count -1;
                             }
-
-                            if (!hasSame) {
+                            if(!hassame){
                                 mAdapter.clear();
                             }
-
-                            for (int i = 0; i < count; i++) {
-                                listNewData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
-                                        publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
+                            for(int i = 0; i<count; i++){
+                                listNewData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id,userInfoResponse.msg.follower.get(i).userName,
+                                        userInfoResponse.msg.follower.get(i).sign,userInfoResponse.msg.follower.get(i).sex,userInfoResponse.msg.
+                                        follower.get(i).avatar));
                             }
-
-
-                            for (int i = 0; i < count; i++) {
-
-                                RomauntNetWork romauntNetWork1 = new RomauntNetWork();
-                                romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                    @Override
-                                    public void onResponse(Object response) {
-                                        UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-                                        Log.e("sign", userInfoResponse.msg.user.sign);
-                                        Log.e("", "username:" + userInfoResponse.msg.user.userName);
-
-                                        for (int j = 0; j < listNewData.size(); j++) {
-
-                                            if (listNewData.get(j).userID == userInfoResponse.msg.user.id) {
-                                                listNewData.get(j).authorname = userInfoResponse.msg.user.userName;
-                                                listNewData.get(j).sign = userInfoResponse.msg.user.sign;
-                                            }
-                                        }
-
-
-                                    }
-
-                                    @Override
-                                    public void onError(Object error) {
-                                        mRefreshLayout.endRefreshing();
-                                    }
-                                });
-
-
-                                romauntNetWork1.getUserInfo(loginToken, Integer.toString(publicStoryListResponse.msg.get(i).AuthorID));
-
-                            }
-
-                            mAdapter.addNewDatas(listNewData);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                                mDataLV.deferNotifyDataSetChanged();
-                            }
-
-
                         }
                     });
-
                 }
 
                 @Override
                 public void onError(Object error) {
                     mRefreshLayout.endRefreshing();
-//                dismissLoadingDialog();
                 }
             });
-            romauntNetWork.getPublicStoryList(loginToken, Long.toString(new Date().getTime()), "1", "10");
+            romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
         }
-
     }
 
-    private List<RefreshModel> listMoreData;
-
-    /*手向上拉*/
+    private List<fansinfoModel> listMoreData;
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         mMorePageNumber++;
         showLoadingDialog();
-        RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN", "");
-        token = sp.getString("TOKEN", "");
-        if (!loginToken.equals("")) {
 
+        RomauntNetWork romauntNetWork = new RomauntNetWork();
+        if(!loginToken.equals("")){
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
-                    final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) response;
+                    final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
                     listMoreData = new ArrayList<>();
-
-                    for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-                        listMoreData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
-                                publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
+                    for(int i = 0 ;i <userInfoResponse.msg.follower.size();i++) {
+                        listMoreData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id, userInfoResponse.msg.follower.get(i).userName,
+                                userInfoResponse.msg.follower.get(i).sign, userInfoResponse.msg.follower.get(i).sex, userInfoResponse.msg.
+                                follower.get(i).avatar));
                     }
 
-                    for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
-                        RomauntNetWork romauntNetWork1 = new RomauntNetWork();
-                        romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                            @Override
-                            public void onResponse(Object response) {
-                                UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-
-                                for (int j = 0; j < listMoreData.size(); j++) {
-                                    if (listMoreData.get(j).userID == userInfoResponse.msg.user.id) {
-                                        listMoreData.get(j).authorname = userInfoResponse.msg.user.userName;
-                                        listMoreData.get(j).sign = userInfoResponse.msg.user.sign;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onError(Object error) {
-                                Log.e("Romaunt", "onError 上拉请求用户信息");
-                                mRefreshLayout.endLoadingMore();
-                            }
-                        });
-
-
-                        romauntNetWork1.getUserInfo(loginToken, Integer.toString(publicStoryListResponse.msg.get(i).AuthorID));
-
-                    }
-
-
-                    mRefreshLayout.endLoadingMore();
-                    dismissLoadingDialog();
-                    mAdapter.addMoreDatas(listMoreData);
                 }
 
                 @Override
                 public void onError(Object error) {
-                    Log.e("Romaunt", "onError 上拉请求广场故事列表");
+                    Log.e("fans", "");
                     mRefreshLayout.endLoadingMore();
                 }
             });
-            romauntNetWork.getPublicStoryList(loginToken, Long.toString(new Date().getTime()), Integer.toString(userInfo.nowPage++), "10");
+            romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
         }
-
+        mRefreshLayout.endLoadingMore();
+        dismissLoadingDialog();
+        mAdapter.addMoreDatas(listMoreData);
 
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+
+        String LoginToken = sp.getString("LOGINTOKEN", "");
+        Intent intent1 = new Intent(FansActivity.this, OtherUserHomePage.class);
+        intent1.putExtra("LoginToken", LoginToken);
+        intent1.putExtra("UserID", mAdapter.getItem(position).userID);
+        intent1.putExtra("Avater", mAdapter.getItem(position).avater);
+        intent1.putExtra("Sign", mAdapter.getItem(position).sign);
+        intent1.putExtra("Username", mAdapter.getItem(position).username);
+        intent1.putExtra("Sex", mAdapter.getItem(position).sex);
+        startActivity(intent1);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        return false;
     }
 }

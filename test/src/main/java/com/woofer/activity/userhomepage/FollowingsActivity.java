@@ -15,7 +15,7 @@ import com.woofer.activity.signinActivity;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.UserInfoResponse;
 import com.woofer.refreshlayout.adapter.fansAdapter;
-import com.woofer.refreshlayout.fansinfoModel;
+import com.woofer.refreshlayout.model.fansinfoModel;
 import com.woofer.net.RomauntNetworkCallback;
 
 import java.util.ArrayList;
@@ -68,6 +68,7 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
         loginToken = sp.getString("LOGINTOKEN", "");
         token = sp.getString("TOKEN", "");
+
         if(!loginToken.equals("")){
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override

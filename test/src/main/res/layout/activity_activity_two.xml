@@ -4,7 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="com.woofer.activity.MainActivity"
-    android:background="#FFFFFF"
     >
     <com.woofer.titlebar.TitleBar
         android:id="@+id/actionbar2"
@@ -20,6 +19,7 @@
         />
 <cn.bingoogolapple.refreshlayout.BGARefreshLayout
     android:layout_width="match_parent"
+    android:background="@drawable/backup"
     android:layout_height="match_parent"
     android:id="@+id/refreshLayout"
     android:layout_below="@id/actionbar2">

@@ -82,7 +82,6 @@
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:text="100"
                 android:gravity="center"
 
                 android:id="@+id/OT_home_tv_fans">
@@ -114,7 +113,6 @@
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
-                android:text="100"
 
                 android:id="@+id/OT_home_tv_following"
                 />
@@ -211,7 +209,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/OT_home_item"
-        android:background="@drawable/laozhu"
         android:id="@+id/OT_home_viewpager"
         >
     </android.support.v4.view.ViewPager>

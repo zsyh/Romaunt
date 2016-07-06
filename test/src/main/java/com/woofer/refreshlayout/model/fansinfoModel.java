@@ -1,4 +1,4 @@
-package com.woofer.refreshlayout;
+package com.woofer.refreshlayout.model;
 
 
 public class fansinfoModel {
