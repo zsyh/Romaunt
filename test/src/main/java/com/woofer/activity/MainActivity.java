@@ -1,7 +1,10 @@
 package com.woofer.activity;
 
 import android.app.LocalActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import java.util.ArrayList;
@@ -57,18 +60,69 @@ public class MainActivity extends Activity {
 
     public static SharedPreferences.Editor editor;
 
+    private BroadcastReceiver mBroadcastReceiver;
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("RomauntAlarmTest","MainActivity onDestroy()");
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("RomauntAlarmTest","MainActivity onStart()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("RomauntAlarmTest","MainActivity onStop()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("RomauntAlarmTest","MainActivity onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("RomauntAlarmTest","MainActivity onPause()");
+    }
 
     /*拿到存储的shareperference
-    并且判断是否失效 失效重获*/
+                    并且判断是否失效 失效重获*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.e("RomauntAlarmTest","MainActivity onCreate()");
+
+
+        //设定定时器的广播接收器
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                //异步拿logintoken
+
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.zaizai1.broadcast.getLoginToken");
+        registerReceiver(mBroadcastReceiver, intentFilter);
+
         SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         logintoken = sp.getString("LOGINTOKEN","");
-
         Log.e("Romaunt", "LoginToken:" + logintoken);
+        token = sp.getString("TOKEN","");
+        Log.e("Romaunt","token:"+token);
+        userID = sp.getString("USERID", "");
 
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
@@ -76,10 +130,10 @@ public class MainActivity extends Activity {
         vp = (ViewPager) findViewById(R.id.vPager);
 
 
-        token = sp.getString("TOKEN","");
-        userID = sp.getString("USERID", "");
-        if(logintoken.equals("")){
 
+
+        if(logintoken.equals("")){
+            Log.e("Romaunt","本地未存储有LoginToken");
         }else{
 
             //启动新线程！
@@ -216,7 +270,6 @@ public class MainActivity extends Activity {
                 }
             }).start();
 
-            Log.e("LOGINTOKEN", logintoken);
 
 
         }

@@ -29,3 +29,5 @@ DegitalInfoActivity
 网络：
 如何正确地自动更新LoginToken的问题
 
+
+处理各种异常，防止程序崩溃

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -57,6 +58,37 @@ public class Activity_four extends Activity {
     private RomauntNetWork romauntNetWork=new RomauntNetWork();
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("RomauntAlarmTest","Activity_four onDestroy()");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("RomauntAlarmTest","Activity_four onStart()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("RomauntAlarmTest","Activity_four onStop()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("RomauntAlarmTest","Activity_four onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("RomauntAlarmTest","Activity_four onPause()");
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -65,7 +97,7 @@ public class Activity_four extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_activity_four);
 
-
+        Log.e("RomauntAlarmTest","Activity_four onCreate()");
 
         textView = (TextView)findViewById(R.id.activity_four_tV2);
         textView.setText(userInfo.signature);

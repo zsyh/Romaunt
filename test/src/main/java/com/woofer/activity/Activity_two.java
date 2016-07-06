@@ -44,8 +44,43 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     private String token;
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("RomauntAlarmTest","Activity_two onDestroy()");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("RomauntAlarmTest","Activity_two onStart()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("RomauntAlarmTest","Activity_two onStop()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("RomauntAlarmTest","Activity_two onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("RomauntAlarmTest","Activity_two onPause()");
+    }
+
+
+
+
+    @Override
     protected void initView(Bundle saveInstanceState) {
         setContentView(R.layout.activity_activity_two);
+
+        Log.e("RomauntAlarmTest","Activity_two initView()");
         mRefreshLayout = getViewById(R.id.refreshLayout);
         mDataLV = getViewById(R.id.data);
     }
@@ -112,6 +147,12 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
+
+                    if(! (response instanceof PublicStoryListResponse)) {//
+                        Log.e("Romaunt","初次加载广场故事列表时返回结果非正确，为防止崩溃直接取消初次加载");
+                        return;
+                    }
+
                     final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) response;
                     listLogic = new ArrayList<>();
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
@@ -134,7 +175,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                         listLogic.get(j).sign = userInfoResponse.msg.user.sign;
                                     }
                                 }
-
+                                userInfo.nowPage++;
                             }
 
                             @Override
@@ -291,6 +332,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
                             if (!hasSame) {
                                 mAdapter.clear();
+                                userInfo.nowPage=2;
                             }
 
                             for (int i = 0; i < count; i++) {

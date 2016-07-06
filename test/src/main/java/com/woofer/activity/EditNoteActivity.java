@@ -264,7 +264,11 @@ public class EditNoteActivity extends Activity {
 
 
                 }
-                toMainActivity();
+
+                Intent i = new Intent("com.zaizai1.broadcast.updateLocalStoryList");
+                sendBroadcast(i);
+
+                EditNoteActivity.this.finish();
             }
         });
 
@@ -486,7 +490,8 @@ public class EditNoteActivity extends Activity {
         builder.setTitle("提示");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                        toMainActivity();
+                    dialog.dismiss();
+                    EditNoteActivity.this.finish();
             }
         });
         builder.setNegativeButton("取消",
@@ -499,16 +504,6 @@ public class EditNoteActivity extends Activity {
         /*
         *重写dialog
         */
-    }
-    public void toMainActivity(){
-
-        //从栈中销毁其上的Activity
-        //MainActivity嵌套viewpager这时候应该怎么选择参数合理出栈？
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intent intent = new Intent(EditNoteActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        this.finish();
     }
 
 

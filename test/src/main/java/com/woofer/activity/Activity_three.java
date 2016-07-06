@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
@@ -36,10 +37,45 @@ public class Activity_three extends Activity {
     private ViewPagerAdapter viewPagerAdapter;
     private OnClickListener clickListener;
     private OnPageChangeListener pageChangeListener;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("RomauntAlarmTest","Activity_three onDestroy()");
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("RomauntAlarmTest","Activity_three onStart()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("RomauntAlarmTest","Activity_three onStop()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("RomauntAlarmTest","Activity_three onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("RomauntAlarmTest","Activity_three onPause()");
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_three);
+
+        Log.e("RomauntAlarmTest","Activity_three initView()");
+
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
 
