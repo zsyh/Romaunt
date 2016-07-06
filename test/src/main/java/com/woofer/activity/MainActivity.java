@@ -1,7 +1,10 @@
 package com.woofer.activity;
 
 import android.app.LocalActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import java.util.ArrayList;
@@ -57,10 +60,14 @@ public class MainActivity extends Activity {
 
     public static SharedPreferences.Editor editor;
 
+    private BroadcastReceiver mBroadcastReceiver;
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.e("RomauntAlarmTest","MainActivity onDestroy()");
+        unregisterReceiver(mBroadcastReceiver);
     }
 
     @Override
@@ -96,10 +103,27 @@ public class MainActivity extends Activity {
 
         Log.e("RomauntAlarmTest","MainActivity onCreate()");
 
+
+        //设定定时器的广播接收器
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                //异步拿logintoken
+
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("GetLoginToken");
+        registerReceiver(mBroadcastReceiver, intentFilter);
+
+
         SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         logintoken = sp.getString("LOGINTOKEN","");
-
         Log.e("Romaunt", "LoginToken:" + logintoken);
+        token = sp.getString("TOKEN","");
+        Log.e("Romaunt","token:"+token);
+        userID = sp.getString("USERID", "");
 
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
@@ -107,12 +131,10 @@ public class MainActivity extends Activity {
         vp = (ViewPager) findViewById(R.id.vPager);
 
 
-        token = sp.getString("TOKEN","");
-        Log.e("Romaunt","token:"+token);
-        userID = sp.getString("USERID", "");
+
 
         if(logintoken.equals("")){
-
+            Log.e("Romaunt","本地未存储有LoginToken");
         }else{
 
             //启动新线程！
@@ -249,7 +271,6 @@ public class MainActivity extends Activity {
                 }
             }).start();
 
-            Log.e("LOGINTOKEN", logintoken);
 
 
         }

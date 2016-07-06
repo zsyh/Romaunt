@@ -175,7 +175,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                         listLogic.get(j).sign = userInfoResponse.msg.user.sign;
                                     }
                                 }
-
+                                userInfo.nowPage++;
                             }
 
                             @Override
@@ -332,6 +332,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
                             if (!hasSame) {
                                 mAdapter.clear();
+                                userInfo.nowPage=2;
                             }
 
                             for (int i = 0; i < count; i++) {
