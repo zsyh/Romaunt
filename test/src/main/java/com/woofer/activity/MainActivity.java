@@ -114,9 +114,8 @@ public class MainActivity extends Activity {
             }
         };
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("GetLoginToken");
+        intentFilter.addAction("com.zaizai1.broadcast.getLoginToken");
         registerReceiver(mBroadcastReceiver, intentFilter);
-
 
         SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         logintoken = sp.getString("LOGINTOKEN","");

@@ -264,6 +264,10 @@ public class EditNoteActivity extends Activity {
 
 
                 }
+
+                Intent i = new Intent("com.zaizai1.broadcast.updateLocalStoryList");
+                sendBroadcast(i);
+
                 EditNoteActivity.this.finish();
             }
         });

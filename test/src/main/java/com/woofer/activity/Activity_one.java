@@ -1,7 +1,10 @@
 package com.woofer.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -48,10 +51,13 @@ public class Activity_one extends Activity {
     private AppAdapter madapter;
     private ActivityoneAdapter adapter=null;*/
 
+    private BroadcastReceiver mBroadcastReceiver;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.e("RomauntAlarmTest","Activity_one onDestroy()");
+        unregisterReceiver(mBroadcastReceiver);
     }
 
 
@@ -88,6 +94,22 @@ public class Activity_one extends Activity {
         setContentView(R.layout.activity_activity_one);
 
         Log.e("RomauntAlarmTest","Activity_one onCreate()");
+
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                //更新数据库
+                notedata.refreshNoteData();
+                madapeter.notifyDataSetChanged();
+
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.zaizai1.broadcast.updateLocalStoryList");
+        registerReceiver(mBroadcastReceiver, intentFilter);
+
+
 
         /**新建适配器 绑定数据结构 塞数据没做*/
         databaseManager = new DatabaseManager(this);
