@@ -486,6 +486,7 @@ public class EditNoteActivity extends Activity {
         builder.setTitle("提示");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
                     EditNoteActivity.this.finish();
             }
         });
