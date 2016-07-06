@@ -3,6 +3,7 @@ package com.woofer.activity.userhomepage;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -63,10 +64,6 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
 
         mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
         mDataLV.setAdapter(mAdapter);
-
-        /**赛数据没做！！！！*/
-
-
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
         loginToken = sp.getString("LOGINTOKEN", "");
@@ -75,8 +72,8 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
-                    UserInfoResponse userInfoResponse =(UserInfoResponse)response;
-                    listLogic = new ArrayList<fansinfoModel>();
+                    final UserInfoResponse userInfoResponse =(UserInfoResponse)response;
+                    listLogic = new ArrayList<>();
                     for(int i = 0 ;i <userInfoResponse.msg.following.size();i++){
                         listLogic.add(new fansinfoModel(userInfoResponse.msg.following.get(i).id,userInfoResponse.msg.following.get(i).userName,
                                 userInfoResponse.msg.following.get(i).sign,userInfoResponse.msg.following.get(i).sex,userInfoResponse.msg.
@@ -99,27 +96,80 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         showLoadingDialog();
         RomauntNetWork romauntNetWork = new RomauntNetWork();
-        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-            @Override
-            public void onResponse(Object response) {
+        if(!loginToken.equals("")) {
+            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                @Override
+                public void onResponse(final Object response) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRefreshLayout.endRefreshing();
+                            dismissLoadingDialog();
+                            final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
+                            listNewData = new ArrayList<>();
 
-            }
+                            boolean hassame = false;
+                            int count = userInfoResponse.msg.following.size();
+                            for(int i = 0;i<userInfoResponse.msg.following.size();i++){
+                                if(userInfoResponse.msg.following.get(i).userName.equals(mAdapter.getItem(0).username));
+                                    hassame = true;
+                                    count = count -1;
+                            }
+                            if(!hassame){
+                                mAdapter.clear();
+                            }
+                            for(int i = 0; i<count; i++){
+                                listNewData.add(new fansinfoModel(userInfoResponse.msg.following.get(i).id,userInfoResponse.msg.following.get(i).userName,
+                                        userInfoResponse.msg.following.get(i).sign,userInfoResponse.msg.following.get(i).sex,userInfoResponse.msg.
+                                        following.get(i).avatar));
+                            }
+                        }
+                    });
+                }
 
-            @Override
-            public void onError(Object error) {
-
-            }
-        });
-        romauntNetWork.getUserInfo(loginToken,Integer.toString(userid));
+                @Override
+                public void onError(Object error) {
+                    mRefreshLayout.endRefreshing();
+                }
+            });
+            romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
+        }
     }
 
     private List<fansinfoModel> listMoreData;
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         mMorePageNumber++;
-
         showLoadingDialog();
-        return false;
+
+        RomauntNetWork romauntNetWork = new RomauntNetWork();
+        if(!loginToken.equals("")){
+            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                @Override
+                public void onResponse(Object response) {
+                    final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
+                    listMoreData = new ArrayList<>();
+                    for(int i = 0 ;i <userInfoResponse.msg.following.size();i++) {
+                        listMoreData.add(new fansinfoModel(userInfoResponse.msg.following.get(i).id, userInfoResponse.msg.following.get(i).userName,
+                                userInfoResponse.msg.following.get(i).sign, userInfoResponse.msg.following.get(i).sex, userInfoResponse.msg.
+                                following.get(i).avatar));
+                    }
+
+                }
+
+                @Override
+                public void onError(Object error) {
+                    Log.e("Following", "");
+                    mRefreshLayout.endLoadingMore();
+                }
+            });
+            romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
+        }
+        mRefreshLayout.endLoadingMore();
+        dismissLoadingDialog();
+        mAdapter.addMoreDatas(listMoreData);
+
+        return true;
     }
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {

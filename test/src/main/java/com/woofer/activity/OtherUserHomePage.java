@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.widget.Toast;
 
 
 import com.woofer.activity.userhomepage.FansActivity;
@@ -265,7 +266,7 @@ public class OtherUserHomePage extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(OtherUserHomePage.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OtherUserHomePage.this, "网络无连接", Toast.LENGTH_SHORT).show();
                         }
                     });
                     return ;
