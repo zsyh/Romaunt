@@ -47,10 +47,47 @@ public class Activity_one extends Activity {
     /*private  List<Map<String, Object>> list;
     private AppAdapter madapter;
     private ActivityoneAdapter adapter=null;*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("RomauntAlarmTest","Activity_one onDestroy()");
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("RomauntAlarmTest","Activity_one onStart()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("RomauntAlarmTest","Activity_one onStop()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("RomauntAlarmTest","Activity_one onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("RomauntAlarmTest","Activity_one onPause()");
+    }
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_one);
+
+        Log.e("RomauntAlarmTest","Activity_one onCreate()");
 
         /**新建适配器 绑定数据结构 塞数据没做*/
         databaseManager = new DatabaseManager(this);

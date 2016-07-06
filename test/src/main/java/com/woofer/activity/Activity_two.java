@@ -44,8 +44,43 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     private String token;
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("RomauntAlarmTest","Activity_two onDestroy()");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("RomauntAlarmTest","Activity_two onStart()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("RomauntAlarmTest","Activity_two onStop()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("RomauntAlarmTest","Activity_two onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("RomauntAlarmTest","Activity_two onPause()");
+    }
+
+
+
+
+    @Override
     protected void initView(Bundle saveInstanceState) {
         setContentView(R.layout.activity_activity_two);
+
+        Log.e("RomauntAlarmTest","Activity_two initView()");
         mRefreshLayout = getViewById(R.id.refreshLayout);
         mDataLV = getViewById(R.id.data);
     }
