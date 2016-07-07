@@ -31,12 +31,11 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
     private BGARefreshLayout mRefreshLayout;
     private ListView mDataLV;
     private fansAdapter mAdapter;
-    private int mNewPageNumber = 0;
-    private int mMorePageNumber = 0;
-    private long firstbacktime = 0;
     private String loginToken;
     private String token;
     private  int userid;
+    /**记录当前适listview中item个数 去重 为多步加载做准备*/
+    private int headofadapater = 0;
 
     @Override
     protected void initView(Bundle saveInstanceState) {
@@ -62,11 +61,12 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(mApp, true);
-        stickinessRefreshViewHolder.setStickinessColor(R.color.colorgray);
-        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
+        stickinessRefreshViewHolder.setStickinessColor(R.color.colorwrite);
+        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_00ffffff);
 
         mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
         mDataLV.setAdapter(mAdapter);
+
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
         loginToken = sp.getString("LOGINTOKEN", "");
@@ -82,7 +82,9 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
                         listLogic.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id,userInfoResponse.msg.follower.get(i).userName,
                                 userInfoResponse.msg.follower.get(i).sign,userInfoResponse.msg.follower.get(i).sex,userInfoResponse.msg.
                                 follower.get(i).avatar));
+                        headofadapater++;
                     }
+                    mAdapter.setDatas(listLogic);
                 }
 
                 @Override
@@ -92,7 +94,7 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
             });
             romauntNetWork.getUserInfo(loginToken,Integer.toString(userid));
         }
-        mAdapter.setDatas(listLogic);
+
 
     }
 
@@ -110,8 +112,10 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
     private List<fansinfoModel> listNewData;
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mRefreshLayout.endRefreshing();
         showLoadingDialog();
-        RomauntNetWork romauntNetWork = new RomauntNetWork();
+        dismissLoadingDialog();
+        /*RomauntNetWork romauntNetWork = new RomauntNetWork();
         if(!loginToken.equals("")) {
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
@@ -121,22 +125,23 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
                         public void run() {
                             mRefreshLayout.endRefreshing();
                             dismissLoadingDialog();
-                            final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
+                            final UserInfoResponse userInfoResponse = (UserInfoResponse) response;
                             listNewData = new ArrayList<>();
 
                             boolean hassame = false;
                             int count = userInfoResponse.msg.follower.size();
-                            for(int i = 0;i<userInfoResponse.msg.follower.size();i++){
-                                if(userInfoResponse.msg.follower.get(i).userName.equals(mAdapter.getItem(0).username));
+                            for (int i = 0; i < userInfoResponse.msg.follower.size(); i++) {
+                                if (userInfoResponse.msg.follower.get(i).userName.equals(mAdapter.getItem(0).username))
+                                    ;
                                 hassame = true;
-                                count = count -1;
+                                count = count - 1;
                             }
-                            if(!hassame){
+                            if (!hassame) {
                                 mAdapter.clear();
                             }
-                            for(int i = 0; i<count; i++){
-                                listNewData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id,userInfoResponse.msg.follower.get(i).userName,
-                                        userInfoResponse.msg.follower.get(i).sign,userInfoResponse.msg.follower.get(i).sex,userInfoResponse.msg.
+                            for (int i = 0; i < count; i++) {
+                                listNewData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id, userInfoResponse.msg.follower.get(i).userName,
+                                        userInfoResponse.msg.follower.get(i).sign, userInfoResponse.msg.follower.get(i).sex, userInfoResponse.msg.
                                         follower.get(i).avatar));
                             }
                         }
@@ -149,13 +154,12 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
                 }
             });
             romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
-        }
+        }*/
     }
 
     private List<fansinfoModel> listMoreData;
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        mMorePageNumber++;
         showLoadingDialog();
 
         RomauntNetWork romauntNetWork = new RomauntNetWork();
@@ -163,13 +167,25 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                 @Override
                 public void onResponse(Object response) {
+                    int j;
                     final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
                     listMoreData = new ArrayList<>();
+
                     for(int i = 0 ;i <userInfoResponse.msg.follower.size();i++) {
-                        listMoreData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id, userInfoResponse.msg.follower.get(i).userName,
-                                userInfoResponse.msg.follower.get(i).sign, userInfoResponse.msg.follower.get(i).sex, userInfoResponse.msg.
-                                follower.get(i).avatar));
+                        for(j = 0; j < headofadapater&&!userInfoResponse.msg.follower.get(i).userName
+                                .equals(mAdapter.getItem(j).username); j++){
+
+                        }
+                        if(j==headofadapater){
+                            listMoreData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id, userInfoResponse.msg.follower.get(i).userName,
+                                    userInfoResponse.msg.follower.get(i).sign, userInfoResponse.msg.follower.get(i).sex, userInfoResponse.msg.
+                                    follower.get(i).avatar));
+                        }
+
                     }
+                    mRefreshLayout.endLoadingMore();
+                    dismissLoadingDialog();
+                    mAdapter.addMoreDatas(listMoreData);
 
                 }
 
@@ -181,10 +197,6 @@ public class FansActivity extends BaseActivity implements AdapterView.OnItemClic
             });
             romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
         }
-        mRefreshLayout.endLoadingMore();
-        dismissLoadingDialog();
-        mAdapter.addMoreDatas(listMoreData);
-
         return true;
     }
 

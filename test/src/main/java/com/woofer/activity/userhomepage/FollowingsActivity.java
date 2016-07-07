@@ -42,7 +42,7 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
         mRefreshLayout = (getViewById(R.id.OT_fans_refreshLayout));
         mDataLV = getViewById(R.id.OT_fans_data);
         SharedPreferences sp  = getSharedPreferences("USERID",OtherUserHomePage.MODE_PRIVATE);
-        userid = sp.getInt("USERID",0);
+        userid = sp.getInt("USERID", 0);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(mApp, true);
-        stickinessRefreshViewHolder.setStickinessColor(R.color.colorgray);
-        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
+        stickinessRefreshViewHolder.setStickinessColor(R.color.colorwrite);
+        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_00ffffff);
 
         mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
         mDataLV.setAdapter(mAdapter);
@@ -80,6 +80,7 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
                                 userInfoResponse.msg.following.get(i).sign,userInfoResponse.msg.following.get(i).sex,userInfoResponse.msg.
                                 following.get(i).avatar));
                     }
+                    mAdapter.setDatas(listLogic);
                 }
 
                 @Override
@@ -89,13 +90,16 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
             });
             romauntNetWork.getUserInfo(loginToken,Integer.toString(userid));
         }
-        mAdapter.setDatas(listLogic);
+
     }
 
-    private List<fansinfoModel> listNewData;
+    /*private List<fansinfoModel> listNewData;*/
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mRefreshLayout.endRefreshing();
         showLoadingDialog();
+        dismissLoadingDialog();
+        /*showLoadingDialog();
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         if(!loginToken.equals("")) {
             romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
@@ -134,7 +138,7 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
                 }
             });
             romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
-        }
+        }*/
     }
 
     private List<fansinfoModel> listMoreData;
@@ -155,6 +159,9 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
                                 userInfoResponse.msg.following.get(i).sign, userInfoResponse.msg.following.get(i).sex, userInfoResponse.msg.
                                 following.get(i).avatar));
                     }
+                    mRefreshLayout.endLoadingMore();
+                    dismissLoadingDialog();
+                    mAdapter.addMoreDatas(listMoreData);
 
                 }
 
@@ -166,9 +173,7 @@ public class FollowingsActivity extends BaseActivity implements AdapterView.OnIt
             });
             romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
         }
-        mRefreshLayout.endLoadingMore();
-        dismissLoadingDialog();
-        mAdapter.addMoreDatas(listMoreData);
+
 
         return true;
     }

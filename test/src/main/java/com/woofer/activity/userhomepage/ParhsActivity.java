@@ -29,6 +29,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import woofer.com.test.R;
 public class ParhsActivity extends BaseActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, BGAOnItemChildClickListener, BGAOnItemChildLongClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
     private BGARefreshLayout mRefreshLayout;
@@ -39,6 +40,7 @@ public class ParhsActivity extends BaseActivity implements AdapterView.OnItemCli
     private String token;
     private int userid;
     private int headofadapter = 0;
+
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -295,6 +297,7 @@ public class ParhsActivity extends BaseActivity implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
+
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

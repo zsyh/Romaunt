@@ -5,7 +5,9 @@
     <color name="colorPrimaryDark">#22A99A</color>
     <color name="colorAccent">#22A99A</color>
     <color name="zangqing">#198E7B</color>
-    <color name="colorwrite">#FFFFFF</color>
+    <color name="colorwrite">#00FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#DBDBDB</color>
     <color name="colorgray">#97A2A8</color>
     <color name="colorbule">#145895</color>
     <color name="colororange">#FC8737</color>

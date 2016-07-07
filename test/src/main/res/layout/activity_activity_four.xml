@@ -167,57 +167,55 @@
         android:layout_below="@id/activity_four_Rel2"
         android:id="@+id/activity_four_tV1"
         />
-<!--
 <com.woofer.ui.imagetextimage
-    android:layout_marginTop="2dp"
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:layout_below="@id/activity_four_Rel2"
 
     android:id="@+id/act_four_tit_one"
     ></com.woofer.ui.imagetextimage>
+
     <com.woofer.ui.imagetextimage
-        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/act_four_tit_one"
 
         android:id="@+id/act_four_tit_two"
         ></com.woofer.ui.imagetextimage>
+
     <com.woofer.ui.imagetextimage
-        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/act_four_tit_two"
 
         android:id="@+id/act_four_tit_three"
         ></com.woofer.ui.imagetextimage>
+
     <com.woofer.ui.imagetextimage
-        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/act_four_tit_three"
 
         android:id="@+id/act_four_tit_four"
         ></com.woofer.ui.imagetextimage>
+
     <com.woofer.ui.imagetextimage
-        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/act_four_tit_four"
 
         android:id="@+id/act_four_tit_five"
         ></com.woofer.ui.imagetextimage>
+
     <com.woofer.ui.imagetextimage
-        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/act_four_tit_five"
 
         android:id="@+id/act_four_tit_six"
-        ></com.woofer.ui.imagetextimage>-->
+        ></com.woofer.ui.imagetextimage>
 
-    <WebView
+    <!--<WebView
 
         android:layout_below="@id/activity_four_Rel2"
         android:layout_width="match_parent"
@@ -225,6 +223,6 @@
         android:id="@+id/webView"
         >
 
-    </WebView>
+    </WebView>-->
 
 </RelativeLayout>
