@@ -14,12 +14,12 @@ import java.util.Map;
 import woofer.com.test.R;
 
 /**activity_two适配器*/
-public class ActivitytwoAdapter extends BaseAdapter {
+public class ActivitymyhomepageAdapter extends BaseAdapter {
 
 	private List<Map<String, Object>> data;
 	private LayoutInflater layoutInflater;
 	private Context context;
-	public ActivitytwoAdapter(Context context, List<Map<String, Object>> data){
+	public ActivitymyhomepageAdapter(Context context, List<Map<String, Object>> data){
 		this.context=context;
 		this.data=data;
 		this.layoutInflater=LayoutInflater.from(context);

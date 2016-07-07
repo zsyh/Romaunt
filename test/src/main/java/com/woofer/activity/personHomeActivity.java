@@ -39,7 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.woofer.adapter.ActivitytwoAdapter;
+import com.woofer.adapter.ActivitymyhomepageAdapter;
+
 import woofer.com.test.R;
 
 public class personHomeActivity extends Activity implements PullScrollView.OnTurnListener {
@@ -70,7 +71,7 @@ public class personHomeActivity extends Activity implements PullScrollView.OnTur
         listView=(ListView)findViewById(R.id.degitalifo_lv);
         listView.setDivider(null);
         List<Map<String, Object>> list=getData();
-        listView.setAdapter(new ActivitytwoAdapter(this, list));
+        listView.setAdapter(new ActivitymyhomepageAdapter(this, list));
 
 
         //透明状态栏

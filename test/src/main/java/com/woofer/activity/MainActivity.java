@@ -123,6 +123,7 @@ public class MainActivity extends Activity {
         token = sp.getString("TOKEN","");
         Log.e("Romaunt","token:"+token);
         userID = sp.getString("USERID", "");
+        Log.e("USERID",userID);
 
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
@@ -141,7 +142,8 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
 
-                    final RomauntNetWork romauntNetWork = new RomauntNetWork();
+                    final RomauntNetWork romauntNetWork = new RomauntNetWork()
+                            ;
 
                     Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
                     if(response==null){

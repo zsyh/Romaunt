@@ -19,14 +19,15 @@
         android:layout_height="16dp"
         android:layout_alignBottom="@id/OT_fans_avater"
         android:layout_alignRight="@id/OT_fans_avater"
-        android:src="@drawable/img_male_my"/>
+        android:src="@drawable/img_male_my"
+
+        android:id="@+id/OT_fans_seximg"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/OT_fans_avater"
         android:layout_alignTop="@id/OT_fans_avater"
-        android:text="Helen"
         android:textSize="16dp"
         android:textColor="#000000"
         android:id="@+id/OT_fans_UserName"
@@ -35,7 +36,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Are you OK?"
         android:layout_alignLeft="@id/OT_fans_UserName"
         android:layout_alignBottom="@id/OT_fans_avater"
 

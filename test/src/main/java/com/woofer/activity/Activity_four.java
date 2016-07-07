@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.woofer.net.RomauntNetWork;
 import com.woofer.refreshlayout.util.Utils;
+import com.woofer.ui.imagetextimage;
 import com.woofer.userInfo;
 
 import java.net.MalformedURLException;
@@ -44,6 +46,12 @@ public class Activity_four extends Activity {
     private String loginToken;
     private String token;
 
+    private imagetextimage img1;
+    private imagetextimage img2;
+    private imagetextimage img3;
+    private imagetextimage img4;
+    private imagetextimage img5;
+    private imagetextimage img6;
 
 
     private String username;
@@ -97,7 +105,7 @@ public class Activity_four extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_activity_four);
 
-        Log.e("RomauntAlarmTest","Activity_four onCreate()");
+        Log.e("RomauntAlarmTest", "Activity_four onCreate()");
 
         textView = (TextView)findViewById(R.id.activity_four_tV2);
         textView.setText(userInfo.signature);
@@ -105,7 +113,98 @@ public class Activity_four extends Activity {
         tvfollower = (TextView)findViewById(R.id.act_four_followerNUM);
         tvfollinger = (TextView)findViewById(R.id.act_four_followingNUM);
 
-        webView = (WebView) findViewById(R.id.webView);
+        img1 = (imagetextimage)findViewById(R.id.act_four_tit_one);
+        img2 = (imagetextimage)findViewById(R.id.act_four_tit_two);
+        img3 = (imagetextimage)findViewById(R.id.act_four_tit_three);
+        img4 = (imagetextimage)findViewById(R.id.act_four_tit_four);
+        img5 = (imagetextimage)findViewById(R.id.act_four_tit_five);
+        img6 = (imagetextimage)findViewById(R.id.act_four_tit_six);
+
+
+    /*private class WebViewClientDemo extends WebViewClient {
+        @Override
+        // 在WebView中而不是默认浏览器中显示页面
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.trim().equals("https://www.config.com/")) {
+                Intent intent = new Intent(Activity_four.this, configActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                *//**不要对Activity进行finish操作 留在栈中*//*
+            } else if(url.trim().equals("https://www.aboutus.com/")){
+                Intent intent = new Intent(Activity_four.this, aboutusActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }else if(url.trim().equals("https://www.user_info.com/")){
+                Intent intent = new Intent(Activity_four.this, UserInfoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }else if(url.trim().equals("https://www.myhomepage.com/")){
+                Intent intent = new Intent(Activity_four.this, personHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }else{
+                webView.loadUrl("file:///android_asset/svg.html");
+                //view.loadUrl(url);
+            }
+
+            return true;
+        }
+    }*/
+
+        View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.act_four_tit_one:
+                        Intent intent = new Intent(Activity_four.this, personHomeActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.act_four_tit_two:
+                        intent = new Intent(Activity_four.this, UserInfoActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.act_four_tit_three:
+                        intent = new Intent(Activity_four.this, aboutusActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.act_four_tit_four:
+
+                        break;
+                    case R.id.act_four_tit_five:
+                        break;
+                    case R.id.act_four_tit_six:
+                        intent = new Intent(Activity_four.this, configActivity.class);
+                        startActivity(intent);
+                        break;
+
+
+                }
+            }
+        };
+        img1.setOnClickListener(clickListener);
+        img2.setOnClickListener(clickListener);
+        img3.setOnClickListener(clickListener);
+        img4.setOnClickListener(clickListener);
+        img5.setOnClickListener(clickListener);
+        img6.setOnClickListener(clickListener);
+        img1.setImage(R.drawable.icon_my_homepage);
+        img1.setText("我的主页");
+        img2.setImage(R.drawable.img_defaultavatar);
+        img2.setText("个人资料");
+
+        img3.setText("关于");
+        img3.setImage(R.drawable.about);
+        img4.setText("收藏");
+        img4.setImage(R.drawable.icon_collection);
+        img5.setText("作品");
+        img5.setImage(R.drawable.icon_open_book);
+        img6.setText("设置与登出");
+        img6.setImage(R.drawable.icon_setup);
+
+
+
+
+        /*webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         try {
             webView.loadUrl("file:///android_asset/miaov_demo.html");
@@ -113,16 +212,16 @@ public class Activity_four extends Activity {
             e.printStackTrace();
         }
         webView.setVerticalScrollBarEnabled(false);
-        webView.setHorizontalScrollBarEnabled(false);
+        webView.setHorizontalScrollBarEnabled(false);*/
         //webView.getSettings().setUseWideViewPort(true);
         //webView.getSettings().setLoadWithOverviewMode(true);
         //webView.getSettings().setBuiltInZoomControls(true); //显示放大缩小
         //webView.getSettings().setSupportZoom(true); //可以缩放
         //webView.getSettings().setDefaultZoom(ZoomDensity.MEDIUM);//默认缩放模式
         //webView.setInitialScale(1000);
-        webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
-        /**设置webview监听事件，监听URL*/
-        webView.setWebViewClient(new WebViewClientDemo());
+        /*webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+        *//**设置webview监听事件，监听URL*//*
+        webView.setWebViewClient(new WebViewClientDemo());*/
         btn1=(Button)findViewById(R.id.activity_four_btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,35 +318,6 @@ public class Activity_four extends Activity {
 */
 
 
-    private class WebViewClientDemo extends WebViewClient {
-        @Override
-        // 在WebView中而不是默认浏览器中显示页面
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.trim().equals("https://www.config.com/")) {
-                Intent intent = new Intent(Activity_four.this, configActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                /**不要对Activity进行finish操作 留在栈中*/
-            } else if(url.trim().equals("https://www.aboutus.com/")){
-                Intent intent = new Intent(Activity_four.this, aboutusActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }else if(url.trim().equals("https://www.user_info.com/")){
-                Intent intent = new Intent(Activity_four.this, UserInfoActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }else if(url.trim().equals("https://www.myhomepage.com/")){
-                Intent intent = new Intent(Activity_four.this, personHomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }else{
-                webView.loadUrl("file:///android_asset/svg.html");
-                //view.loadUrl(url);
-            }
-
-            return true;
-        }
-    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (webView.canGoBack()&& (keyCode == KeyEvent.KEYCODE_BACK) ) {

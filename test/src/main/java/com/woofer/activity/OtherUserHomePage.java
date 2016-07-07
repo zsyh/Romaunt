@@ -19,13 +19,22 @@ import android.widget.Toast;
 import com.woofer.activity.userhomepage.FansActivity;
 import com.woofer.activity.userhomepage.FollowingsActivity;
 import com.woofer.activity.userhomepage.ParhsActivity;
+import com.woofer.adapter.OtherUserHomePageTransfer;
 import com.woofer.adapter.ViewPagerAdapter;
+import com.woofer.net.GetStoryResponse;
+import com.woofer.net.PersonStoryListResponse;
 import com.woofer.net.RomauntNetWork;
+import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
+import com.woofer.refreshlayout.model.ParhsModel;
 import com.woofer.titlebar.TitleBar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import woofer.com.test.R;
 
@@ -62,14 +71,19 @@ public class OtherUserHomePage extends Activity {
     public static SharedPreferences.Editor editor;
 
 
+    public static OtherUserHomePageTransfer otherUserHomePageTransfer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user_home_page);
+
+        otherUserHomePageTransfer=new OtherUserHomePageTransfer();
+        otherUserHomePageTransfer.followingList=new ArrayList<>();
+        otherUserHomePageTransfer.fansList=new ArrayList<>();
+        otherUserHomePageTransfer.parhsList=new ArrayList<>();
+
         Intent intent = getIntent();
-
-
-
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
 
@@ -114,6 +128,8 @@ public class OtherUserHomePage extends Activity {
                 OtherUserHomePage.this.finish();
             }
         });
+
+
 
     }
     protected void InitView() {
@@ -170,9 +186,11 @@ public class OtherUserHomePage extends Activity {
         tv2.setOnClickListener(clickListener);
         tv3.setOnClickListener(clickListener);
         InitPager();
+
+
         getuserInfo();
-        followings.setText(Integer.toString(followinsNUM));
-        fans.setText(Integer.toString(fansNUM));
+        getParas();
+
     }
 
     private void InitPager(){
@@ -260,7 +278,7 @@ public class OtherUserHomePage extends Activity {
     }
     private void getuserInfo(){
         //启动新线程！
-        new Thread(new Runnable() {
+          new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -281,9 +299,44 @@ public class OtherUserHomePage extends Activity {
                     if(userInfoResponse.msg.following!=null){
                         followinsNUM = userInfoResponse.msg.following.size();
                         fansNUM = userInfoResponse.msg.follower.size();
+                        Log.e("followinsNUM",Integer.toString(followinsNUM));
+
+                        for(int i = 0 ; i < fansNUM ; i++){
+                            Map<String, Object> map=new HashMap<String, Object>();
+                            map.put("image",  R.drawable.img_warning);
+                            map.put("image1", R.drawable.img_warning);
+                            map.put("textView", userInfoResponse.msg.follower.get(i).userName);
+                            map.put("textView1", userInfoResponse.msg.follower.get(i).sign);
+                            otherUserHomePageTransfer.fansList.add(map);
+                        }
+
+                        Intent i1 = new Intent("com.zaizai1.broadcast.notifyFansGot");
+                        sendBroadcast(i1);
+
+                        for(int i = 0 ; i < followinsNUM ; i++){
+                            Map<String, Object> map=new HashMap<String, Object>();
+                            map.put("image",  R.drawable.img_warning);
+                            map.put("image1", R.drawable.img_warning);
+                            map.put("textView", userInfoResponse.msg.following.get(i).userName);
+                            map.put("textView1", userInfoResponse.msg.following.get(i).sign);
+                            otherUserHomePageTransfer.followingList.add(map);
+                        }
+
+                        Intent i2 = new Intent("com.zaizai1.broadcast.notifyFollowingsGot");
+                        sendBroadcast(i2);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                followings.setText(Integer.toString(followinsNUM));
+                                fans.setText(Integer.toString(fansNUM));
+                            }
+                        });
+
                     }else{
                         followinsNUM = 0;
                         fansNUM  = 0;
+                        Log.e("followinsNUM",Integer.toString(followinsNUM));
                     }
 
                     String username = userInfoResponse.msg.user.userName;
@@ -298,5 +351,94 @@ public class OtherUserHomePage extends Activity {
 
             }
         }).start();
+    }
+
+
+
+
+
+
+
+    public void getParas(){
+
+
+
+        RomauntNetWork romauntNetWork = new RomauntNetWork();
+        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+        final String loginToken= sp.getString("LOGINTOKEN", "");
+
+        SharedPreferences sp1 = getSharedPreferences("USERID", OtherUserHomePage.MODE_PRIVATE);
+        final int userid = sp1.getInt("USERID", 0);
+
+
+        if (!loginToken.equals("")) {
+            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                @Override
+                public void onResponse(Object response) {
+                    final PersonStoryListResponse personStoryListResponse = (PersonStoryListResponse) response;
+                    for (int i = 0; i < personStoryListResponse.msg.stories.size(); i++) {
+                        otherUserHomePageTransfer.parhsList.add(new ParhsModel(
+                                personStoryListResponse.msg.stories.get(i).flags,
+                                personStoryListResponse.msg.stories.get(i).title,
+                                datetotime(personStoryListResponse.msg.stories.get(i).createdAt),
+                                0,
+                                personStoryListResponse.msg.stories.get(i).content,
+                                personStoryListResponse.msg.stories.get(i).id));
+                        Log.e("listLogic", personStoryListResponse.msg.stories.get(i).content);
+                    }
+                    for (int i = 0; i < personStoryListResponse.msg.stories.size(); i++) {
+                        RomauntNetWork romauntNetWork1 = new RomauntNetWork();
+                        romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                            @Override
+                            public void onResponse(Object response) {
+                                final GetStoryResponse storyResponse = (GetStoryResponse) response;
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        parhs.setText(Integer.toString(otherUserHomePageTransfer.parhsList.size()));
+                                    }
+                                });
+
+                                for (int j = 0; j < otherUserHomePageTransfer.parhsList.size(); j++) {
+                                    /**比较之前的结果和刷新*/
+                                    if (otherUserHomePageTransfer.parhsList.get(j).storyid.equals(storyResponse.msg.story.id)) {
+                                        otherUserHomePageTransfer.parhsList.get(j).thumbNUM = storyResponse.msg.likeCount;
+                                    }
+                                }
+                                //数据加载完毕，发送广播通知子activity去获取数据
+                                Intent i = new Intent("com.zaizai1.broadcast.notifyParasGot");
+                                sendBroadcast(i);
+                            }
+
+                            @Override
+                            public void onError(Object error) {
+
+                            }
+                        });
+                        romauntNetWork1.getStory(loginToken, personStoryListResponse.msg.stories.get(i).id, Integer.toString(userid));
+                    }
+
+
+                }
+
+                @Override
+                public void onError(Object error) {
+
+                }
+            });
+            romauntNetWork.getPersonStoryList(loginToken, Integer.toString(userid), "1", "100");
+        }
+
+
+
+    }
+
+
+    private String datetotime(String time){
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyyMMdd HH:mm");
+        long lcc = Long.valueOf(time);
+        int i = Integer.parseInt(time);
+        String times = sdr.format(new Date(i * 1000L));
+        return times;
     }
 }

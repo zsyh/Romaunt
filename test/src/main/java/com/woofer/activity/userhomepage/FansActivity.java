@@ -1,25 +1,34 @@
 package com.woofer.activity.userhomepage;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.woofer.activity.BaseActivity;
 import com.woofer.activity.OtherUserHomePage;
 import com.woofer.activity.signinActivity;
+import com.woofer.adapter.ParasAdapter;
+import com.woofer.adapter.fansAdapter;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
-import com.woofer.refreshlayout.adapter.fansAdapter;
+import com.woofer.refreshlayout.model.ParhsModel;
 import com.woofer.refreshlayout.model.fansinfoModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
@@ -27,184 +36,52 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
 import woofer.com.test.R;
 
-public class FansActivity extends BaseActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, BGAOnItemChildClickListener, BGAOnItemChildLongClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
-    private BGARefreshLayout mRefreshLayout;
+
+public class FansActivity extends Activity{
     private ListView mDataLV;
-    private fansAdapter mAdapter;
-    private int mNewPageNumber = 0;
-    private int mMorePageNumber = 0;
-    private long firstbacktime = 0;
-    private String loginToken;
-    private String token;
-    private  int userid;
+    private List<Map<String,Object>> dataList;
+    /**记录当前适listview中item个数 去重 为多步加载做准备*/
+
+    private BroadcastReceiver mBroadcastReceiver;
 
     @Override
-    protected void initView(Bundle saveInstanceState) {
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    @Override
+    protected void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_fans);
-        mRefreshLayout = getViewById(R.id.refreshLayout);
-        mDataLV = getViewById(R.id.data);
-        SharedPreferences sp  = getSharedPreferences("USERID",OtherUserHomePage.MODE_PRIVATE);
-        userid = sp.getInt("USERID", 0);
-    }
+        mDataLV = (ListView)findViewById(R.id.data);
 
-    @Override
-    protected void setListener() {
-        mRefreshLayout.setDelegate(this);
 
-        mDataLV.setOnItemClickListener(this);
 
-        mAdapter = new fansAdapter(this);
-        mAdapter.setOnItemChildClickListener(this);
-        mAdapter.setOnItemChildLongClickListener(this);
-    }
+        //List<Map<String,Object>> list = getData();
 
-    private List<fansinfoModel> listLogic;
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
-        BGAStickinessRefreshViewHolder stickinessRefreshViewHolder = new BGAStickinessRefreshViewHolder(mApp, true);
-        stickinessRefreshViewHolder.setStickinessColor(R.color.colorgray);
-        stickinessRefreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
 
-        mRefreshLayout.setRefreshViewHolder(stickinessRefreshViewHolder);
-        mDataLV.setAdapter(mAdapter);
-        RomauntNetWork romauntNetWork = new RomauntNetWork();
-        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
-        loginToken = sp.getString("LOGINTOKEN", "");
-        token = sp.getString("TOKEN", "");
+       // mDataLV.setAdapter(new fansAdapter(this , list));
 
-        if(!loginToken.equals("")){
-            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                @Override
-                public void onResponse(Object response) {
-                    final UserInfoResponse userInfoResponse =(UserInfoResponse)response;
-                    listLogic = new ArrayList<>();
-                    for(int i = 0 ;i <userInfoResponse.msg.follower.size();i++){
-                        listLogic.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id,userInfoResponse.msg.follower.get(i).userName,
-                                userInfoResponse.msg.follower.get(i).sign,userInfoResponse.msg.follower.get(i).sex,userInfoResponse.msg.
-                                follower.get(i).avatar));
-                    }
-                }
+        //透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //透明导航栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
-                @Override
-                public void onError(Object error) {
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
 
-                }
-            });
-            romauntNetWork.getUserInfo(loginToken,Integer.toString(userid));
-        }
-        mAdapter.setDatas(listLogic);
+                dataList= OtherUserHomePage.otherUserHomePageTransfer.fansList;
+                mDataLV.setAdapter(new fansAdapter(FansActivity.this,dataList));
+
+               // unregisterReceiver(mBroadcastReceiver);
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.zaizai1.broadcast.notifyFansGot");
+        registerReceiver(mBroadcastReceiver, intentFilter);
 
     }
 
-
-    @Override
-    public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
-
-    }
-
-    @Override
-    public boolean onItemChildLongClick(ViewGroup viewGroup, View view, int i) {
-        return false;
-    }
-
-    private List<fansinfoModel> listNewData;
-    @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        showLoadingDialog();
-        RomauntNetWork romauntNetWork = new RomauntNetWork();
-        if(!loginToken.equals("")) {
-            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                @Override
-                public void onResponse(final Object response) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mRefreshLayout.endRefreshing();
-                            dismissLoadingDialog();
-                            final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
-                            listNewData = new ArrayList<>();
-
-                            boolean hassame = false;
-                            int count = userInfoResponse.msg.follower.size();
-                            for(int i = 0;i<userInfoResponse.msg.follower.size();i++){
-                                if(userInfoResponse.msg.follower.get(i).userName.equals(mAdapter.getItem(0).username));
-                                hassame = true;
-                                count = count -1;
-                            }
-                            if(!hassame){
-                                mAdapter.clear();
-                            }
-                            for(int i = 0; i<count; i++){
-                                listNewData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id,userInfoResponse.msg.follower.get(i).userName,
-                                        userInfoResponse.msg.follower.get(i).sign,userInfoResponse.msg.follower.get(i).sex,userInfoResponse.msg.
-                                        follower.get(i).avatar));
-                            }
-                        }
-                    });
-                }
-
-                @Override
-                public void onError(Object error) {
-                    mRefreshLayout.endRefreshing();
-                }
-            });
-            romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
-        }
-    }
-
-    private List<fansinfoModel> listMoreData;
-    @Override
-    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        mMorePageNumber++;
-        showLoadingDialog();
-
-        RomauntNetWork romauntNetWork = new RomauntNetWork();
-        if(!loginToken.equals("")){
-            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                @Override
-                public void onResponse(Object response) {
-                    final UserInfoResponse userInfoResponse = (UserInfoResponse)response;
-                    listMoreData = new ArrayList<>();
-                    for(int i = 0 ;i <userInfoResponse.msg.follower.size();i++) {
-                        listMoreData.add(new fansinfoModel(userInfoResponse.msg.follower.get(i).id, userInfoResponse.msg.follower.get(i).userName,
-                                userInfoResponse.msg.follower.get(i).sign, userInfoResponse.msg.follower.get(i).sex, userInfoResponse.msg.
-                                follower.get(i).avatar));
-                    }
-
-                }
-
-                @Override
-                public void onError(Object error) {
-                    Log.e("fans", "");
-                    mRefreshLayout.endLoadingMore();
-                }
-            });
-            romauntNetWork.getUserInfo(loginToken, Integer.toString(userid));
-        }
-        mRefreshLayout.endLoadingMore();
-        dismissLoadingDialog();
-        mAdapter.addMoreDatas(listMoreData);
-
-        return true;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-
-        String LoginToken = sp.getString("LOGINTOKEN", "");
-        Intent intent1 = new Intent(FansActivity.this, OtherUserHomePage.class);
-        intent1.putExtra("LoginToken", LoginToken);
-        intent1.putExtra("UserID", mAdapter.getItem(position).userID);
-        intent1.putExtra("Avater", mAdapter.getItem(position).avater);
-        intent1.putExtra("Sign", mAdapter.getItem(position).sign);
-        intent1.putExtra("Username", mAdapter.getItem(position).username);
-        intent1.putExtra("Sex", mAdapter.getItem(position).sex);
-        startActivity(intent1);
-    }
-
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
-    }
 }
