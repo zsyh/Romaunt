@@ -1090,4 +1090,71 @@ public class RomauntNetWork {
         }
 
     }
+
+
+    public void updateUserInfo(String LoginToken,String userName, String avatar,String sign,String sex,
+                               String updateNotice,String noticeEnable,String followingEnable,String followerEnable,String aboutNotice) {
+        String url = "http://139.129.131.240:3000/api/token/userinfo/update";
+
+
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addHeader("LoginToken", LoginToken)
+                .addParams("userName", userName)
+                .addParams("avatar", avatar)
+                .addParams("sign", sign)
+                .addParams("sex", sex)
+                .addParams("updateNotice", updateNotice)
+                .addParams("noticeEnable", noticeEnable)
+                .addParams("followingEnable", followingEnable)
+                .addParams("followerEnable", followerEnable)
+                .addParams("aboutNotice", aboutNotice)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        Log.e("NetWorkTest", "Error:" + e.getMessage());
+
+                        if (romauntNetworkCallback != null) {
+                            romauntNetworkCallback.onError(e);
+                        }
+
+                    }
+
+                    @Override
+                    public void onResponse(String s) {
+                        Log.e("NetWorkTest", "onResponse:" + s);
+
+                        Boolean status = StatusRecognize.getStatus(s);
+                        Gson gson = new Gson();
+
+                        if (status == true) {
+                            java.lang.reflect.Type type = new TypeToken<UserInfoResponse>() {
+                            }.getType();
+                            UserInfoResponse userInfoResponse = gson.fromJson(s, type);
+
+                            if (romauntNetworkCallback != null) {
+                                romauntNetworkCallback.onResponse(userInfoResponse);
+                            }
+
+                        } else {
+                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {
+                            }.getType();
+                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+
+                            if (romauntNetworkCallback != null) {
+                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                            }
+
+                        }
+
+                    }
+                });
+
+
+    }
+
+
+
 }
