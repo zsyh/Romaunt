@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,16 +17,12 @@ import android.widget.Toast;
 
 
 import com.woofer.activity.userhomepage.FansActivity;
-import com.woofer.activity.userhomepage.FollowersActivity;
+import com.woofer.activity.userhomepage.FollowingsActivity;
 import com.woofer.activity.userhomepage.ParhsActivity;
 import com.woofer.adapter.ViewPagerAdapter;
-import com.woofer.net.LoginResponse;
 import com.woofer.net.RomauntNetWork;
-import com.woofer.net.RomauntNetworkCallback;
-import com.woofer.net.StatusFalseResponse;
 import com.woofer.net.UserInfoResponse;
 import com.woofer.titlebar.TitleBar;
-import com.woofer.userInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +30,11 @@ import java.util.List;
 import woofer.com.test.R;
 
 public class OtherUserHomePage extends Activity {
-    private TextView fans,followers ,parhs;
+    private TextView fans, followings,parhs;
     private TextView tv1 ,tv2 ,tv3;
     private ViewPager vp;
     private TitleBar titleBar;
+
 
     private String LoginToken;
     private int UserId;
@@ -46,11 +42,24 @@ public class OtherUserHomePage extends Activity {
     private TextView UserName;
     private ImageView imgsex;
     private TextView sign;
+    private TextView InformTitle;
+
+    private TextView Toptv1;
+    private TextView Toptv2;
+    private TextView Toptv3;
+    private TextView buttomtv;
+
+    private int followinsNUM;
+    private int fansNUM;
+    private int prahsNUM;
 
     private LocalActivityManager manager;
     private ViewPagerAdapter viewPageAdapter;
     private OnClickListener clickListener;
     private OnPageChangeListener pageChangeListener;
+
+    private SharedPreferences sp;
+    public static SharedPreferences.Editor editor;
 
 
     @Override
@@ -59,6 +68,8 @@ public class OtherUserHomePage extends Activity {
         setContentView(R.layout.activity_other_user_home_page);
         Intent intent = getIntent();
 
+
+
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
 
@@ -66,6 +77,11 @@ public class OtherUserHomePage extends Activity {
 
         String Id = intent.getStringExtra("ID");
         UserId = intent.getIntExtra("UserID", 0);
+
+        sp = this.getSharedPreferences("USERID", OtherUserHomePage.MODE_WORLD_READABLE);
+        editor = sp.edit();
+        editor.putInt("USERID", UserId);
+        editor.apply();
         LoginToken = intent.getStringExtra("LoginToken");
 
 
@@ -102,12 +118,21 @@ public class OtherUserHomePage extends Activity {
     }
     protected void InitView() {
         // TODO Auto-generated method stub
+        InformTitle = (TextView)findViewById(R.id.OT_home_item);
         tv1 = (TextView)findViewById(R.id.OT_home_tv1);
         tv2 = (TextView)findViewById(R.id.OT_home_tv2);
         tv3 = (TextView)findViewById(R.id.OT_home_tv3);
+        buttomtv = (TextView)findViewById(R.id.OT_home_item);
+        buttomtv.setText("粉丝");
+        Toptv1 = (TextView)findViewById(R.id.OT_home_fans);
+        Toptv2 = (TextView)findViewById(R.id.OT_home_following);
+        Toptv3 = (TextView)findViewById(R.id.OT_home_parhs);
         fans = (TextView) findViewById(R.id.OT_home_tv_fans);
-        followers = (TextView) findViewById(R.id.OT_home_tv_following);
+        followings = (TextView) findViewById(R.id.OT_home_tv_following);
         parhs = (TextView) findViewById(R.id.OT_home_tv_parhs);
+        fans.setTextColor(Color.rgb(25, 142, 123));
+        tv1.setBackgroundColor(Color.rgb(25, 142, 123));
+        Toptv1.setTextColor(Color.rgb(25, 142, 123));
         clickListener = new View.OnClickListener() {
 
             @Override
@@ -139,13 +164,15 @@ public class OtherUserHomePage extends Activity {
             }
         };
         fans.setOnClickListener(clickListener);
-        followers.setOnClickListener(clickListener);
+        followings.setOnClickListener(clickListener);
         parhs.setOnClickListener(clickListener);
         tv1.setOnClickListener(clickListener);
         tv2.setOnClickListener(clickListener);
         tv3.setOnClickListener(clickListener);
         InitPager();
         getuserInfo();
+        followings.setText(Integer.toString(followinsNUM));
+        fans.setText(Integer.toString(fansNUM));
     }
 
     private void InitPager(){
@@ -159,16 +186,38 @@ public class OtherUserHomePage extends Activity {
             public void onPageSelected(int position) {
                 switch (position){
                     case 0:
-                        tv1.setBackgroundColor(Color.rgb(25,142,123));
-                        tv2.setBackgroundColor(Color.rgb(255,255,255));
+                        Toptv1.setTextColor(Color.rgb(25, 142, 123));
+                        Toptv2.setTextColor(Color.rgb(139, 139, 139));
+                        Toptv3.setTextColor(Color.rgb(139, 139, 139));
+                        fans.setTextColor(Color.rgb(25, 142, 123));
+                        buttomtv.setText("粉丝");
+                        tv1.setBackgroundColor(Color.rgb(25, 142, 123));
+                        followings.setTextColor(Color.rgb(139, 139, 139));
+                        tv2.setBackgroundColor(Color.rgb(255, 255, 255));
+                        parhs.setTextColor(Color.rgb(139, 139, 139));
                         tv3.setBackgroundColor(Color.rgb(255,255,255));
                         break;
                     case 1:
-                        tv2.setBackgroundColor(Color.rgb(25,142,123));
-                        tv3.setBackgroundColor(Color.rgb(255,255,255));
-                        tv1.setBackgroundColor(Color.rgb(255,255,255));
+                        Toptv1.setTextColor(Color.rgb(139, 139, 139));
+                        Toptv2.setTextColor(Color.rgb(25, 142, 123));
+                        Toptv3.setTextColor(Color.rgb(139, 139, 139));
+                        fans.setTextColor(Color.rgb(139, 139, 139));
+                        buttomtv.setText("关注");
+                        tv1.setBackgroundColor(Color.rgb(255, 255, 255));
+                        followings.setTextColor(Color.rgb(25, 142, 123));
+                        tv2.setBackgroundColor(Color.rgb(25, 142, 123));
+                        tv3.setBackgroundColor(Color.rgb(255, 255, 255));
+                        parhs.setTextColor(Color.rgb(139, 139, 139));
+
                         break;
                     case 2:
+                        Toptv1.setTextColor(Color.rgb(139, 139, 139));
+                        Toptv2.setTextColor(Color.rgb(139, 139, 139));
+                        Toptv3.setTextColor(Color.rgb(25, 142, 123));
+                        parhs.setTextColor(Color.rgb(25, 142, 123));
+                        followings.setTextColor(Color.rgb(139, 139, 139));
+                        fans.setTextColor(Color.rgb(139, 139, 139));
+                        buttomtv.setText("文章");
                         tv3.setBackgroundColor(Color.rgb(25,142,123));
                         tv2.setBackgroundColor(Color.rgb(255,255,255));
                         tv1.setBackgroundColor(Color.rgb(255,255,255));
@@ -193,7 +242,7 @@ public class OtherUserHomePage extends Activity {
         intent.putExtra("id", 1);
         mViews.add(getView("QualityActivity1", intent));
 
-        intent.setClass(this, FollowersActivity.class);
+        intent.setClass(this, FollowingsActivity.class);
         intent.putExtra("id", 2);
         mViews.add(getView("QualityActivity2", intent));
 
@@ -210,7 +259,6 @@ public class OtherUserHomePage extends Activity {
 
     }
     private void getuserInfo(){
-
         //启动新线程！
         new Thread(new Runnable() {
             @Override
@@ -223,16 +271,24 @@ public class OtherUserHomePage extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(OtherUserHomePage.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OtherUserHomePage.this, "网络无连接", Toast.LENGTH_SHORT).show();
                         }
                     });
                     return ;
                 }
                 if (response instanceof UserInfoResponse) {
-                    UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                    final UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                    if(userInfoResponse.msg.following!=null){
+                        followinsNUM = userInfoResponse.msg.following.size();
+                        fansNUM = userInfoResponse.msg.follower.size();
+                    }else{
+                        followinsNUM = 0;
+                        fansNUM  = 0;
+                    }
 
                     String username = userInfoResponse.msg.user.userName;
                     int sex = userInfoResponse.msg.user.sex;
+
                 }
                 else
                 {
@@ -242,6 +298,5 @@ public class OtherUserHomePage extends Activity {
 
             }
         }).start();
-
     }
 }

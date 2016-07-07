@@ -61,17 +61,17 @@ public class storydegitalActivity extends AppCompatActivity {
         avater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                    SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
 
-                String LoginToken = sp.getString("LOGINTOKEN", "");
-                Intent intent1 = new Intent(storydegitalActivity.this, OtherUserHomePage.class);
-                intent1.putExtra("LoginToken", LoginToken);
-                intent1.putExtra("UserID", UserId);
-                intent1.putExtra("Avater", avaterurl);
-                intent1.putExtra("Sign", Signature);
-                intent1.putExtra("Username", UserName);
-                intent1.putExtra("Sex", sex);
-                startActivity(intent1);
+                    String LoginToken = sp.getString("LOGINTOKEN", "");
+                    Intent intent1 = new Intent(storydegitalActivity.this, OtherUserHomePage.class);
+                    intent1.putExtra("LoginToken", LoginToken);
+                    intent1.putExtra("UserID", UserId);
+                    intent1.putExtra("Avater", avaterurl);
+                    intent1.putExtra("Sign", Signature);
+                    intent1.putExtra("Username", UserName);
+                    intent1.putExtra("Sex", sex);
+                    startActivity(intent1);
             }
         });
 

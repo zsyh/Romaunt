@@ -10,26 +10,29 @@
         android:layout_height="10dp"
         android:id="@+id/itemTV0"/>
     <TextView
-        android:maxLength="14"
-        android:layout_below="@id/itemTV0"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:textSize="18sp"
-        android:text="标题"
-
-        android:id="@+id/activity_one_itemTV1"/>
-    <TextView
         android:layout_below="@id/itemTV0"
         android:layout_width="30dp"
+        android:layout_alignParentLeft="true"
         android:layout_height="20dp"
-        android:layout_toRightOf="@id/activity_one_itemTV1"
         android:layout_marginLeft="20dp"
 
         android:background="#E3F8F5"
         android:textColor="#52C4B8"
         android:text="传说"
         android:id="@+id/itemIV1"/>
+
+    <TextView
+        android:maxLength="14"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/itemTV0"
+        android:layout_toRightOf="@id/itemIV1"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:textSize="18sp"
+        android:text="标题"
+        android:textColor="#000000"
+
+        android:id="@+id/activity_one_itemTV1"/>
 
     <TextView
         android:layout_below="@id/itemTV0"
