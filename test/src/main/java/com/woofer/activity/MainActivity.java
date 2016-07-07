@@ -142,7 +142,8 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
 
-                    final RomauntNetWork romauntNetWork = new RomauntNetWork();
+                    final RomauntNetWork romauntNetWork = new RomauntNetWork()
+                            ;
 
                     Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
                     if(response==null){

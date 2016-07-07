@@ -84,7 +84,7 @@ public class Activity_three extends Activity {
       /*  listView=(ListView)findViewById(R.id.listview);
         listView.setDivider(null);
         List<Map<String, Object>> list=getData();
-        listView.setAdapter(new ActivitytwoAdapter(this, list));
+        listView.setAdapter(new ActivitymyhomepageAdapter(this, list));
 */
         InitView();
 

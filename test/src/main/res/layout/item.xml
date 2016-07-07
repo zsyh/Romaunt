@@ -11,14 +11,13 @@
         android:id="@+id/itemTV0"/>
     <TextView
         android:layout_below="@id/itemTV0"
-        android:layout_width="30dp"
+        android:layout_width="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_height="20dp"
         android:layout_marginLeft="20dp"
 
         android:background="#E3F8F5"
         android:textColor="#52C4B8"
-        android:text="传说"
         android:id="@+id/itemIV1"/>
 
     <TextView
@@ -29,18 +28,16 @@
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:textSize="18sp"
-        android:text="标题"
         android:textColor="#000000"
 
         android:id="@+id/activity_one_itemTV1"/>
 
     <TextView
         android:layout_below="@id/itemTV0"
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="0dp"
-        android:text="14:14"
         android:id="@+id/activity_one_itemTV2"/>
     <ImageView
         android:layout_below="@id/activity_one_itemTV1"
@@ -58,8 +55,7 @@
         android:layout_height="20dp"
         android:textSize="16sp"
         android:layout_below="@id/activity_one_itemTV1"
-
-        android:text="authorid"      android:id="@+id/activity_one_AuthorID"/>
+        android:id="@+id/activity_one_AuthorID"/>
     <TextView
         android:textStyle="bold"
         android:layout_width="wrap_content"
@@ -68,8 +64,6 @@
         android:textSize="14sp"
         android:layout_below="@id/activity_one_itemTV1"
         android:layout_marginLeft="20dp"
-
-        android:text="快让自己的签名变得长一点吧......"
         android:id="@+id/activity_one_itemTV4"/>
     <TextView
         android:layout_width="20dp"
@@ -81,7 +75,6 @@
 
         android:id="@+id/itemIV5"/>
     <TextView
-        android:text="删除"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"

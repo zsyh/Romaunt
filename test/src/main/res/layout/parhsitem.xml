@@ -45,7 +45,7 @@
         android:background="#E3F8F5"
         android:textColor="#52C4B8"
 
-        android:id="@+id/OT_parhs_thumbNUM"
+            android:id="@+id/OT_parhs_thumbNUM"
         />
     <TextView
         android:maxLength="14"

@@ -5,26 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/backup"
     tools:context="com.woofer.activity.userhomepage.FansActivity">
-
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/refreshLayout"
-        android:layout_below="@id/actionbar2">
-
-
-        <cn.bingoogolapple.refreshlayout.BGAStickyNavLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp" />
             <ListView
                 android:id="@+id/data"
                 android:layout_height="match_parent"
@@ -38,9 +18,6 @@
                 android:paddingBottom="50dp"
                 android:paddingTop="0dp"
                 android:scrollbars="none"
-                tools:listitem="@layout/item"
+                tools:listitem="@layout/fansitem"
                 />
-
-        </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 </RelativeLayout>

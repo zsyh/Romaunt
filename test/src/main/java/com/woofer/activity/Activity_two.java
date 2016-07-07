@@ -2,6 +2,8 @@ package com.woofer.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -157,7 +165,8 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                     listLogic = new ArrayList<>();
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
                         listLogic.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
-                                publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
+                                publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id,""
+                                ,datetotime(publicStoryListResponse.msg.get(i).createdAt),publicStoryListResponse.msg.get(i).flags));
                                 Log.e("storyID",  publicStoryListResponse.msg.get(i).id);
                     }
 
@@ -173,6 +182,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                     if (listLogic.get(j).userID == userInfoResponse.msg.user.id) {
                                         listLogic.get(j).authorname = userInfoResponse.msg.user.userName;
                                         listLogic.get(j).sign = userInfoResponse.msg.user.sign;
+                                        listLogic.get(j).avater = userInfoResponse.msg.user.avatar;
                                     }
                                 }
                                 userInfo.nowPage++;
@@ -337,7 +347,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
                             for (int i = 0; i < count; i++) {
                                 listNewData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
-                                        publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
+                                        publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id,"",datetotime(publicStoryListResponse.msg.get(i).createdAt),publicStoryListResponse.msg.get(i).flags));
                             }
 
 
@@ -439,7 +449,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
                         listMoreData.add(new RefreshModel(publicStoryListResponse.msg.get(i).title,
-                                publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id));
+                                publicStoryListResponse.msg.get(i).content, "", "", publicStoryListResponse.msg.get(i).AuthorID, publicStoryListResponse.msg.get(i).id,"",datetotime(publicStoryListResponse.msg.get(i).createdAt),publicStoryListResponse.msg.get(i).flags));
                     }
 
                     for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
@@ -491,7 +501,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            long currentTime = System.currentTimeMillis();
+                long currentTime = System.currentTimeMillis();
             if (currentTime - firstbacktime <= 2000) {
                 this.finish();
             } else {
@@ -501,4 +511,12 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
         }
         return true;
     }
+    private String datetotime(String time){
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyyMMdd HH:mm");
+        long lcc = Long.valueOf(time);
+        int i = Integer.parseInt(time);
+        String times = sdr.format(new Date(i * 1000L));
+        return times;
+    }
+
 }
