@@ -179,6 +179,7 @@
         android:layout_height="match_parent"
         android:id="@+id/degital_act_content"
         android:layout_above="@id/degital_act_munu"
+        android:gravity="left|top"
         android:editable="false"
         />
 

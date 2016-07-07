@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.woofer.activity.MainActivity"
+    android:background="#FFFFFF"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/itemTV0"/>
+
+  <TextView
+      android:layout_below="@id/itemTV0"
+      android:layout_width="wrap_content"
+      android:layout_marginTop="4dp"
+      android:layout_alignParentLeft="true"
+      android:layout_height="20dp"
+      android:layout_marginLeft="20dp"
+
+      android:background="#E3F8F5"
+      android:textColor="#52C4B8"
+
+      android:id="@+id/OT_parhs_lable"
+      />
+    <TextView
+        android:layout_below="@id/itemTV0"
+        android:paddingTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp"
+        android:layout_alignBottom="@id/OT_parhs_lable"
+
+        android:id="@+id/OT_parhs_time"
+        />
+    <TextView
+        android:layout_below="@id/itemTV0"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toLeftOf="@id/OT_parhs_time"
+        android:gravity="center"
+        android:layout_alignBottom="@id/OT_parhs_lable"
+        android:background="#E3F8F5"
+        android:textColor="#52C4B8"
+
+        android:id="@+id/OT_parhs_thumbNUM"
+        />
+    <TextView
+        android:maxLength="14"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/itemTV0"
+        android:layout_toRightOf="@id/OT_parhs_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_toLeftOf="@id/OT_parhs_thumbNUM"
+
+        android:id="@+id/OT_parhs_title"
+        />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="16dp"
+        android:maxLines="2"
+        android:layout_marginTop="6dp"
+        android:layout_below="@id/OT_parhs_title"
+
+        android:id="@+id/OT_parhs_content"
+        />
+</RelativeLayout>

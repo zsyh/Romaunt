@@ -303,8 +303,8 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
 
         if (!loginToken.equals("")) {
-            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                @Override
+                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                        @Override
                 public void onResponse(Object response) {
 
                     final Object finalResponse = response;
