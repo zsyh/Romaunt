@@ -53,34 +53,22 @@ public class signinActivity extends AppCompatActivity {
 
         password =(EditText)findViewById(R.id.signin_password);
 
-        storagekey = (CheckBox)findViewById(R.id.signin_CB1);
+        storagekey = (CheckBox)findViewById(R.id.CheckBoxSavePwd);
         storagekey.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    sp.edit().putBoolean("CBONECHECK",true).apply();
+                    sp.edit().putBoolean("SavePwdChecked",true).apply();
                 }
                 else {
                         /*选中保存密码则为false*/
-                    sp.edit().putBoolean("CBONECHECK",false).apply();
+                    sp.edit().putBoolean("SavePwdChecked",false).apply();
                 }
             }
         });
 
-        autologin = (CheckBox)findViewById(R.id.signin_CB2);
-        autologin.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    sp.edit().putBoolean("CBTWOCHECK",true).apply();
-                }
-                else{
-                    sp.edit().putBoolean("CBTWOCHECK",false).apply();
-                }
-            }
-        });
 
-        showkey = (CheckBox)findViewById(R.id.signin_CB3);
+        showkey = (CheckBox)findViewById(R.id.CheckBoxShowPwd);
         showkey.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -148,42 +136,46 @@ public class signinActivity extends AppCompatActivity {
             }
         });
 
-        if(sp.getBoolean("CBONECHECK",false)){
-            storagekey.setChecked(true);
-            /*params 第一个为sharepreference 中的key 第二个是缺省值*/
-            phone.setText(sp.getString("USERNAME",""));
-            password.setText(sp.getString("PASSWORD",""));
-            if(sp.getBoolean("CBTWOCHECK",false)){
-                username = phone.getText().toString();
-                key = password.getText().toString();
-                if (username.equals("") | key.equals("")) {
-                    Toast.makeText(signinActivity.this, "请输入用户名或密码", Toast.LENGTH_SHORT).show();
-                } else {
-                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                        @Override
-                        public void onResponse(Object response) {
+//        if(sp.getBoolean("CBONECHECK",false)){
+//            storagekey.setChecked(true);
+//            /*params 第一个为sharepreference 中的key 第二个是缺省值*/
+//            phone.setText(sp.getString("USERNAME",""));
+//            password.setText(sp.getString("PASSWORD",""));
 
-                            LoginResponse loginResponse = (LoginResponse) response;
-                            System.out.println("status:" + loginResponse.status);
-                            System.out.println("userID:" + loginResponse.msg.userID);
-                            System.out.println("LoginToken:" + loginResponse.msg.LoginToken);
-                            System.out.println("token:" + loginResponse.msg.token);
-                        }
 
-                        @Override
-                        public void onError(Object error) {
-                            Toast.makeText(signinActivity.this, "网络无连接，登录失败", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//            if(sp.getBoolean("CBTWOCHECK",false)){
+//                username = phone.getText().toString();
+//                key = password.getText().toString();
+//                if (username.equals("") | key.equals("")) {
+//                    Toast.makeText(signinActivity.this, "请输入用户名或密码", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+//                        @Override
+//                        public void onResponse(Object response) {
+//
+//                            LoginResponse loginResponse = (LoginResponse) response;
+//                            System.out.println("status:" + loginResponse.status);
+//                            System.out.println("userID:" + loginResponse.msg.userID);
+//                            System.out.println("LoginToken:" + loginResponse.msg.LoginToken);
+//                            System.out.println("token:" + loginResponse.msg.token);
+//                        }
+//
+//                        @Override
+//                        public void onError(Object error) {
+//                            Toast.makeText(signinActivity.this, "网络无连接，登录失败", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//
+//                    romauntNetWork.login(username, key);
+//                }
+//            }
+//        }
 
-                    romauntNetWork.login(username, key);
-                }
-            }
-        }
+
     }
 
     private void saveInfo(){
-        if(storagekey.isChecked()){
+
             editor = sp.edit();
             userInfo.username = username;
             userInfo.key = key;
@@ -194,7 +186,7 @@ public class signinActivity extends AppCompatActivity {
 
 
             editor.apply();
-        }
+
     }
 
 

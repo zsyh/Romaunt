@@ -125,9 +125,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_login_Lin3"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="35dp"
 
-        android:id="@+id/signin_CB1"
+        android:id="@+id/CheckBoxSavePwd"
         />
 
     <TextView
@@ -135,41 +135,21 @@
         android:layout_height="wrap_content"
         android:textSize="14dp"
         android:text="记住密码"
-        android:layout_toRightOf="@id/signin_CB1"
+        android:layout_toRightOf="@id/CheckBoxSavePwd"
         android:layout_below="@id/activity_login_Lin3"
         android:layout_marginTop="8dp"
 
-        android:id="@+id/signin_TV1"
+        android:id="@+id/TextViewSavePwd"
         />
+
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/signin_TV1"
-        android:layout_below="@id/activity_login_Lin3"
-        android:layout_marginLeft="20dp"
-
-        android:id="@+id/signin_CB2"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="自动登录"
-        android:textSize="14dp"
-        android:layout_below="@id/activity_login_Lin3"
-        android:layout_marginTop="8dp"
-        android:layout_toRightOf="@id/signin_CB2"
-        android:layout_marginRight="20dp"
-
-        android:id="@+id/signin_TV2"/>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/signin_TV2"
+        android:layout_toRightOf="@id/TextViewSavePwd"
          android:layout_below="@id/activity_login_Lin3"
 
-        android:id="@+id/signin_CB3"/>
+        android:id="@+id/CheckBoxShowPwd"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -177,7 +157,7 @@
         android:text="显示密码"
         android:textSize="14dp"
         android:layout_below="@id/activity_login_Lin3"
-        android:layout_toRightOf="@id/signin_CB3"/>
+        android:layout_toRightOf="@id/CheckBoxShowPwd"/>
 
     <Button
         android:layout_width="wrap_content"
