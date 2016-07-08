@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.woofer.activity.userhomepage.FollowingsActivity">
+    tools:context="com.woofer.activity.userhomepage.FollowingsActivity"
+
+    android:id="@+id/OT_home_follow_Rlayout">
 
             <ListView
                 android:id="@+id/OT_fans_data"

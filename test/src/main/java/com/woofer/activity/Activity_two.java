@@ -220,8 +220,6 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
-                mAdapter.getItem(position).userID);
         Intent intent = new Intent(Activity_two.this, storydegitalActivity.class);
         intent.putExtra("USERID", mAdapter.getItem(position).userID);
         intent.putExtra("ID", mAdapter.getItem(position).id);
@@ -232,8 +230,8 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
-                mAdapter.getItem(position).userID);
+       /* showToast(mAdapter.getItem(position).title + mAdapter.getItem(position).id + "  userid：" +
+                mAdapter.getItem(position).userID);*/
 
         return true;
     }
@@ -246,10 +244,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     public boolean onItemChildLongClick(ViewGroup viewGroup, View childview, int position) {
-        if (childview.getId() == R.id.itemTV5) {
-            showToast("长按了删除" + mAdapter.getItem(position).title);
-            return true;
-        }
+
         return false;
     }
 

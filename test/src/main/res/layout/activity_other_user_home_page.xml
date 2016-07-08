@@ -162,6 +162,7 @@
         android:background="#ECE9EC"
         android:id="@+id/OT_home_menu"
         android:layout_below="@id/OT_home_VP_menu">
+
         <Button
             android:paddingLeft="50dp"
             android:layout_width="0dp"
@@ -177,15 +178,24 @@
             android:gravity="center"
             android:layout_height="30dp"
             android:layout_weight="0.01"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_weight="0.1"
+
+            android:id="@+id/OT_home_follow_btn"/>
+
         <Button
-            android:paddingLeft="50dp"
+            android:layout_gravity="left"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight="0.494"
+            android:layout_weight="0.394"
             android:text="关注"
-            android:background="#ECE9EC"
+            android:background="@null"
             android:textColor="#9A909A"
-            android:drawableLeft="@drawable/icon_plus_grey"
+
+            android:id="@+id/OT_home_addfollow_btn"
             />
 
     </LinearLayout>

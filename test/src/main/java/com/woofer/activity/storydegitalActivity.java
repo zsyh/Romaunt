@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import woofer.com.test.R;
 
@@ -39,6 +38,9 @@ public class storydegitalActivity extends AppCompatActivity {
     private URL url;
     private String UserName;
     private int sex;
+    private int followingEnable;
+    private int fansEnable ;
+
 
 
     @Override
@@ -62,6 +64,11 @@ public class storydegitalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                    SharedPreferences sp1 = storydegitalActivity.this.getSharedPreferences("ENABLE",storydegitalActivity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor =sp1.edit();
+                    editor.putInt("FOLLOWINGENABLE",followingEnable);
+                    editor.putInt("FANSENABLE", fansEnable);
+                    editor.apply();
 
                     String LoginToken = sp.getString("LOGINTOKEN", "");
                     Intent intent1 = new Intent(storydegitalActivity.this, OtherUserHomePage.class);
@@ -71,6 +78,8 @@ public class storydegitalActivity extends AppCompatActivity {
                     intent1.putExtra("Sign", Signature);
                     intent1.putExtra("Username", UserName);
                     intent1.putExtra("Sex", sex);
+                    intent1.putExtra("FOLLOWINGENABLE", followingEnable);
+                    intent1.putExtra("FANSENABLE", fansEnable);
                     startActivity(intent1);
             }
         });
@@ -129,10 +138,11 @@ public class storydegitalActivity extends AppCompatActivity {
                  UserName = userInfoResponse.msg.user.userName;
                 avaterurl = userInfoResponse.msg.user.avatar;
                 sex = userInfoResponse.msg.user.sex;
-                Toast.makeText(storydegitalActivity.this, avaterurl, Toast.LENGTH_SHORT).show();
                 Signature = userInfoResponse.msg.user.sign;
                 username.setText(UserName);
                 signatrue.setText(Signature);
+                followingEnable = userInfoResponse.msg.user.followerEnable;
+                fansEnable = userInfoResponse.msg.user.followerEnable;
 
                 if(!avaterurl.equals("")) {
                     try {

@@ -61,7 +61,7 @@ public class signinActivity extends AppCompatActivity implements View.OnClickLis
 
 
         /*存储密码*/
-        sp = this.getSharedPreferences("userinfo", signinActivity.MODE_WORLD_READABLE);
+        sp = this.getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
 
 
 
@@ -157,7 +157,7 @@ public class signinActivity extends AppCompatActivity implements View.OnClickLis
             userInfo.username = username;
             userInfo.key = key;
             editor.putString("USERID",userID );
-            editor.putString("USERNAME", username);
+            editor.putString("phone", username);
             editor.putString("LOGINTOKEN",logintoken);
             editor.putString("TOKEN",token);
 

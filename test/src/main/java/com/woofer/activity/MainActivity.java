@@ -169,7 +169,7 @@ public class MainActivity extends Activity {
                         editor = sp.edit();
                             /*editor.putString("FOLLOWERNUM",num1);
                             editor.putString("FOLLOWINGNUM", num2);*/
-                        editor.putString("NICHENG",username);
+                        editor.putString("USERNAME",username);
                         editor.putInt("SEX",sex);
                         editor.putString("AVATERURL", avaterurl);
                         editor.putString("USERSIGN", signature);
@@ -226,7 +226,7 @@ public class MainActivity extends Activity {
                                 editor = sp.edit();
                             /*editor.putString("FOLLOWERNUM",num1);
                             editor.putString("FOLLOWINGNUM", num2);*/
-                                editor.putString("NICHENG",username);
+                                editor.putString("USERNAME",username);
                                 editor.putInt("SEX",sex);
                                 editor.putString("AVATERURL", avaterurl);
                                 editor.putString("USERSIGN", signature);

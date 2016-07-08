@@ -30,6 +30,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private String avacterurl;
     private URL url;
     private int sexflag;
+    private String username;
 
 
     @Override
