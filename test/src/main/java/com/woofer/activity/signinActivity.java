@@ -22,7 +22,7 @@ import com.woofer.userInfo;
 
 import woofer.com.test.R;
 
-public class signinActivity extends AppCompatActivity implements View.OnClickListener{
+public class signinActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private String Tag ="signinAc";
     private Button buttonSignIn;
@@ -46,24 +46,58 @@ public class signinActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
+         /*存储密码*/
+        sp = this.getSharedPreferences("userinfo",MainActivity.MODE_PRIVATE);
+
         phone =(EditText)findViewById(R.id.signin_phone);
 
         password =(EditText)findViewById(R.id.signin_password);
+
         storagekey = (CheckBox)findViewById(R.id.signin_CB1);
-        storagekey.setOnCheckedChangeListener(checkedBoxListener);
+        storagekey.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    sp.edit().putBoolean("CBONECHECK",true).apply();
+                }
+                else {
+                        /*选中保存密码则为false*/
+                    sp.edit().putBoolean("CBONECHECK",false).apply();
+                }
+            }
+        });
 
         autologin = (CheckBox)findViewById(R.id.signin_CB2);
-        autologin.setOnCheckedChangeListener(checkedBoxListener);
+        autologin.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    sp.edit().putBoolean("CBTWOCHECK",true).apply();
+                }
+                else{
+                    sp.edit().putBoolean("CBTWOCHECK",false).apply();
+                }
+            }
+        });
 
         showkey = (CheckBox)findViewById(R.id.signin_CB3);
-        showkey.setOnCheckedChangeListener(checkedBoxListener);
 
 
 
         /*存储密码*/
         sp = this.getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
 
-
+        showkey.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         imageButton = (ImageButton)findViewById(R.id.activity_login_ibtn1);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +107,8 @@ public class signinActivity extends AppCompatActivity implements View.OnClickLis
                 signinActivity.this.finish();
             }
         });
+
+
 
         final RomauntNetWork romauntNetWork = new RomauntNetWork();
 
@@ -117,6 +153,7 @@ public class signinActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+
         if(sp.getBoolean("CBONECHECK",false)){
             storagekey.setChecked(true);
             /*params 第一个为sharepreference 中的key 第二个是缺省值*/
@@ -166,42 +203,7 @@ public class signinActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private OnCheckedChangeListener checkedBoxListener = new OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            switch (buttonView.getId()){
-                case R.id.signin_CB1:
-                    if(isChecked){
-                        sp.edit().putBoolean("CBONECHECK",true).apply();
-                    }
-                    else {
-                        /*选中保存密码则为false*/
-                        sp.edit().putBoolean("CBONECHECK",false).apply();
-                    }
-                    break;
-                case R.id.signin_CB2:
-                    if(isChecked){
-                        sp.edit().putBoolean("CBTWOCHECK",true).apply();
-                    }
-                    else{
-                        sp.edit().putBoolean("CBTWOCHECK",false).apply();
-                    }
-                    break;
-                case R.id.signin_CB3:
-                    if(isChecked) {
-                        password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    }
-                    else{
-                        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    }
-                    break;
 
-            }
-        }
-    };
 
-    @Override
-    public void onClick(View v) {
 
-    }
 }
