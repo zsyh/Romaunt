@@ -77,25 +77,26 @@
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="1"
-
+        android:background="#FFFFFF"
         android:id="@+id/degital_act_munu">
         <LinearLayout
+            android:background="#FFFFFF"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.25"
             android:orientation="vertical">
             <ImageButton
                 android:layout_gravity="center"
-                android:layout_width="30dp"
+                android:layout_width="50dp"
 
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:scaleType="fitXY"
                 android:background="#FFFFFF"
-                android:src="@drawable/img_transmit"
+                android:src="@drawable/selector_transmit"
                 />
             <TextView
                 android:layout_gravity="center"
@@ -109,19 +110,19 @@
             android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
+            android:layout_weight="0.25"
             android:orientation="vertical"
             android:gravity="top|center">
             <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:scaleType="fitXY"
                 android:background="#FFFFFF"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/img_favour"
+                android:src="@drawable/selector_thumb"
                 />
             <TextView
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="3dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,16 +133,18 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
+            android:layout_weight="0.25"
             android:orientation="vertical"
             android:gravity="top|center">
             <ImageButton
                 android:layout_marginLeft="5dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:scaleType="fitXY"
                 android:background="#FFFFFF"
-                android:src="@drawable/img_collect"/>
+                android:src="@drawable/selector_collect"
+
+                android:id="@+id/story_degital_collect"/>
             <TextView
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
@@ -153,16 +156,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
 
-            android:layout_weight="0.3"
+            android:layout_weight="0.25"
             android:orientation="vertical">
             <ImageButton
                 android:layout_gravity="center"
-                android:layout_width="40dp"
-
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:scaleType="fitXY"
                 android:background="#FFFFFF"
-                android:src="@drawable/img_comment"
+                android:src="@drawable/selector_comment"
+
+                android:id="@+id/story_degital_comment"
                 />
             <TextView
                 android:layout_gravity="center"
@@ -181,6 +185,7 @@
         android:layout_above="@id/degital_act_munu"
         android:gravity="left|top"
         android:editable="false"
+        android:background="@null"
         />
 
 </RelativeLayout>

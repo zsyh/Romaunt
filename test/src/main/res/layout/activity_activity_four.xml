@@ -130,7 +130,9 @@
             android:text="github项目地址"
             android:textSize="20dp"
             android:background="@drawable/btnstyle2"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF"
+
+            android:id="@+id/activity_four_btn"/>
 
     </LinearLayout>
     <RelativeLayout

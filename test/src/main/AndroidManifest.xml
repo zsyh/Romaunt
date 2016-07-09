@@ -45,7 +45,10 @@
         <activity android:name="com.woofer.activity.OtherUserHomePage" />
         <activity android:name="com.woofer.activity.userhomepage.FansActivity" />
         <activity android:name="com.woofer.activity.userhomepage.FollowingsActivity" />
-        <activity android:name="com.woofer.activity.userhomepage.ParhsActivity"></activity>
+        <activity android:name="com.woofer.activity.userhomepage.ParhsActivity" />
+        <activity android:name="com.woofer.activity.CommentActivity"
+            android:windowSoftInputMode="adjustResize"
+            ></activity>
     </application>
 
 </manifest>
