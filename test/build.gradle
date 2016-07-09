@@ -34,5 +34,5 @@ dependencies {
     compile 'cn.bingoogolapple:bga-banner:2.0.4@aar'
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.5@aar'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile files('libs/okhttputils-2_4_1.jar')
+    compile files('libs/okhttputils-2_6_2.jar')
 }

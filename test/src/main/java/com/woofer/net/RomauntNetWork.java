@@ -15,12 +15,14 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import java.io.IOException;
 
 import okhttp3.Call;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/6/25.
  */
 public class RomauntNetWork {
+
 
     private RomauntNetworkCallback romauntNetworkCallback;
 
@@ -30,8 +32,8 @@ public class RomauntNetWork {
     }
 
     public void register(String mobile, String password, String userName, String avatar) {
-
         String url = "http://139.129.131.240:3000/api/register";
+
         OkHttpUtils
                 .post()
                 .url(url)
