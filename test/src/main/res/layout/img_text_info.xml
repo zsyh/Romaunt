@@ -15,7 +15,7 @@
             android:src="@drawable/btn_right"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:id="@+id/img_text_IV1"
+            android:id="@+id/imgtextswitch_switch"
             />
 
     </LinearLayout>

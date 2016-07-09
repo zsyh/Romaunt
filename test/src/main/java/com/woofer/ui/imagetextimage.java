@@ -20,8 +20,8 @@ public class imagetextimage extends RelativeLayout{
     public imagetextimage(Context context, AttributeSet attributeSet){
         super(context, attributeSet);
         LayoutInflater.from(context).inflate(R.layout.img_text_img, this, true);
-        this.imageView1=(ImageView)findViewById(R.id.act_four_img);
-        this.textView1=(TextView)findViewById(R.id.act_four_text);
+        this.imageView1=(ImageView)findViewById(R.id.imgtextswitch_pic);
+        this.textView1=(TextView)findViewById(R.id.imgtextswitch_hint);
         this.imageView2=(ImageView)findViewById(R.id.img_text_touxiang_IV2);
         this.setClickable(true);
         this.setFocusable(true);

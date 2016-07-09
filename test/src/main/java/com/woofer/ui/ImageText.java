@@ -22,7 +22,7 @@ public class   ImageText extends RelativeLayout{
         LayoutInflater.from(context).inflate(R.layout.img_text, this, true);
         this.textView1=(TextView)findViewById(R.id.img_text_TV1);
         this.textView2=(TextView)findViewById(R.id.img_text_TV2);
-        this.imageView1=(ImageView)findViewById(R.id.img_text_IV1);
+        this.imageView1=(ImageView)findViewById(R.id.imgtextswitch_switch);
         this.setClickable(true);
         this.setFocusable(true);
     }

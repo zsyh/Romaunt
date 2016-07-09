@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="54dp"
     android:weightSum="1"
+    android:background="@drawable/btnstyleactfour"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +13,7 @@
         android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:textColor="#000000"
+        android:textColor="@drawable/texthover"
 
         android:id="@+id/img_text_TV1"/>
     <TextView
@@ -23,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="20dp"
-
+        android:textColor="@drawable/texthovergray"
         android:id="@+id/img_text_TV2"/>
 
     </LinearLayout>
@@ -34,6 +35,6 @@
         android:src="@drawable/btn_right"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:id="@+id/img_text_IV1"
+        android:id="@+id/imgtextswitch_switch"
         />
 </RelativeLayout>

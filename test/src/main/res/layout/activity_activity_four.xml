@@ -127,7 +127,7 @@
             android:layout_width="0dp"
             android:layout_height="44dp"
             android:layout_weight="0.9"
-            android:text="写个故事"
+            android:text="github项目地址"
             android:textSize="20dp"
             android:background="@drawable/btnstyle2"
             android:textColor="#FFFFFF"/>

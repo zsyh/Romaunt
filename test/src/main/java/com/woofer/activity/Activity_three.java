@@ -203,17 +203,17 @@ public class Activity_three extends Activity {
         }
         return list;
     }*/
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            long currentTime=System.currentTimeMillis();
-            if(currentTime - firstbacktime <= 2000){
-                this.finish();
-            }else{
-                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
-                firstbacktime = currentTime;
-            }
-        }
-        return true;
-    }
+   @Override
+   public boolean onKeyDown(int keyCode, KeyEvent event) {
+       if (keyCode == KeyEvent.KEYCODE_BACK) {
+           long currentTime = System.currentTimeMillis();
+           if (currentTime - firstbacktime <= 2000) {
+               this.finish();
+           } else {
+               Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+               firstbacktime = currentTime;
+           }
+       }
+       return true;
+   }
 }
