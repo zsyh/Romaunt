@@ -5,11 +5,11 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import woofer.com.test.R;
 
@@ -22,6 +22,8 @@ import com.woofer.titlebar.TitleBar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import javax.security.auth.login.LoginException;
 
 public class storydegitalActivity extends AppCompatActivity {
     private TitleBar titleBar;
@@ -39,6 +41,10 @@ public class storydegitalActivity extends AppCompatActivity {
     private URL url;
     private String UserName;
     private int sex;
+    private int followingEnable;
+    private int fansEnable ;
+    private int noticeEnable;
+
 
 
     @Override
@@ -62,6 +68,11 @@ public class storydegitalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                    SharedPreferences sp1 = storydegitalActivity.this.getSharedPreferences("ENABLE",storydegitalActivity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor =sp1.edit();
+                    editor.putInt("FOLLOWINGENABLE",followingEnable);
+                    editor.putInt("FANSENABLE", fansEnable);
+                    editor.apply();
 
                     String LoginToken = sp.getString("LOGINTOKEN", "");
                     Intent intent1 = new Intent(storydegitalActivity.this, OtherUserHomePage.class);
@@ -71,6 +82,8 @@ public class storydegitalActivity extends AppCompatActivity {
                     intent1.putExtra("Sign", Signature);
                     intent1.putExtra("Username", UserName);
                     intent1.putExtra("Sex", sex);
+                    intent1.putExtra("FOLLOWINGENABLE", followingEnable);
+                    intent1.putExtra("FANSENABLE", fansEnable);
                     startActivity(intent1);
             }
         });
@@ -95,44 +108,21 @@ public class storydegitalActivity extends AppCompatActivity {
         Content = (EditText)findViewById(R.id.degital_act_content);
     }
     private void setStoryInfo(){
-        RomauntNetWork romauntNetWork = new RomauntNetWork();
-        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-            @Override
-            public void onResponse(Object response) {
-                GetStoryResponse getStoryResponse = (GetStoryResponse) response;
-                final int likeNUM = getStoryResponse.msg.likeCount;
-                final String content = getStoryResponse.msg.story.content;
-                final String title = getStoryResponse.msg.story.title;
-                final String flag = getStoryResponse.msg.story.flags;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        titleBar.setTitle(title);
-                        thumbNUM.setText(Integer.toString(likeNUM));
-                        Content.setText(content);
-                        lable.setText(flag);
-                    }
-                });
 
-            }
-
-            @Override
-            public void onError(Object error) {
-            }
-        });
-        romauntNetWork.getStory(LoginToken, Id, Integer.toString(UserId));
         RomauntNetWork romauntNetWork1 = new RomauntNetWork();
         romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
             @Override
             public void onResponse(Object response) {
                 UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-                 UserName = userInfoResponse.msg.user.userName;
+                UserName = userInfoResponse.msg.user.userName;
                 avaterurl = userInfoResponse.msg.user.avatar;
                 sex = userInfoResponse.msg.user.sex;
-                Toast.makeText(storydegitalActivity.this, avaterurl, Toast.LENGTH_SHORT).show();
                 Signature = userInfoResponse.msg.user.sign;
                 username.setText(UserName);
                 signatrue.setText(Signature);
+                followingEnable = userInfoResponse.msg.user.followerEnable;
+                fansEnable = userInfoResponse.msg.user.followerEnable;
+                noticeEnable = userInfoResponse.msg.user.noticeEnable;
 
                 if(!avaterurl.equals("")) {
                     try {
@@ -160,6 +150,37 @@ public class storydegitalActivity extends AppCompatActivity {
             }
         });
         romauntNetWork1.getUserInfo(LoginToken, Integer.toString(UserId));
+        if(noticeEnable==0){
+            RomauntNetWork romauntNetWork = new RomauntNetWork();
+            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                @Override
+                public void onResponse(Object response) {
+                    GetStoryResponse getStoryResponse = (GetStoryResponse) response;
+                    final int likeNUM = getStoryResponse.msg.likeCount;
+                    final String content = getStoryResponse.msg.story.content;
+                    final String title = getStoryResponse.msg.story.title;
+                    final String flag = getStoryResponse.msg.story.flags;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            titleBar.setTitle(title);
+                            thumbNUM.setText(Integer.toString(likeNUM));
+                            Content.setText(content);
+                            lable.setText(flag);
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onError(Object error) {
+                }
+            });romauntNetWork.getStory(LoginToken, Id, Integer.toString(UserId));
+
+        }else{
+            Content.setText("该用户已设置为不可查看文章内容");
+        }
+
     }
 
 

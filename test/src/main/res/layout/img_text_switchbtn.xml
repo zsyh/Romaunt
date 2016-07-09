@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:background="@drawable/btnstyleactfour"
@@ -14,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:background="@drawable/btnstysexchoose"
         android:id="@+id/imgtextswitch_pic"/>
         <TextView
             android:layout_marginTop="10dp"
@@ -26,13 +28,14 @@
 
 
     </LinearLayout>
-    <ImageView
-        android:layout_marginTop="10dp"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:targetApi="ice_cream_sandwich"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
+
         android:id="@+id/imgtextswitch_switch"
         />
+
 </RelativeLayout>

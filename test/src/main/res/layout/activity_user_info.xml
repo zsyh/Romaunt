@@ -36,37 +36,37 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
 
-        android:id="@+id/user_info_ITT1"
+        android:id="@+id/user_info_avatar"
         >
     </com.woofer.ui.ImageTexttouxiang>
     <com.woofer.ui.ImageText
-        android:layout_below="@id/user_info_ITT1"
+        android:layout_below="@id/user_info_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/user_info_IT1"
+        android:id="@+id/user_info_username"
         android:background="#FFFFFF">
 
     </com.woofer.ui.ImageText>
     <com.woofer.ui.ImageText
-        android:layout_below="@id/user_info_IT1"
+        android:layout_below="@id/user_info_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/user_info_IT2"
+        android:id="@+id/user_info_sex"
         android:background="#FFFFFF">
 
     </com.woofer.ui.ImageText>
         <com.woofer.ui.Texttextimg
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/user_info_qianming"
+            android:id="@+id/user_info_sign"
             android:background="#FFFFFF"
-            android:layout_below="@id/user_info_IT2">
+            android:layout_below="@id/user_info_sex">
 
         </com.woofer.ui.Texttextimg>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_below="@id/user_info_qianming"
+        android:layout_below="@id/user_info_sign"
         android:id="@+id/user_info_TV"
         android:background="#EEEEEE"/>
     <com.woofer.ui.ImageText

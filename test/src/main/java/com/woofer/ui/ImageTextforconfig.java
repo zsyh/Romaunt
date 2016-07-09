@@ -21,7 +21,7 @@ public class ImageTextforconfig extends RelativeLayout{
         super(context, attributeSet);
         LayoutInflater.from(context).inflate(R.layout.img_text_config, this, true);
         this.textView1=(TextView)findViewById(R.id.img_text_TV1);
-        this.imageView1=(ImageView)findViewById(R.id.img_text_IV1);
+        this.imageView1=(ImageView)findViewById(R.id.imgtextswitch_switch);
         this.setClickable(true);
         this.setFocusable(true);
     }

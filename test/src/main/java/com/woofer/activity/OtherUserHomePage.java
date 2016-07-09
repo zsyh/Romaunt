@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
@@ -21,6 +23,7 @@ import com.woofer.activity.userhomepage.FollowingsActivity;
 import com.woofer.activity.userhomepage.ParhsActivity;
 import com.woofer.adapter.OtherUserHomePageTransfer;
 import com.woofer.adapter.ViewPagerAdapter;
+import com.woofer.net.AddFollowResponse;
 import com.woofer.net.GetStoryResponse;
 import com.woofer.net.PersonStoryListResponse;
 import com.woofer.net.RomauntNetWork;
@@ -48,10 +51,12 @@ public class OtherUserHomePage extends Activity {
     private String LoginToken;
     private int UserId;
 
+
     private TextView UserName;
     private ImageView imgsex;
     private TextView sign;
     private TextView InformTitle;
+
 
     private TextView Toptv1;
     private TextView Toptv2;
@@ -61,6 +66,8 @@ public class OtherUserHomePage extends Activity {
     private int followinsNUM;
     private int fansNUM;
     private int prahsNUM;
+    private ImageButton followImgbtn;
+    private Button followbtn;
 
     private LocalActivityManager manager;
     private ViewPagerAdapter viewPageAdapter;
@@ -69,9 +76,14 @@ public class OtherUserHomePage extends Activity {
 
     private SharedPreferences sp;
     public static SharedPreferences.Editor editor;
+    private boolean hasmyself = false;
+
+    private int followingEnable;
+    private int fansEnable ;
 
 
     public static OtherUserHomePageTransfer otherUserHomePageTransfer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +91,10 @@ public class OtherUserHomePage extends Activity {
         setContentView(R.layout.activity_other_user_home_page);
 
         otherUserHomePageTransfer=new OtherUserHomePageTransfer();
-        otherUserHomePageTransfer.followingList=new ArrayList<>();
         otherUserHomePageTransfer.fansList=new ArrayList<>();
+        otherUserHomePageTransfer.followingList=new ArrayList<>();
         otherUserHomePageTransfer.parhsList=new ArrayList<>();
+
 
         Intent intent = getIntent();
         manager = new LocalActivityManager(this, true);
@@ -89,10 +102,15 @@ public class OtherUserHomePage extends Activity {
 
         vp = (ViewPager) findViewById(R.id.OT_home_viewpager);
 
+
         String Id = intent.getStringExtra("ID");
         UserId = intent.getIntExtra("UserID", 0);
 
-        sp = this.getSharedPreferences("USERID", OtherUserHomePage.MODE_WORLD_READABLE);
+        SharedPreferences sp1 = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
+        followingEnable = sp1.getInt("FOLLOWINGENABLE", 1);
+        fansEnable = sp1.getInt("FANSENABLE", 1);
+
+        sp = this.getSharedPreferences("USERID", OtherUserHomePage.MODE_PRIVATE);
         editor = sp.edit();
         editor.putInt("USERID", UserId);
         editor.apply();
@@ -134,7 +152,81 @@ public class OtherUserHomePage extends Activity {
     }
     protected void InitView() {
         // TODO Auto-generated method stub
+        followImgbtn = (ImageButton)findViewById(R.id.OT_home_follow_btn);
+        followbtn =(Button)findViewById(R.id.OT_home_addfollow_btn);
+        followbtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fansEnable == 1) {
+                    if (hasmyself) {
+                        /**取消关注*/
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        AddFollowResponse addFollowResponse = (AddFollowResponse) response;
+                                        Log.e("cancelfollow", addFollowResponse.status);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                followImgbtn.setImageResource(R.drawable.icon_plus_grey);
+                                                hasmyself = false;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(Object error) {
+                                        Toast.makeText(OtherUserHomePage.this, "网络连接错误，请检查您的网络", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                romauntNetWork.delFollow(LoginToken, Integer.toString(UserId));
+                            }
+                        }).start();
+
+
+                    } else {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        if (!(response instanceof AddFollowResponse)) {
+                                            return;
+                                        }
+                                        AddFollowResponse addFollowResponse = (AddFollowResponse) response;
+                                        if (addFollowResponse.status.equals("true")) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    followImgbtn.setImageResource(R.drawable.icon_plus_green);
+                                                    hasmyself = true;
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Object error) {
+                                        Toast.makeText(OtherUserHomePage.this, "网络连接错误，请检查您的网络", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                romauntNetWork.addFollow(LoginToken, Integer.toString(UserId));
+                            }
+                        }).start();
+                    }
+                } else {
+                    Toast.makeText(OtherUserHomePage.this, "该用户已设置为不可添加粉丝", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         InformTitle = (TextView)findViewById(R.id.OT_home_item);
+
         tv1 = (TextView)findViewById(R.id.OT_home_tv1);
         tv2 = (TextView)findViewById(R.id.OT_home_tv2);
         tv3 = (TextView)findViewById(R.id.OT_home_tv3);
@@ -299,14 +391,14 @@ public class OtherUserHomePage extends Activity {
                     if(userInfoResponse.msg.following!=null){
                         followinsNUM = userInfoResponse.msg.following.size();
                         fansNUM = userInfoResponse.msg.follower.size();
-                        Log.e("followinsNUM",Integer.toString(followinsNUM));
+                        Log.e("followinsNUM", Integer.toString(followinsNUM));
 
                         for(int i = 0 ; i < fansNUM ; i++){
                             Map<String, Object> map=new HashMap<String, Object>();
-                            map.put("image",  R.drawable.img_warning);
-                            map.put("image1", R.drawable.img_warning);
-                            map.put("textView", userInfoResponse.msg.follower.get(i).userName);
-                            map.put("textView1", userInfoResponse.msg.follower.get(i).sign);
+                            map.put("AVATAR",  R.drawable.img_warning);
+                            map.put("SEX", R.drawable.img_warning);
+                            map.put("USERNAME", userInfoResponse.msg.follower.get(i).userName);
+                            map.put("SIGN", userInfoResponse.msg.follower.get(i).sign);
                             otherUserHomePageTransfer.fansList.add(map);
                         }
 
@@ -315,15 +407,49 @@ public class OtherUserHomePage extends Activity {
 
                         for(int i = 0 ; i < followinsNUM ; i++){
                             Map<String, Object> map=new HashMap<String, Object>();
-                            map.put("image",  R.drawable.img_warning);
-                            map.put("image1", R.drawable.img_warning);
-                            map.put("textView", userInfoResponse.msg.following.get(i).userName);
-                            map.put("textView1", userInfoResponse.msg.following.get(i).sign);
+                            map.put("AVATAR",  R.drawable.img_warning);
+                            map.put("SEX", R.drawable.img_warning);
+                            map.put("USERNAME", userInfoResponse.msg.following.get(i).userName);
+                            map.put("SIGN", userInfoResponse.msg.following.get(i).sign);
                             otherUserHomePageTransfer.followingList.add(map);
                         }
 
                         Intent i2 = new Intent("com.zaizai1.broadcast.notifyFollowingsGot");
                         sendBroadcast(i2);
+
+
+                        SharedPreferences sp  = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                        String username = sp.getString("USERNAME", "");
+
+                        Map<String, Object> map1=new HashMap<String, Object>();
+                        map1.put("USERNAME", username);
+
+                        OtherUserHomePageTransfer otherUserHomePageTransfer1=new OtherUserHomePageTransfer();
+                        otherUserHomePageTransfer1.fansList=new ArrayList<>();
+                        otherUserHomePageTransfer1.fansList.add(map1);
+                        Log.e("map1", "1");
+                        boolean hasMe = false;
+                        for(int i=0; i<otherUserHomePageTransfer.fansList.size();i++){
+                            if(otherUserHomePageTransfer.fansList.get(i).get("USERNAME").equals(otherUserHomePageTransfer1.fansList.get(0).get("USERNAME"))){
+                                hasMe=true;
+                                hasmyself = true;
+                            }
+                        }
+                        if(hasMe) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    followImgbtn.setImageResource(R.drawable.icon_plus_green);
+                                }
+                            });
+                        }else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    followImgbtn.setImageResource(R.drawable.icon_plus_grey);
+                                }
+                            });
+                        }
 
                         runOnUiThread(new Runnable() {
                             @Override
@@ -336,7 +462,6 @@ public class OtherUserHomePage extends Activity {
                     }else{
                         followinsNUM = 0;
                         fansNUM  = 0;
-                        Log.e("followinsNUM",Integer.toString(followinsNUM));
                     }
 
                     String username = userInfoResponse.msg.user.userName;
@@ -408,6 +533,8 @@ public class OtherUserHomePage extends Activity {
                                 //数据加载完毕，发送广播通知子activity去获取数据
                                 Intent i = new Intent("com.zaizai1.broadcast.notifyParasGot");
                                 sendBroadcast(i);
+
+
                             }
 
                             @Override

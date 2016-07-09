@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:id="@+id/activity_config_titlebar"
-        android:background="#3CB3A6"
+        android:background="#198E7B"
         hint:titletcolor="#FFFFFF"
         hint:titlesize="20sp"
         hint:leftwidth="30dp"
@@ -20,72 +20,138 @@
     </com.woofer.titlebar.TitleBar>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:layout_below="@id/activity_config_titlebar"
         android:background="#EEEEEE"
+
         android:id="@+id/acticity_config_TV1"/>
-    <com.woofer.ui.ImageTextforconfig
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_config_Imagetext"
-        android:layout_below="@id/acticity_config_TV1">
-        </com.woofer.ui.ImageTextforconfig>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:layout_below="@id/activity_config_Imagetext"
-        android:background="#EEEEEE"
-        android:id="@+id/acticity_config_TV2"/>
-    <com.woofer.ui.ImageTextforconfig
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_config_Imagetext2"
-        android:layout_below="@id/acticity_config_TV2">
-    </com.woofer.ui.ImageTextforconfig>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:layout_below="@id/activity_config_Imagetext2"
-        android:background="#EEEEEE"
-        android:id="@+id/acticity_config_TV3"/>
-    <com.woofer.ui.ImageTextforconfig
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_config_Imagetext3"
-        android:layout_below="@id/acticity_config_TV3">
-    </com.woofer.ui.ImageTextforconfig>
-    <com.woofer.ui.ImageTextforconfig
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_config_Imagetext4"
-        android:layout_below="@id/activity_config_Imagetext3">
-    </com.woofer.ui.ImageTextforconfig>
-    <com.woofer.ui.ImageTextforconfig
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_config_Imagetext5"
-        android:layout_below="@id/activity_config_Imagetext4">
-    </com.woofer.ui.ImageTextforconfig>
-    <com.woofer.ui.ImageTextforconfig
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_config_Imagetext6"
-        android:layout_below="@id/activity_config_Imagetext5">
-    </com.woofer.ui.ImageTextforconfig>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="16dp"
         android:background="#EEEEEE"
-        android:id="@+id/activity_config_TV1"
-        android:layout_below="@id/activity_config_Imagetext6"/>
+        android:layout_marginLeft="20dp"
+        android:text="选中->粉丝可见"
+        android:layout_below="@id/acticity_config_TV1"
+
+        android:id="@+id/activity_config_hint_fans"/>
+    <com.woofer.ui.imagetextswichbtn
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_config_hint_fans"
+
+        android:id="@+id/config_fans_availble"
+        >
+    </com.woofer.ui.imagetextswichbtn>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="#EEEEEE"
+        android:layout_marginLeft="20dp"
+        android:text="选中->关注人可见"
+        android:layout_below="@id/config_fans_availble"
+
+        android:id="@+id/activity_config_hint_following"/>
+    <com.woofer.ui.imagetextswichbtn
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_config_hint_following"
+
+        android:id="@+id/config_following_availble"
+        >
+    </com.woofer.ui.imagetextswichbtn>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="#EEEEEE"
+        android:layout_marginLeft="20dp"
+        android:text="选中->收到赞时通知"
+        android:layout_below="@id/config_following_availble"
+
+        android:id="@+id/activity_config_notice_thumb"
+        />
+    <com.woofer.ui.imagetextswichbtn
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_config_notice_thumb"
+
+        android:id="@+id/config_notice_thumb"
+
+
+        >
+    </com.woofer.ui.imagetextswichbtn>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="#EEEEEE"
+        android:layout_marginLeft="20dp"
+        android:text="选中->收到评论时通知"
+        android:layout_below="@id/config_notice_thumb"
+
+        android:id="@+id/activity_config_notice_commit"
+        />
+    <com.woofer.ui.imagetextswichbtn
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_config_notice_commit"
+
+        android:id="@+id/config_notice_commit"
+
+
+        >
+    </com.woofer.ui.imagetextswichbtn>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="#EEEEEE"
+        android:layout_marginLeft="20dp"
+        android:text="选中->收到文章被收藏通知"
+        android:layout_below="@id/config_notice_commit"
+
+        android:id="@+id/activity_config_notice_islike"
+        />
+    <com.woofer.ui.imagetextswichbtn
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_config_notice_islike"
+
+        android:id="@+id/config_notice_storyislike"
+
+        >
+    </com.woofer.ui.imagetextswichbtn>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="#EEEEEE"
+        android:layout_marginLeft="20dp"
+        android:text="选中->仅wifi下上传"
+        android:layout_below="@id/config_notice_storyislike"
+
+        android:id="@+id/activity_config_notice_wifi_sync"
+        />
+    <com.woofer.ui.imagetextswichbtn
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_config_notice_wifi_sync"
+        android:id="@+id/config_notice_wifistnc_only"
+
+        >
+    </com.woofer.ui.imagetextswichbtn>
     <Button
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:id="@+id/activity_config_btn"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="退出登录"
         android:background="#FFFFFF"
-         android:layout_below="@id/activity_config_TV1"
+         android:layout_below="@id/config_notice_wifistnc_only"
+        android:id="@+id/activity_config_btn"
         />
 
 </RelativeLayout>

@@ -13,7 +13,7 @@ import java.util.Map;
 
 import woofer.com.test.R;
 
-/**activity_two适配器*/
+/**粉丝 关注 actiyity的适配器*/
 public class fansAdapter extends BaseAdapter {
 
 	private List<Map<String, Object>> data;
@@ -72,12 +72,12 @@ public class fansAdapter extends BaseAdapter {
 			zujian=(Zujian)convertView.getTag();
 		}
 		//绑定数据
-		zujian.image.setBackgroundResource((Integer) data.get(position).get("image"));
-		zujian.image1.setBackgroundResource((Integer) data.get(position).get("image1"));
+		zujian.image.setBackgroundResource((Integer) data.get(position).get("AVATAR"));
+		zujian.image1.setBackgroundResource((Integer) data.get(position).get("SEX"));
 
 
-		zujian.textView.setText((String) data.get(position).get("textView"));
-		zujian.textView1.setText((String)data.get(position).get("textView1"));
+		zujian.textView.setText((String) data.get(position).get("USERNAME"));
+		zujian.textView1.setText((String)data.get(position).get("SIGN"));
 
 
 		return convertView;

@@ -1,4 +1,3 @@
-
 package com.woofer.activity;
 
 import android.app.Activity;
@@ -43,8 +42,6 @@ public class Activity_four extends Activity {
 
     private ListView listView = null;
     private Button btn1;
-    private String loginToken;
-    private String token;
 
     private imagetextimage img1;
     private imagetextimage img2;
@@ -60,7 +57,6 @@ public class Activity_four extends Activity {
     private URL url;
     private String following;
     private String follower;
-    public static SharedPreferences.Editor editor;
 
 
     private RomauntNetWork romauntNetWork=new RomauntNetWork();
@@ -234,8 +230,6 @@ public class Activity_four extends Activity {
         username = sp.getString("USERNAME", "");
         if(btn1.getText().equals("   点此登录")&&!username.equals("")){
             btn1.setText(username);
-            loginToken=sp.getString("LOGINTOKEN","");
-            token= sp.getString("TOKEN", "");
             signatre = sp.getString("USERSIGN", "");
 //            follower = sp.getString("FOLLOWERNUM", "");
 //            following = sp.getString("FOLLOWINGNUM", "");
@@ -316,9 +310,22 @@ public class Activity_four extends Activity {
         return bitmap;
     }
 */
+@Override
+public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - firstbacktime <= 2000) {
+            this.finish();
+        } else {
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            firstbacktime = currentTime;
+        }
+    }
+    return true;
+}
 
 
-    @Override
+   /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (webView.canGoBack()&& (keyCode == KeyEvent.KEYCODE_BACK) ) {
             webView.goBack();
@@ -333,10 +340,10 @@ public class Activity_four extends Activity {
                 firstbacktime = currentTime;
             }
         }
-        /**不要写成
+        *//**不要写成
          *return super.onKeyDown(keyCode, event);
          *有毒
-         */
+         *//*
         return true;
-    }
+    }*/
 }

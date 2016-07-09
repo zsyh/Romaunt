@@ -294,8 +294,6 @@ public class EditNoteActivity extends Activity {
                     }
                 }).show();
             }*/
-
-
                 LayoutInflater layoutInflater = LayoutInflater.from(EditNoteActivity.this);
 //                LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_layoutforlabel, null);
                 View conView = layoutInflater.inflate(R.layout.dialog_layoutforlabel,null);
@@ -308,24 +306,14 @@ public class EditNoteActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                             editText_lable.setText(editText.getText().toString());
                             dialog.dismiss();
-
                         //toMainActivity();
-
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
                     @Override
-
                     public void onClick(DialogInterface dialog, int which) {
-
-                        // TODO Auto-generated method stub
-
-                        // do something
-
                         dialog.dismiss();
-
                     }
-
                 }).show();
 
 

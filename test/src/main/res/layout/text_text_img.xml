@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@drawable/btnstyle"
+    android:background="@drawable/btnstyleactfour"
     android:weightSum="1"
     >
     <LinearLayout
@@ -14,7 +14,7 @@
         android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:textColor="#000000"
+        android:textColor="@drawable/texthover"
 
         android:id="@+id/text_text_TV1"/>
     <TextView
@@ -26,8 +26,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="20dp"
-
-
+        android:textColor="@drawable/texthovergray"
         android:id="@+id/text_text_TV2"/>
 
     </LinearLayout>

@@ -39,8 +39,6 @@ public class MainActivity extends Activity {
     private String logintoken;
     private String token;
     private String userID;
-    private String signature;
-    private String avaterurl;
     private int followerNUM;
     private int followingNUM;
     private String num1;
@@ -158,21 +156,30 @@ public class MainActivity extends Activity {
                     if (response instanceof UserInfoResponse) {
                         UserInfoResponse userInfoResponse = (UserInfoResponse) response;
                         Log.e("Romaunt", userInfoResponse.msg.user.mobile);
-                        signature = userInfoResponse.msg.user.sign;
-                        avaterurl = userInfoResponse.msg.user.avatar;
+                        String signature = userInfoResponse.msg.user.sign;
+                        String avaterurl = userInfoResponse.msg.user.avatar;
                         String username = userInfoResponse.msg.user.userName;
                         int sex = userInfoResponse.msg.user.sex;
-                        Log.e("Romaunt", "&&&&&&&&&&&&&&&&&&&&&&&");
-                        //int follower  = userInfoResponse.msg.follower.size();
+                        int noticeEnable =userInfoResponse.msg.user.noticeEnable;
+                        int followingEnable =userInfoResponse.msg.user.followingEnable;
+                        int followerEnable =userInfoResponse.msg.user.followerEnable;
+                        int aboutNotice =userInfoResponse.msg.user.aboutNotice;
+                        int updateNotice =userInfoResponse.msg.user.updateNotice;
+
 
                         SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
                         editor = sp.edit();
                             /*editor.putString("FOLLOWERNUM",num1);
                             editor.putString("FOLLOWINGNUM", num2);*/
-                        editor.putString("NICHENG",username);
-                        editor.putInt("SEX",sex);
+                        editor.putString("USERNAME",username);
+                        editor.putInt("SEX", sex);
                         editor.putString("AVATERURL", avaterurl);
                         editor.putString("USERSIGN", signature);
+                        editor.putInt("NOTICEENABLE",noticeEnable);
+                        editor.putInt("FOLLOWINGENABLE",followingEnable);
+                        editor.putInt("FOLLOWERENABLE",followerEnable);
+                        editor.putInt("ABOUTENABLE",aboutNotice);
+                        editor.putInt("UPDATENOTICE",updateNotice);
 
                         editor.apply();
                         Log.e("AVA", avaterurl);
@@ -217,8 +224,8 @@ public class MainActivity extends Activity {
                             if(response2 instanceof UserInfoResponse){
                                 UserInfoResponse userInfoResponse = (UserInfoResponse) response2;
                                 Log.e("Romaunt", userInfoResponse.msg.user.mobile);
-                                signature = userInfoResponse.msg.user.sign;
-                                avaterurl = userInfoResponse.msg.user.avatar;
+                                String signature = userInfoResponse.msg.user.sign;
+                                String avaterurl = userInfoResponse.msg.user.avatar;
                                 String username = userInfoResponse.msg.user.userName;
                                 int sex = userInfoResponse.msg.user.sex;
 
@@ -226,13 +233,12 @@ public class MainActivity extends Activity {
                                 editor = sp.edit();
                             /*editor.putString("FOLLOWERNUM",num1);
                             editor.putString("FOLLOWINGNUM", num2);*/
-                                editor.putString("NICHENG",username);
-                                editor.putInt("SEX",sex);
+                                editor.putString("USERNAME", username);
+                                editor.putInt("SEX", sex);
                                 editor.putString("AVATERURL", avaterurl);
                                 editor.putString("USERSIGN", signature);
 
                                 editor.apply();
-                                Log.e("AVA", avaterurl);
 
                             }
                             else{

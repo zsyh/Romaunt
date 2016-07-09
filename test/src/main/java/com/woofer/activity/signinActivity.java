@@ -68,7 +68,13 @@ public class signinActivity extends AppCompatActivity {
         });
 
 
+
         showkey = (CheckBox)findViewById(R.id.CheckBoxShowPwd);
+
+
+        /*存储密码*/
+        sp = this.getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+
         showkey.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -180,7 +186,7 @@ public class signinActivity extends AppCompatActivity {
             userInfo.username = username;
             userInfo.key = key;
             editor.putString("USERID",userID );
-            editor.putString("USERNAME", username);
+            editor.putString("phone", username);
             editor.putString("LOGINTOKEN",logintoken);
             editor.putString("TOKEN",token);
 

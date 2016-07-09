@@ -11,7 +11,7 @@
     <com.woofer.titlebar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#3CB3A6"
+        android:background="#198E7B"
         android:id="@+id/actionbar_aboutus"
         hint:titletcolor="#FFFFFF"
         hint:titlesize="20sp"
