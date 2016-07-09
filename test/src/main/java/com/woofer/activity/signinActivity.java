@@ -119,6 +119,7 @@ public class signinActivity extends AppCompatActivity {
                             System.out.println("LoginToken:" + loginResponse.msg.LoginToken);
                             System.out.println("token:" + loginResponse.msg.token);
 
+
                             logintoken = loginResponse.msg.LoginToken;
                             token = loginResponse.msg.token;
                             userID = loginResponse.msg.userID;
@@ -189,7 +190,6 @@ public class signinActivity extends AppCompatActivity {
             editor.putString("phone", username);
             editor.putString("LOGINTOKEN",logintoken);
             editor.putString("TOKEN",token);
-
 
             editor.apply();
 

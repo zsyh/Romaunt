@@ -58,14 +58,13 @@ public class MainActivity extends Activity {
 
     public static SharedPreferences.Editor editor;
 
-    private BroadcastReceiver mBroadcastReceiver;
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.e("RomauntAlarmTest","MainActivity onDestroy()");
-        unregisterReceiver(mBroadcastReceiver);
+
     }
 
     @Override
@@ -101,19 +100,6 @@ public class MainActivity extends Activity {
 
         Log.e("RomauntAlarmTest","MainActivity onCreate()");
 
-
-        //设定定时器的广播接收器
-        mBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                //异步拿logintoken
-
-            }
-        };
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.zaizai1.broadcast.getLoginToken");
-        registerReceiver(mBroadcastReceiver, intentFilter);
 
         SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         logintoken = sp.getString("LOGINTOKEN","");
