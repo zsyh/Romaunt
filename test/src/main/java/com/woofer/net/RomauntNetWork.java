@@ -1,21 +1,15 @@
 package com.woofer.net;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.woofer.activity.MainActivity;
-import com.woofer.activity.signinActivity;
-import com.woofer.userInfo;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 /**
@@ -44,7 +38,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -54,7 +48,7 @@ public class RomauntNetWork {
                     }
 
                     @Override
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
                         Boolean status = StatusRecognize.getStatus(s);
@@ -95,7 +89,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
                         if (romauntNetworkCallback != null) {
                             romauntNetworkCallback.onError(e);
@@ -104,7 +98,7 @@ public class RomauntNetWork {
                     }
 
                     @Override
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -152,7 +146,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -163,7 +157,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -210,7 +204,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -221,7 +215,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -266,7 +260,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -276,7 +270,7 @@ public class RomauntNetWork {
                     }
 
                     @Override
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -323,7 +317,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -333,7 +327,7 @@ public class RomauntNetWork {
                     }
 
                     @Override
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
                         Boolean status = StatusRecognize.getStatus(s);
@@ -379,7 +373,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -390,7 +384,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -436,7 +430,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -447,7 +441,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -490,7 +484,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -501,7 +495,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -545,7 +539,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -556,7 +550,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -600,7 +594,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -611,7 +605,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -656,7 +650,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -667,7 +661,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -716,7 +710,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -727,7 +721,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
                         Gson gson = new Gson();
@@ -762,7 +756,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -773,7 +767,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
                         Gson gson = new Gson();
@@ -804,7 +798,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -815,7 +809,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -859,7 +853,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -870,7 +864,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -914,7 +908,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -925,7 +919,7 @@ public class RomauntNetWork {
 
                     @Override
 
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
 
@@ -1115,7 +1109,7 @@ public class RomauntNetWork {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int i) {
                         Log.e("NetWorkTest", "Error:" + e.getMessage());
 
                         if (romauntNetworkCallback != null) {
@@ -1125,7 +1119,7 @@ public class RomauntNetWork {
                     }
 
                     @Override
-                    public void onResponse(String s) {
+                    public void onResponse(String s, int i) {
                         Log.e("NetWorkTest", "onResponse:" + s);
 
                         Boolean status = StatusRecognize.getStatus(s);
