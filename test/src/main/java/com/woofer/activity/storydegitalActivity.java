@@ -122,45 +122,39 @@ public class storydegitalActivity extends AppCompatActivity {
                 if(isown){
                     isown=!isown;
                     collectbtn.setImageResource(R.drawable.collect);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            RomauntNetWork romauntNetWork = new RomauntNetWork();
-                            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                @Override
-                                public void onResponse(Object response) {
-                                    Toast.makeText(storydegitalActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
-                                }
 
-                                @Override
-                                public void onError(Object error) {
-                                    Toast.makeText(storydegitalActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            romauntNetWork.storyCollect(LoginToken, Integer.toString(UserId),"0");
+                    RomauntNetWork romauntNetWork = new RomauntNetWork();
+                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                        @Override
+                        public void onResponse(Object response) {
+                            Toast.makeText(storydegitalActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
                         }
-                    }).start();
+
+                        @Override
+                        public void onError(Object error) {
+                            Toast.makeText(storydegitalActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    romauntNetWork.storyCollect(LoginToken, Integer.toString(UserId), "0");
+
                 }else{
                     isown=!isown;
                     collectbtn.setImageResource(R.drawable.collect_yellow);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            RomauntNetWork romauntNetWork = new RomauntNetWork();
-                            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                @Override
-                                public void onResponse(Object response) {
-                                    Toast.makeText(storydegitalActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
-                                }
 
-                                @Override
-                                public void onError(Object error) {
-                                    Toast.makeText(storydegitalActivity.this, "收藏失败", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            romauntNetWork.storyCollect(LoginToken, Integer.toString(UserId), "1");
+                    RomauntNetWork romauntNetWork = new RomauntNetWork();
+                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                        @Override
+                        public void onResponse(Object response) {
+                            Toast.makeText(storydegitalActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                         }
-                    }).start();
+
+                        @Override
+                        public void onError(Object error) {
+                            Toast.makeText(storydegitalActivity.this, "收藏失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    romauntNetWork.storyCollect(LoginToken, Integer.toString(UserId), "1");
+
                 }
             }
         });
