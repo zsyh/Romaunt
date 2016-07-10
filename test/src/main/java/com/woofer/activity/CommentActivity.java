@@ -307,13 +307,14 @@ public class CommentActivity extends AppCompatActivity {
             View v = getCurrentFocus();
             if (isShouldHideInput(v, ev)) {
                 onFocusChange(false);
+                mCommentEdittext.setText("");
 
             }
             return super.dispatchTouchEvent(ev);
         }
         // 必不可少，否则所有的组件都不会有TouchEvent了
         if (getWindow().superDispatchTouchEvent(ev)) {
-            mCommentEdittext.setText("");
+
             return true;
         }
         return onTouchEvent(ev);
