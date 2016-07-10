@@ -66,13 +66,15 @@ public  class  App extends Application{
 
                 String bodyString = buffer.clone().readString(charset);
 
-                Log.e("Romaunt", "Interceptor中的body:"+bodyString);
+                //Log.e("Romaunt", "Interceptor中的body:"+bodyString);
 
                 //token已过期
                 if(bodyString.indexOf("LoginToken")>=0){
 
                     Boolean status = StatusRecognize.getStatus(bodyString);
                     if(status==false) {
+
+                        Log.e("Romaunt", "Interceptor判定LoginToken已过期，开始重新获取");
 
                         //取出本地的token
                         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
@@ -89,9 +91,12 @@ public  class  App extends Application{
                             LoginResponse loginResponse=(LoginResponse)object;
                             newLoginToken = loginResponse.msg.LoginToken;
                             newToken= loginResponse.msg.token;
+                            Log.e("Romaunt", "Interceptor获取的新token："+newToken);
+                            Log.e("Romaunt", "Interceptor获取的新LoginToken："+newLoginToken);
                         }
                         else {
                             Log.e("Romaunt","Interceptor 尝试获取新LoginToken时返回不是LoginResponse");
+                            return originalResponse;//抛出status false
                         }
 
 

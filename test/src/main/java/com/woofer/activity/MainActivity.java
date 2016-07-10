@@ -170,85 +170,9 @@ public class MainActivity extends Activity {
                         editor.apply();
                         Log.e("AVA", avaterurl);
                     }
-                    else if(response instanceof StatusFalseResponse && ((StatusFalseResponse) response).msg.equals("LoginToken"))
+                    else if(response instanceof StatusFalseResponse )
                     {
-                        Object response1 =romauntNetWork.getTokenSync(token);
-                        if(response1==null){
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            return ;
-                        }
-                        if (response1 instanceof LoginResponse) {
-                            LoginResponse loginResponse =(LoginResponse)response1;
-
-                            logintoken = loginResponse.msg.LoginToken;
-                            token = loginResponse.msg.token;
-                            userID = loginResponse.msg.userID;
-
-                            SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-                            userInfo.status = 1;
-                            editor = sp.edit();
-                            editor.putString("LOGINTOKEN", logintoken);
-                            editor.putString("TOKEN", token);
-
-                            editor.apply();
-
-                            Object response2 = romauntNetWork.getUserInfoSync(logintoken, userID);
-                            if(response2==null){
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                return ;
-                            }
-                            if(response2 instanceof UserInfoResponse){
-                                UserInfoResponse userInfoResponse = (UserInfoResponse) response2;
-                                Log.e("Romaunt", userInfoResponse.msg.user.mobile);
-                                String signature = userInfoResponse.msg.user.sign;
-                                String avaterurl = userInfoResponse.msg.user.avatar;
-                                String username = userInfoResponse.msg.user.userName;
-                                int sex = userInfoResponse.msg.user.sex;
-
-                                sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-                                editor = sp.edit();
-                            /*editor.putString("FOLLOWERNUM",num1);
-                            editor.putString("FOLLOWINGNUM", num2);*/
-                                editor.putString("USERNAME", username);
-                                editor.putInt("SEX", sex);
-                                editor.putString("AVATERURL", avaterurl);
-                                editor.putString("USERSIGN", signature);
-
-                                editor.apply();
-
-                            }
-                            else{
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT);
-                                    }
-                                });
-                            }
-
-                        }
-                        else if(response instanceof StatusFalseResponse)
-                        {
-                            //网络无连接
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT);
-                                }
-                            });
-                        }
-
-
+                        Log.e("Romaunt","MainActivity中getUserInfo StatusFalse");
                     }
                     else
                     {
