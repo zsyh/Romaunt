@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,8 +15,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
-import android.webkit.WebSettings.LayoutAlgorithm;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.woofer.net.RomauntNetWork;
-import com.woofer.refreshlayout.util.Utils;
+import com.woofer.util.Utils;
 import com.woofer.ui.imagetextimage;
 import com.woofer.userInfo;
 

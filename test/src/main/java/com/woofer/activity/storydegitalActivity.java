@@ -19,15 +19,13 @@ import com.woofer.net.GetStoryResponse;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
-import com.woofer.refreshlayout.util.Utils;
+import com.woofer.util.Utils;
 import com.woofer.titlebar.TitleBar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.security.auth.login.LoginException;
 
 public class storydegitalActivity extends AppCompatActivity {
     private TitleBar titleBar;

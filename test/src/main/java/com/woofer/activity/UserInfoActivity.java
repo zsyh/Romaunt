@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
-import com.woofer.refreshlayout.util.Utils;
+import com.woofer.util.Utils;
 import com.woofer.ui.CustomDialogsexchoose;
 import com.woofer.ui.ImageText;
 import com.woofer.ui.ImageTexttouxiang;

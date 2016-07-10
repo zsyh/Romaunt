@@ -1,4 +1,4 @@
-package com.woofer.refreshlayout.util;
+package com.woofer.util;
 
 
 import android.support.annotation.StringRes;
