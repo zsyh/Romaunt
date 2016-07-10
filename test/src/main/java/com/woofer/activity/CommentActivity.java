@@ -78,8 +78,6 @@ public class CommentActivity extends AppCompatActivity {
         list = new ArrayList<>();
 
         initView();
-
-        getCommentData();
         Intent intent = getIntent();
         Logintoken = intent.getStringExtra("LOGINTOKEN");
         Userid = intent.getIntExtra("USERID", 1);
@@ -88,6 +86,9 @@ public class CommentActivity extends AppCompatActivity {
         content = intent.getStringExtra("Content");
         storyId = intent.getStringExtra("ID");
         InitCompement();
+
+        getCommentData();
+
     }
 
     private void initView() {
@@ -168,85 +169,59 @@ public class CommentActivity extends AppCompatActivity {
      * 获取评论列表数据
      */
     private void getCommentData() {
-        /**此线程不开会导致闪退*/
-        new Thread(new Runnable() {
+
+        RomauntNetWork romauntNetWork = new RomauntNetWork();
+        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
             @Override
-            public void run() {
-                RomauntNetWork romauntNetWork = new RomauntNetWork();
-                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                    @Override
-                    public void onResponse(Object response) {
-                        if (response instanceof GetCommentlistResponse) {
-                            final GetCommentlistResponse getCommentlistResponse = (GetCommentlistResponse) response;
+            public void onResponse(Object response) {
+                if (response instanceof GetCommentlistResponse) {
+                    final GetCommentlistResponse getCommentlistResponse = (GetCommentlistResponse) response;
 
-                            count = getCommentlistResponse.msg.comment.size();
-                            for (int i = 0; i < getCommentlistResponse.msg.comment.size(); i++) {
-                                list.add(new Commentdate(i, getCommentlistResponse.msg.comment.get(i).UserId, " ",
-                                        datetotime(getCommentlistResponse.msg.comment.get(i).createdAt), getCommentlistResponse.msg.comment.get(i).content,
-                                        " ", " ",getCommentlistResponse.msg.comment.get(i).id));
-                            }
-                            for(int i= 0;i<getCommentlistResponse.msg.comment.size(); i++){
-                                RomauntNetWork romauntNetWork1 = new RomauntNetWork();
-                                romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                    @Override
-                                    public void onResponse(Object response) {
-                                        UserInfoResponse userInfoResponse = (UserInfoResponse)response;
-                                            for(int j = 0;j<list.size();j++){
-                                                if(list.get(j).commnetAccount==userInfoResponse.msg.user.id){
-                                                    list.get(j).commentNickname =userInfoResponse.msg.user.userName;
-                                                    list.get(j).avatar = userInfoResponse.msg.user.avatar;
-                                                    list.get(j).sign = userInfoResponse.msg.user.sign;
-                                                }
-                                            }
-                                        adapter.notifyDataSetChanged();
-                                        /*for(int i=0;i<list.size();i++){
-                                            for(int j=0;j<i;j++){
-                                                if(Long.parseLong(list.get(j).origintimestamp)>Long.parseLong(list.get(i).origintimestamp)){
-                                                    List<Commentdate> temp =list;
-                                                    list.get(j).positon=temp.get(i).positon;
-                                                    list.get(j).commnetAccount = temp.get(i).commnetAccount;
-                                                    list.get(j).commentNickname = temp.get(i).commentNickname;
-                                                    list.get(j).commentTime = temp.get(i).commentTime;
-                                                    list.get(j).commentContent =temp.get(i).commentContent;
-                                                    list.get(j).sign = temp.get(i).sign;
-                                                    list.get(j).avatar = temp.get(i).avatar;
-                                                    list.get(j).storyid = temp.get(i).storyid;
-
-                                                    list.get(i).positon=temp.get(j).positon;
-                                                    list.get(i).commnetAccount = temp.get(j).commnetAccount;
-                                                    list.get(i).commentNickname = temp.get(j).commentNickname;
-                                                    list.get(i).commentTime = temp.get(j).commentTime;
-                                                    list.get(i).commentContent =temp.get(j).commentContent;
-                                                    list.get(i).sign = temp.get(j).sign;
-                                                    list.get(i).avatar = temp.get(j).avatar;
-                                                    list.get(i).storyid = temp.get(j).storyid;
-                                                }
-                                            }
-                                        }*/
-                                    }
-                                    @Override
-                                    public void onError(Object error) {
-
-                                    }
-                                });romauntNetWork1.getUserInfo(Logintoken,Integer.toString(getCommentlistResponse.msg.comment.get(i).UserId));
-                            }
-                            adapter = new CommentAdapter(CommentActivity.this, list, R.layout.comment_item_list, handler);
-                            mListData.setAdapter(adapter);
-                        }
-
-
+                    count = getCommentlistResponse.msg.comment.size();
+                    for (int i = 0; i < getCommentlistResponse.msg.comment.size(); i++) {
+                        list.add(new Commentdate(i, getCommentlistResponse.msg.comment.get(i).UserId, " ",
+                                datetotime(getCommentlistResponse.msg.comment.get(i).createdAt), getCommentlistResponse.msg.comment.get(i).content,
+                                " ", " ", getCommentlistResponse.msg.comment.get(i).id));
                     }
+                    for (int i = 0; i < getCommentlistResponse.msg.comment.size(); i++) {
+                        RomauntNetWork romauntNetWork1 = new RomauntNetWork();
+                        romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                            @Override
+                            public void onResponse(Object response) {
+                                UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                                for (int j = 0; j < list.size(); j++) {
+                                    if (list.get(j).commnetAccount == userInfoResponse.msg.user.id) {
+                                        list.get(j).commentNickname = userInfoResponse.msg.user.userName;
+                                        list.get(j).avatar = userInfoResponse.msg.user.avatar;
+                                        list.get(j).sign = userInfoResponse.msg.user.sign;
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
 
+                            }
 
+                            @Override
+                            public void onError(Object error) {
 
-                    @Override
-                    public void onError(Object error) {
-
+                            }
+                        });
+                        romauntNetWork1.getUserInfo(Logintoken, Integer.toString(getCommentlistResponse.msg.comment.get(i).UserId));
                     }
-                });
-                romauntNetWork.getCommentlist(Logintoken, storyId);
+                    adapter = new CommentAdapter(CommentActivity.this, list, R.layout.comment_item_list, handler);
+                    mListData.setAdapter(adapter);
+                }
+
+
             }
-        }).start();
+
+
+            @Override
+            public void onError(Object error) {
+
+            }
+        });
+        romauntNetWork.getCommentlist(Logintoken, storyId);
+
 }
     /**
      * 获取回复列表数据

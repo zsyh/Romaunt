@@ -94,29 +94,26 @@ public class UserInfoActivity extends AppCompatActivity {
                         editor.putString("USERNAME", username);
                         editor.apply();
                         dialog.dismiss();
-                        new Thread(new Runnable() {
+
+                        RomauntNetWork romauntNetWork = new RomauntNetWork();
+                        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                             @Override
-                            public void run() {
-                                RomauntNetWork romauntNetWork = new RomauntNetWork();
-                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                    @Override
-                                    public void onResponse(Object response) {
-                                        if(response instanceof UserInfoResponse) {
-                                            Toast.makeText(UserInfoActivity.this, "用户名更新成功", Toast.LENGTH_SHORT).show();
-                                        }else{
-                                            Toast.makeText(UserInfoActivity.this, "用户名更新失败,请重试", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(Object error) {
-
-                                    }
-                                });
-                                romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(sex), Integer.toString(updatenotice),
-                                        Integer.toString(noticeenable), Integer.toString(followingenable), Integer.toString(followerenable), Integer.toString(aboutnotice));
+                            public void onResponse(Object response) {
+                                if(response instanceof UserInfoResponse) {
+                                    Toast.makeText(UserInfoActivity.this, "用户名更新成功", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(UserInfoActivity.this, "用户名更新失败,请重试", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }).start();
+
+                            @Override
+                            public void onError(Object error) {
+
+                            }
+                        });
+                        romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(sex), Integer.toString(updatenotice),
+                                Integer.toString(noticeenable), Integer.toString(followingenable), Integer.toString(followerenable), Integer.toString(aboutnotice));
+
 
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
