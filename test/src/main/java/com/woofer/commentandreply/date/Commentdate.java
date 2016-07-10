@@ -7,40 +7,46 @@ import java.util.List;
  * Created by Admin on 2016/5/27.
  */
 public class Commentdate {
-    public int positon;					    //评论记录ID
+    public int positon;					    //记录listview中位置
     public int commnetAccount;	       //评论人账号
     public String commentNickname;	   //评论人昵称
     public String commentTime;		   //评论时间
     public String commentContent;	   //评论内容
     public String sign;
     public String avatar;               //获取头像
-    public int storyid;
+    public int commentid;                 //评论id
+
+    /**用来检索评论下的回复个数 目前好像用不到 因为发表回复的时候不能指定人
+     * 只能回复发表达当前评论的人
+     * */
+    public int replynum;
+
+    public List<Replydate> replyList = new ArrayList<Replydate>();
+    //回复内容列表
     public Commentdate (){
 
 
     }
 
-    public Commentdate (int positon,int commnetAccount, String commentNickname, String commentTime, String commentContent, String sign, String avatar,int storyid){
+    public Commentdate (int positon,int commnetAccount, String commentNickname, String commentTime, String commentContent, String sign, String avatar,int commentid){
         this.positon = positon;
         this.commnetAccount = commnetAccount;
         this.commentNickname = commentNickname;
         this.commentTime = commentTime;
         this.commentContent = commentContent;
         this.sign = sign;
-        this.storyid = storyid;
+        this.commentid = commentid;
 
         this.avatar = avatar;
     }
     public int getStoryid(){
-        return storyid;
+        return commentid;
     }
-    public  void setStoryid(int storyid){
-        this.storyid = storyid;
+    public  void setStoryid(int commentid){
+        this.commentid = commentid;
     }
 
 
-    private List<Replydate> replyList = new ArrayList<Replydate>();
-    //回复内容列表
     public int getPositon() {
         return positon;
     }

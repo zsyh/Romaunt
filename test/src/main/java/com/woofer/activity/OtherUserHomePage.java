@@ -31,7 +31,10 @@ import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
 import com.woofer.refreshlayout.model.ParhsModel;
 import com.woofer.titlebar.TitleBar;
+
 import com.woofer.ui.Followbtnstyle;
+
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +42,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import woofer.com.test.R;
 
@@ -223,23 +227,41 @@ public class OtherUserHomePage extends Activity {
 
             @Override
             public void onClick(View v) {
-                if (fansEnable == 1) {
                     if (hasmyself) {
+
                         *//**取消关注*//*
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
+
+
                                 RomauntNetWork romauntNetWork = new RomauntNetWork();
                                 romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                                     @Override
                                     public void onResponse(Object response) {
                                         AddFollowResponse addFollowResponse = (AddFollowResponse) response;
                                         Log.e("cancelfollow", addFollowResponse.status);
+
+
+
+
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
                                                 followImgbtn.setImageResource(R.drawable.icon_plus_grey);
                                                 hasmyself = false;
+                                                SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+
+
+                                                String username = sp.getString("USERNAME","");
+                                                List<Map<String,Object>> fansList=OtherUserHomePage.otherUserHomePageTransfer.fansList;
+                                                for(int i =0 ;i<fansList.size();i++) {
+                                                    if(fansList.get(i).get("USERNAME").equals(username)) {
+                                                        fansList.remove(i);
+                                                    }
+                                                }
+                                                Intent i = new Intent("com.zaizai1.broadcast.notifyFansRefresh");
+                                                sendBroadcast(i);
                                             }
                                         });
                                     }
@@ -250,14 +272,11 @@ public class OtherUserHomePage extends Activity {
                                     }
                                 });
                                 romauntNetWork.delFollow(LoginToken, Integer.toString(UserId));
-                            }
-                        }).start();
+
 
 
                     } else {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
+
                                 RomauntNetWork romauntNetWork = new RomauntNetWork();
                                 romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                                     @Override
@@ -267,11 +286,29 @@ public class OtherUserHomePage extends Activity {
                                         }
                                         AddFollowResponse addFollowResponse = (AddFollowResponse) response;
                                         if (addFollowResponse.status.equals("true")) {
+
+
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     followImgbtn.setImageResource(R.drawable.icon_plus_green);
                                                     hasmyself = true;
+                                                    SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+
+                                                    String username = sp.getString("USERNAME","");
+                                                    String sign= sp.getString("USERSIGN", "");
+
+                                                    Map<String, Object> map=new HashMap<>();
+                                                    map.put("AVATAR",  R.drawable.img_warning);
+                                                    map.put("SEX", R.drawable.img_warning);
+                                                    map.put("USERNAME", username);
+                                                    map.put("SIGN", sign);
+                                                    OtherUserHomePage.otherUserHomePageTransfer.fansList.add(map);
+
+
+                                                    Intent i = new Intent("com.zaizai1.broadcast.notifyFansRefresh");
+                                                    sendBroadcast(i);
+
                                                 }
                                             });
                                         }
@@ -283,12 +320,9 @@ public class OtherUserHomePage extends Activity {
                                     }
                                 });
                                 romauntNetWork.addFollow(LoginToken, Integer.toString(UserId));
-                            }
-                        }).start();
+
                     }
-                } else {
-                    Toast.makeText(OtherUserHomePage.this, "该用户已设置为不可添加粉丝", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });*/
         InformTitle = (TextView)findViewById(R.id.OT_home_item);

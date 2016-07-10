@@ -72,7 +72,7 @@ public class FollowingsActivity extends Activity{
                     dataList= OtherUserHomePage.otherUserHomePageTransfer.followingList;
                     mDataLV.setAdapter(new com.woofer.adapter.fansAdapter(FollowingsActivity.this,dataList));
 
-                    // unregisterReceiver(mBroadcastReceiver);
+                    //unregisterReceiver(mBroadcastReceiver);
                 }
             };
             IntentFilter intentFilter = new IntentFilter();

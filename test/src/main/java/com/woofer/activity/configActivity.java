@@ -255,9 +255,7 @@ public class configActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
+
                     RomauntNetWork romauntNetWork = new RomauntNetWork();
                     romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                         @Override
@@ -282,8 +280,7 @@ public class configActivity extends AppCompatActivity {
 
                     romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(sex), Integer.toString(UPDATENOTICE),
                             Integer.toString(NOTICEENABLE), Integer.toString(FOLLOWINGENABLE), Integer.toString(FOLLOWERENABLE), Integer.toString(ABOUTENABLE));
-                }
-            }).start();
+
                 this.finish();
         }
         return true;

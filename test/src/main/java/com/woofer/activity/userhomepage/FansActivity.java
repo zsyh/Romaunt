@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ListView;
 import com.woofer.activity.OtherUserHomePage;
@@ -24,10 +25,13 @@ public class FansActivity extends Activity{
     private List<Map<String,Object>> dataList;
     /**记录当前适listview中item个数 去重 为多步加载做准备*/
     private BroadcastReceiver mBroadcastReceiver;
+    private BroadcastReceiver BroadcastReceiverFansListRefresh;
+    private fansAdapter mfansAdapter;
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mBroadcastReceiver);
+        unregisterReceiver(BroadcastReceiverFansListRefresh);
     }
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -49,13 +53,33 @@ public class FansActivity extends Activity{
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     dataList = OtherUserHomePage.otherUserHomePageTransfer.fansList;
-                    mDataLV.setAdapter(new fansAdapter(FansActivity.this, dataList));
-                    // unregisterReceiver(mBroadcastReceiver);
+                    mfansAdapter=new fansAdapter(FansActivity.this, dataList);
+                    mDataLV.setAdapter(mfansAdapter);
+                    unregisterReceiver(mBroadcastReceiver);
                 }
             };
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("com.zaizai1.broadcast.notifyFansGot");
             registerReceiver(mBroadcastReceiver, intentFilter);
+
+
+            BroadcastReceiverFansListRefresh = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    mfansAdapter.notifyDataSetChanged();
+                    Log.e("Romaunt","FansActivity的fanslist更新广播接收");
+                }
+            };
+            IntentFilter intentFilterFansListRefresh = new IntentFilter();
+            intentFilterFansListRefresh.addAction("com.zaizai1.broadcast.notifyFansRefresh");
+            registerReceiver(BroadcastReceiverFansListRefresh, intentFilterFansListRefresh);
+
+
+
+
+
         }
+
+
     }
 }

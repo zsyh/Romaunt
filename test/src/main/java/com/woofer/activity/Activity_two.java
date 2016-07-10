@@ -185,7 +185,8 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                         listLogic.get(j).avater = userInfoResponse.msg.user.avatar;
                                     }
                                 }
-                                userInfo.nowPage++;
+                                mAdapter.notifyDataSetChanged();
+
                             }
 
                             @Override
@@ -201,6 +202,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
 
                     mAdapter.setDatas(listLogic);
+                    userInfo.nowPage++;
                 }
 
                 @Override
@@ -328,7 +330,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                             int count = publicStoryListResponse.msg.size();
                             for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
 
-                                if (publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
+                                if (!mAdapter.isEmpty() && publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
                                     hasSame = true;
                                     count = i;
                                 }
@@ -363,6 +365,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                                 listNewData.get(j).sign = userInfoResponse.msg.user.sign;
                                             }
                                         }
+                                        mAdapter.notifyDataSetChanged();
 
 
                                     }
@@ -459,7 +462,9 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                         listMoreData.get(j).authorname = userInfoResponse.msg.user.userName;
                                         listMoreData.get(j).sign = userInfoResponse.msg.user.sign;
                                     }
+
                                 }
+                                mAdapter.notifyDataSetChanged();
                             }
 
                             @Override
