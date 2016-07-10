@@ -95,8 +95,6 @@ public class CommentAdapter extends BaseAdapter {
 
             mholder.replyBut = (Button)
                     convertView.findViewById(R.id.but_comment_reply);
-            mholder.mDelect = (Button)
-                    convertView.findViewById(R.id.but_comment_delect);
 
             convertView.setTag(mholder);
         } else {
@@ -107,13 +105,6 @@ public class CommentAdapter extends BaseAdapter {
         mholder.commentItemTime.setText(bean.getCommentTime());
         mholder.commentItemContent.setText(bean.getCommentContent());
 
-        if(list.get(position).getPositon()==4){
-            mholder.mDelect.setVisibility(View.VISIBLE);
-            mholder.replyBut.setVisibility(View.GONE);
-        }else {
-            mholder.mDelect.setVisibility(View.GONE);
-            mholder.replyBut.setVisibility(View.VISIBLE);
-        }
 
 
         final ReplyAdapter adapter = new ReplyAdapter(context, bean.getReplyList(), R.layout.reply_item);
@@ -121,7 +112,6 @@ public class CommentAdapter extends BaseAdapter {
         TextviewClickListener tcl = new TextviewClickListener(position);
         mholder.replyBut.setOnClickListener(tcl);
 
-        mholder.mDelect.setOnClickListener(tcl);
         return convertView;
     }
 
@@ -130,9 +120,7 @@ public class CommentAdapter extends BaseAdapter {
         public TextView commentItemTime;            //评论时间
         public TextView commentItemContent;         //评论内容
         public NoScrollListView replyList;          //评论回复列表
-        public TextView mPraiseText;                //点赞
         public Button replyBut;                     //回复
-        public Button mDelect;                      //删除评论
         public ImageView avatarpic;                 //
         public ImageView sexpic;                    //
 
@@ -160,19 +148,9 @@ public class CommentAdapter extends BaseAdapter {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.but_comment_reply:
-                    handler.sendMessage(handler.obtainMessage(10, position));
+                    handler.sendMessage(handler.obtainMessage(1, position));
                     break;
-                case R.id.lyt_comment_zan:
-                    if (isVisible.get(list.get(position).getPositon())){
-                        isVisible.put(list.get(position).getPositon(), false);
-                    }else {
-                        isVisible.put(list.get(position).getPositon(), true);
-                    }
-                    notifyDataSetChanged();
-                    break;
-                case R.id.but_comment_delect:
-                    handler.sendMessage(handler.obtainMessage(11, position));
-                    break;
+
             }
         }
     }

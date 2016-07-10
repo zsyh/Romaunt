@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="花朵盛开时"
+        android:text="用户名"
         android:textColor="#848484"
         android:textSize="16sp"
         android:layout_toRightOf="@id/comment_area_avatar"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:layout_marginRight="5dp"
-        android:text="2小时前"
+        android:text="time"
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@id/comment_name"
         android:textSize="12sp"
@@ -46,7 +46,7 @@
         android:textSize="19dp"
         android:paddingRight="40dp"
         android:layout_below="@id/comment_name"
-        android:text="这个分析做的不错非常直观一目了然按时大大大"
+        android:text="个人签名"
 
         android:id="@+id/comment_content"
         />
@@ -61,27 +61,7 @@
         android:id="@+id/comment_item_LI1"
         >
 
-        <LinearLayout
 
-            android:id="@+id/lyt_comment_zan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:visibility="visible"
-            >
-
-            <ImageView
-                android:id="@+id/img_zan"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                />
-
-
-
-        </LinearLayout>
 
 
         <Button
@@ -99,19 +79,7 @@
             android:visibility="visible"
             />
 
-        <Button
-            android:id="@+id/but_comment_delect"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/button_comment_item"
-            android:paddingBottom="3dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="3dp"
-            android:text="删除"
-            android:textColor="#D55353"
-            android:visibility="visible" />
+
 
     </LinearLayout>
 
