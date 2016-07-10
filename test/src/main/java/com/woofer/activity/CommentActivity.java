@@ -48,7 +48,7 @@ public class CommentActivity extends AppCompatActivity {
     private ListView mListData;
     private LinearLayout mLytCommentVG;
     private NoTouchLinearLayout mLytEdittextVG;
-    private EditText mCommentEdittext;
+    public static EditText mCommentEdittext;
     private Button mSendBut;
 
     private CommentAdapter adapter;
@@ -417,11 +417,14 @@ public class CommentActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
         //判断控件是否显示
         if (mLytEdittextVG.getVisibility() == View.VISIBLE) {
             mLytEdittextVG.setVisibility(View.GONE);
             mLytCommentVG.setVisibility(View.VISIBLE);
+        }
+        else{
+            super.onBackPressed();
         }
     }
     private String datetotime(String time){
