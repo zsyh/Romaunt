@@ -161,7 +161,7 @@ public class OtherUserHomePage extends Activity {
         followbtnstyle.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fansEnable == 1) {
+
                     if (hasmyself) {
                         /**取消关注*/
                                 RomauntNetWork romauntNetWork = new RomauntNetWork();
@@ -241,9 +241,7 @@ public class OtherUserHomePage extends Activity {
                                 });
                                 romauntNetWork.addFollow(LoginToken, Integer.toString(UserId));
                     }
-                } else {
-                    Toast.makeText(OtherUserHomePage.this, "该用户已设置为不可添加粉丝", Toast.LENGTH_SHORT).show();
-                }
+
             }
 
 

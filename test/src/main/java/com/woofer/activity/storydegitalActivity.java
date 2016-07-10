@@ -197,7 +197,7 @@ public class storydegitalActivity extends AppCompatActivity {
                 Signature = userInfoResponse.msg.user.sign;
                 username.setText(UserName);
                 signatrue.setText(Signature);
-                followingEnable = userInfoResponse.msg.user.followerEnable;
+                followingEnable = userInfoResponse.msg.user.followingEnable;
                 fansEnable = userInfoResponse.msg.user.followerEnable;
                 noticeEnable = userInfoResponse.msg.user.noticeEnable;
 
