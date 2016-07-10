@@ -198,6 +198,7 @@ public class CommentActivity extends AppCompatActivity {
                                                     list.get(j).sign = userInfoResponse.msg.user.sign;
                                                 }
                                             }
+                                        adapter.notifyDataSetChanged();
                                         /*for(int i=0;i<list.size();i++){
                                             for(int j=0;j<i;j++){
                                                 if(Long.parseLong(list.get(j).origintimestamp)>Long.parseLong(list.get(i).origintimestamp)){
