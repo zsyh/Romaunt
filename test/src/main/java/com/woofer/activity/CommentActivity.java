@@ -423,6 +423,7 @@ public class CommentActivity extends AppCompatActivity {
         if (mLytEdittextVG.getVisibility() == View.VISIBLE) {
             mLytEdittextVG.setVisibility(View.GONE);
             mLytCommentVG.setVisibility(View.VISIBLE);
+            mCommentEdittext.setText("");
         }
         else{
             super.onBackPressed();
