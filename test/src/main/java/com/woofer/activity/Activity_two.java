@@ -328,7 +328,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                             int count = publicStoryListResponse.msg.size();
                             for (int i = 0; i < publicStoryListResponse.msg.size(); i++) {
 
-                                if (publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
+                                if (!mAdapter.isEmpty() && publicStoryListResponse.msg.get(i).id.equals(mAdapter.getItem(0).id)) {
                                     hasSame = true;
                                     count = i;
                                 }
