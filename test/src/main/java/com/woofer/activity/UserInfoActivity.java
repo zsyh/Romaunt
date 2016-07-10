@@ -89,29 +89,35 @@ public class UserInfoActivity extends AppCompatActivity {
                         .setView(conView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         username = editText.getText().toString();
-                        nicheng.setText(1,username);
+                        nicheng.setText(1, username);
                         editor = sp.edit();
                         editor.putString("USERNAME", username);
                         editor.apply();
                         dialog.dismiss();
-                        RomauntNetWork romauntNetWork = new RomauntNetWork();
-                        romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                        new Thread(new Runnable() {
                             @Override
-                            public void onResponse(Object response) {
-                                if(response instanceof UserInfoResponse) {
-                                    Toast.makeText(UserInfoActivity.this, "用户名更新成功", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(UserInfoActivity.this, "用户名更新失败,请重试", Toast.LENGTH_SHORT).show();
-                                }
-                            }
+                            public void run() {
+                                RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        if(response instanceof UserInfoResponse) {
+                                            Toast.makeText(UserInfoActivity.this, "用户名更新成功", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(UserInfoActivity.this, "用户名更新失败,请重试", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
 
-                            @Override
-                            public void onError(Object error) {
+                                    @Override
+                                    public void onError(Object error) {
 
+                                    }
+                                });
+                                romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(sex), Integer.toString(updatenotice),
+                                        Integer.toString(noticeenable), Integer.toString(followingenable), Integer.toString(followerenable), Integer.toString(aboutnotice));
                             }
-                        });
-                        romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(sex), Integer.toString(updatenotice),
-                                Integer.toString(noticeenable), Integer.toString(followingenable), Integer.toString(followerenable), Integer.toString(aboutnotice));
+                        }).start();
+
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -197,7 +203,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
                                             }
                                         });
-                                        romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(1), Integer.toString(updatenotice),
+                                        romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(2), Integer.toString(updatenotice),
                                                 Integer.toString(noticeenable), Integer.toString(followingenable), Integer.toString(followerenable), Integer.toString(aboutnotice));
                                     }
                                 }).start();
@@ -298,24 +304,30 @@ public class UserInfoActivity extends AppCompatActivity {
                             editor.putString("USERSIGN", signature);
                             editor.apply();
                             dialog.dismiss();
-                            RomauntNetWork romauntNetWork = new RomauntNetWork();
-                            romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                            new Thread(new Runnable() {
                                 @Override
-                                public void onResponse(Object response) {
-                                    if (response instanceof UserInfoResponse) {
-                                        Toast.makeText(UserInfoActivity.this, "签名更新成功", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(UserInfoActivity.this, "签名更新失败 请重试 ", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
+                                public void run() {
+                                    RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                        @Override
+                                        public void onResponse(Object response) {
+                                            if (response instanceof UserInfoResponse) {
+                                                Toast.makeText(UserInfoActivity.this, "签名更新成功", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(UserInfoActivity.this, "签名更新失败 请重试 ", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
 
-                                @Override
-                                public void onError(Object error) {
+                                        @Override
+                                        public void onError(Object error) {
 
+                                        }
+                                    });
+                                    romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(sex), Integer.toString(updatenotice),
+                                            Integer.toString(noticeenable), Integer.toString(followingenable), Integer.toString(followerenable), Integer.toString(aboutnotice));
                                 }
-                            });
-                            romauntNetWork.updateUserInfo(logintoken, username, avacterurl, signature, Integer.toString(sex), Integer.toString(updatenotice),
-                                    Integer.toString(noticeenable), Integer.toString(followingenable), Integer.toString(followerenable), Integer.toString(aboutnotice));
+                            }).start();
+
                         } else {
                             Toast.makeText(UserInfoActivity.this, "签名不能为空", Toast.LENGTH_SHORT).show();
                         }
