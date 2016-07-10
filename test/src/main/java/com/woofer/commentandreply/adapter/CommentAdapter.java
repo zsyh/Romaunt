@@ -56,7 +56,7 @@ public class CommentAdapter extends BaseAdapter {
         isVisible = new HashMap<Integer, Boolean>();
         for (int i = 0; i < list.size(); i++) {
             //规避ID重复的风险
-            addMap(list.get(i).getId());
+            addMap(list.get(i).getPositon());
         }
     }
 
@@ -107,7 +107,7 @@ public class CommentAdapter extends BaseAdapter {
         mholder.commentItemTime.setText(bean.getCommentTime());
         mholder.commentItemContent.setText(bean.getCommentContent());
 
-        if(list.get(position).getId()==4){
+        if(list.get(position).getPositon()==4){
             mholder.mDelect.setVisibility(View.VISIBLE);
             mholder.replyBut.setVisibility(View.GONE);
         }else {
@@ -163,10 +163,10 @@ public class CommentAdapter extends BaseAdapter {
                     handler.sendMessage(handler.obtainMessage(10, position));
                     break;
                 case R.id.lyt_comment_zan:
-                    if (isVisible.get(list.get(position).getId())){
-                        isVisible.put(list.get(position).getId(), false);
+                    if (isVisible.get(list.get(position).getPositon())){
+                        isVisible.put(list.get(position).getPositon(), false);
                     }else {
-                        isVisible.put(list.get(position).getId(), true);
+                        isVisible.put(list.get(position).getPositon(), true);
                     }
                     notifyDataSetChanged();
                     break;

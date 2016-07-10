@@ -7,50 +7,45 @@ import java.util.List;
  * Created by Admin on 2016/5/27.
  */
 public class Commentdate {
-    private int id;					//评论记录ID
-    private int commnetAccount;	//评论人账号
-    private String commentNickname;	//评论人昵称
-    private String commentTime;		//评论时间
-    private String commentContent;	//评论内容
-    private String sign;
-    private String avatar;              //获取头像
+    public int positon;					    //评论记录ID
+    public int commnetAccount;	       //评论人账号
+    public String commentNickname;	   //评论人昵称
+    public String commentTime;		   //评论时间
+    public String commentContent;	   //评论内容
+    public String sign;
+    public String avatar;               //获取头像
+    public int storyid;
     public Commentdate (){
+
 
     }
 
-    public Commentdate (int id,int commnetAccount, String commentNickname, String commentTime, String commentContent, String sign, String avatar){
-        this.id = id;
+    public Commentdate (int positon,int commnetAccount, String commentNickname, String commentTime, String commentContent, String sign, String avatar,int storyid){
+        this.positon = positon;
         this.commnetAccount = commnetAccount;
         this.commentNickname = commentNickname;
         this.commentTime = commentTime;
         this.commentContent = commentContent;
         this.sign = sign;
+        this.storyid = storyid;
 
         this.avatar = avatar;
     }
-    public String getSign() {
-        return sign;
+    public int getStoryid(){
+        return storyid;
+    }
+    public  void setStoryid(int storyid){
+        this.storyid = storyid;
     }
 
-    public String getAvatar(){
-        return avatar;
-    }
-
-    public void setAvatar(String avatar){
-            this.avatar = avatar;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
 
     private List<Replydate> replyList = new ArrayList<Replydate>();
     //回复内容列表
-    public int getId() {
-        return id;
+    public int getPositon() {
+        return positon;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int positon) {
+        this.positon = positon;
     }
     public int getCommnetAccount() {
         return commnetAccount;

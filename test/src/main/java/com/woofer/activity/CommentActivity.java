@@ -24,10 +24,10 @@ import android.widget.Toast;
 import com.woofer.adapter.OtherUserHomePageTransfer;
 import com.woofer.adapter.fansAdapter;
 import com.woofer.commentandreply.adapter.CommentAdapter;
-import com.woofer.commentandreply.cookie.CommentAndReplyCookie;
 import com.woofer.commentandreply.date.Commentdate;
 import com.woofer.commentandreply.date.Replydate;
 import com.woofer.commentandreply.view.NoTouchLinearLayout;
+import com.woofer.net.CommentResponse;
 import com.woofer.net.GetCommentlistResponse;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
@@ -69,7 +69,6 @@ public class CommentActivity extends AppCompatActivity {
     private TextView timetv;
     private TextView storydetals;
 
-    public static CommentAndReplyCookie commentAndReplyCookie;
     private List<Commentdate> list;
 
     @Override
@@ -77,8 +76,6 @@ public class CommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         list = new ArrayList<>();
-        commentAndReplyCookie = new CommentAndReplyCookie();
-        commentAndReplyCookie.commentdate = new ArrayList<>();
 
         initView();
 
@@ -130,28 +127,31 @@ public class CommentActivity extends AppCompatActivity {
      */
     private void publishComment() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-
-        SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
-
-        Commentdate freshview = new Commentdate(count,Userid, "Myself", str, comment, sp.getString("USERSIGN", ""), sp.getString("AVATERURL", ""));
-        list.add(0, freshview);//加载到list的最前面
-
-        if (count == 0) {
-            adapter = new CommentAdapter(CommentActivity.this, list, R.layout.comment_item_list, handler);
-            mListData.setAdapter(adapter);
-        }
-        adapter.notifyDataSetChanged();
-        count++;
-
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
             @Override
 
             public void onResponse(Object response) {
                 Toast.makeText(CommentActivity.this, "评论成功", Toast.LENGTH_SHORT).show();
+
+                CommentResponse commentResponse = (CommentResponse) response;
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
+                Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+                String str = formatter.format(curDate);
+
+                SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+
+                Commentdate freshview = new Commentdate(count, Integer.parseInt(sp.getString("USERID","")), sp.getString("USERNAME",""), str, comment, sp.getString("USERSIGN",""),
+                        sp.getString("AVATERURL", ""), commentResponse.msg.id);
+                list.add(0, freshview);//加载到list的最前面
+
+                if (count == 0) {
+                    adapter = new CommentAdapter(CommentActivity.this, list, R.layout.comment_item_list, handler);
+                    mListData.setAdapter(adapter);
+                }
+                adapter.notifyDataSetChanged();
+                count++;
+
             }
 
             @Override
@@ -183,7 +183,51 @@ public class CommentActivity extends AppCompatActivity {
                             for (int i = 0; i < getCommentlistResponse.msg.comment.size(); i++) {
                                 list.add(new Commentdate(i, getCommentlistResponse.msg.comment.get(i).UserId, " ",
                                         datetotime(getCommentlistResponse.msg.comment.get(i).createdAt), getCommentlistResponse.msg.comment.get(i).content,
-                                        " ", " "));
+                                        " ", " ",getCommentlistResponse.msg.comment.get(i).id));
+                            }
+                            for(int i= 0;i<getCommentlistResponse.msg.comment.size(); i++){
+                                RomauntNetWork romauntNetWork1 = new RomauntNetWork();
+                                romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        UserInfoResponse userInfoResponse = (UserInfoResponse)response;
+                                            for(int j = 0;j<list.size();j++){
+                                                if(list.get(j).commnetAccount==userInfoResponse.msg.user.id){
+                                                    list.get(j).commentNickname =userInfoResponse.msg.user.userName;
+                                                    list.get(j).avatar = userInfoResponse.msg.user.avatar;
+                                                    list.get(j).sign = userInfoResponse.msg.user.sign;
+                                                }
+                                            }
+                                        /*for(int i=0;i<list.size();i++){
+                                            for(int j=0;j<i;j++){
+                                                if(Long.parseLong(list.get(j).origintimestamp)>Long.parseLong(list.get(i).origintimestamp)){
+                                                    List<Commentdate> temp =list;
+                                                    list.get(j).positon=temp.get(i).positon;
+                                                    list.get(j).commnetAccount = temp.get(i).commnetAccount;
+                                                    list.get(j).commentNickname = temp.get(i).commentNickname;
+                                                    list.get(j).commentTime = temp.get(i).commentTime;
+                                                    list.get(j).commentContent =temp.get(i).commentContent;
+                                                    list.get(j).sign = temp.get(i).sign;
+                                                    list.get(j).avatar = temp.get(i).avatar;
+                                                    list.get(j).storyid = temp.get(i).storyid;
+
+                                                    list.get(i).positon=temp.get(j).positon;
+                                                    list.get(i).commnetAccount = temp.get(j).commnetAccount;
+                                                    list.get(i).commentNickname = temp.get(j).commentNickname;
+                                                    list.get(i).commentTime = temp.get(j).commentTime;
+                                                    list.get(i).commentContent =temp.get(j).commentContent;
+                                                    list.get(i).sign = temp.get(j).sign;
+                                                    list.get(i).avatar = temp.get(j).avatar;
+                                                    list.get(i).storyid = temp.get(j).storyid;
+                                                }
+                                            }
+                                        }*/
+                                    }
+                                    @Override
+                                    public void onError(Object error) {
+
+                                    }
+                                });romauntNetWork1.getUserInfo(Logintoken,Integer.toString(getCommentlistResponse.msg.comment.get(i).UserId));
                             }
                             adapter = new CommentAdapter(CommentActivity.this, list, R.layout.comment_item_list, handler);
                             mListData.setAdapter(adapter);
@@ -202,22 +246,6 @@ public class CommentActivity extends AppCompatActivity {
                 romauntNetWork.getCommentlist(Logintoken, storyId);
             }
         }).start();
-
-
-
-       /* list = new ArrayList<>();
-        count = 4;
-        for (int i = 0; i < 4; i++) {
-            Commentdate bean = new Commentdate();
-            bean.setId(i);
-            bean.setCommentNickname("亮司");
-            bean.setCommentTime("13:" + i + "5");
-            bean.setCommnetAccount("12345" + i);
-            bean.setCommentContent("hasaqi");
-            bean.setReplyList(getReplyData());
-            list.add(bean);
-        }
-        return list;*/
 }
     /**
      * 获取回复列表数据
