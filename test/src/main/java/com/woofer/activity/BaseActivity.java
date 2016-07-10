@@ -5,7 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.woofer.refreshlayout.App;
+import com.woofer.App;
 import com.woofer.refreshlayout.engine.Engine;
 import com.woofer.refreshlayout.util.ToastUtil;
 

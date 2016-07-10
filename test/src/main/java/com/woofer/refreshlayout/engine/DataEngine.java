@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.woofer.refreshlayout.App;
+import com.woofer.App;
 import com.woofer.refreshlayout.model.BannerModel;
 
 import java.util.ArrayList;

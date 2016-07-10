@@ -4,7 +4,7 @@ package com.woofer.refreshlayout.util;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
-import com.woofer.refreshlayout.App;
+import com.woofer.App;
 
 
 public class ToastUtil {
