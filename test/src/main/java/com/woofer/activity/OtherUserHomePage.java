@@ -175,6 +175,18 @@ public class OtherUserHomePage extends Activity {
                                             public void run() {
                                                 followbtnstyle.setImage(R.drawable.icon_plus_grey);
                                                 hasmyself = false;
+                                                SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+
+
+                                                String username = sp.getString("USERNAME","");
+                                                List<Map<String,Object>> fansList=OtherUserHomePage.otherUserHomePageTransfer.fansList;
+                                                for(int i =0 ;i<fansList.size();i++) {
+                                                    if(fansList.get(i).get("USERNAME").equals(username)) {
+                                                        fansList.remove(i);
+                                                    }
+                                                }
+                                                Intent i = new Intent("com.zaizai1.broadcast.notifyFansRefresh");
+                                                sendBroadcast(i);
                                             }
                                         });
                                     }
@@ -202,6 +214,21 @@ public class OtherUserHomePage extends Activity {
                                                 public void run() {
                                                     followbtnstyle.setImage(R.drawable.icon_plus_green);
                                                     hasmyself = true;
+                                                    SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+
+                                                    String username = sp.getString("USERNAME","");
+                                                    String sign= sp.getString("USERSIGN", "");
+
+                                                    Map<String, Object> map=new HashMap<>();
+                                                    map.put("AVATAR",  R.drawable.img_warning);
+                                                    map.put("SEX", R.drawable.img_warning);
+                                                    map.put("USERNAME", username);
+                                                    map.put("SIGN", sign);
+                                                    OtherUserHomePage.otherUserHomePageTransfer.fansList.add(map);
+
+
+                                                    Intent i = new Intent("com.zaizai1.broadcast.notifyFansRefresh");
+                                                    sendBroadcast(i);
                                                 }
                                             });
                                         }
@@ -221,110 +248,7 @@ public class OtherUserHomePage extends Activity {
 
 
         });
-        /*followImgbtn = (ImageButton)findViewById(R.id.OT_home_follow_btn);
-        followbtn =(Button)findViewById(R.id.OT_home_addfollow_btn);
-        followbtn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                    if (hasmyself) {
-
-                        *//**取消关注*//*
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-
-
-                                RomauntNetWork romauntNetWork = new RomauntNetWork();
-                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                    @Override
-                                    public void onResponse(Object response) {
-                                        AddFollowResponse addFollowResponse = (AddFollowResponse) response;
-                                        Log.e("cancelfollow", addFollowResponse.status);
-
-
-
-
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                followImgbtn.setImageResource(R.drawable.icon_plus_grey);
-                                                hasmyself = false;
-                                                SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
-
-
-                                                String username = sp.getString("USERNAME","");
-                                                List<Map<String,Object>> fansList=OtherUserHomePage.otherUserHomePageTransfer.fansList;
-                                                for(int i =0 ;i<fansList.size();i++) {
-                                                    if(fansList.get(i).get("USERNAME").equals(username)) {
-                                                        fansList.remove(i);
-                                                    }
-                                                }
-                                                Intent i = new Intent("com.zaizai1.broadcast.notifyFansRefresh");
-                                                sendBroadcast(i);
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void onError(Object error) {
-                                        Toast.makeText(OtherUserHomePage.this, "网络连接错误，请检查您的网络", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                romauntNetWork.delFollow(LoginToken, Integer.toString(UserId));
-
-
-
-                    } else {
-
-                                RomauntNetWork romauntNetWork = new RomauntNetWork();
-                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
-                                    @Override
-                                    public void onResponse(Object response) {
-                                        if (!(response instanceof AddFollowResponse)) {
-                                            return;
-                                        }
-                                        AddFollowResponse addFollowResponse = (AddFollowResponse) response;
-                                        if (addFollowResponse.status.equals("true")) {
-
-
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    followImgbtn.setImageResource(R.drawable.icon_plus_green);
-                                                    hasmyself = true;
-                                                    SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
-
-                                                    String username = sp.getString("USERNAME","");
-                                                    String sign= sp.getString("USERSIGN", "");
-
-                                                    Map<String, Object> map=new HashMap<>();
-                                                    map.put("AVATAR",  R.drawable.img_warning);
-                                                    map.put("SEX", R.drawable.img_warning);
-                                                    map.put("USERNAME", username);
-                                                    map.put("SIGN", sign);
-                                                    OtherUserHomePage.otherUserHomePageTransfer.fansList.add(map);
-
-
-                                                    Intent i = new Intent("com.zaizai1.broadcast.notifyFansRefresh");
-                                                    sendBroadcast(i);
-
-                                                }
-                                            });
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(Object error) {
-                                        Toast.makeText(OtherUserHomePage.this, "网络连接错误，请检查您的网络", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                romauntNetWork.addFollow(LoginToken, Integer.toString(UserId));
-
-                    }
-
-            }
-        });*/
+      
         InformTitle = (TextView)findViewById(R.id.OT_home_item);
 
         tv1 = (TextView)findViewById(R.id.OT_home_tv1);
