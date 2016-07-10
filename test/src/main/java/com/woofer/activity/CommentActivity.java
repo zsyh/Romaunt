@@ -135,7 +135,7 @@ public class CommentActivity extends AppCompatActivity {
                 Toast.makeText(CommentActivity.this, "评论成功", Toast.LENGTH_SHORT).show();
 
                 CommentResponse commentResponse = (CommentResponse) response;
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss ");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm");
                 Date curDate = new Date(System.currentTimeMillis());//获取当前时间
                 String str = formatter.format(curDate);
 
@@ -277,6 +277,7 @@ public class CommentActivity extends AppCompatActivity {
     }
 
 
+    /**有commentadapter的点击事件 由handle传入数据 负责视图的更新*/
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -284,17 +285,12 @@ public class CommentActivity extends AppCompatActivity {
             super.handleMessage(msg);
 
             switch (msg.what) {
-                case 10:
+                case 1:
                     isReply = true;
                     position = (Integer) msg.obj;
                     mLytCommentVG.setVisibility(View.GONE);
                     mLytEdittextVG.setVisibility(View.VISIBLE);
                     onFocusChange(true);
-                    break;
-                case 11:
-                    isReply = false;
-                    position = (Integer)msg.obj;
-                    DelectComment(position);
                     break;
 
             }
@@ -312,12 +308,14 @@ public class CommentActivity extends AppCompatActivity {
             View v = getCurrentFocus();
             if (isShouldHideInput(v, ev)) {
                 onFocusChange(false);
+                mCommentEdittext.setText("");
 
             }
             return super.dispatchTouchEvent(ev);
         }
         // 必不可少，否则所有的组件都不会有TouchEvent了
         if (getWindow().superDispatchTouchEvent(ev)) {
+
             return true;
         }
         return onTouchEvent(ev);
@@ -427,6 +425,7 @@ public class CommentActivity extends AppCompatActivity {
         }
         else{
             super.onBackPressed();
+
         }
     }
     private String datetotime(String time){
