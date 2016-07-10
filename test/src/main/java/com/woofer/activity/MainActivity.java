@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.woofer.Scroll.FixedSpeedScroller;
 import com.woofer.net.LoginResponse;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
@@ -114,7 +117,8 @@ public class MainActivity extends Activity {
 
         vp = (ViewPager) findViewById(R.id.vPager);
 
-
+        //设定viewPager滑动动画时间为0
+        setViewPagerScrollSpeed(vp);
 
 
         if(logintoken.equals("")){
@@ -195,6 +199,26 @@ public class MainActivity extends Activity {
 
         InitView();
 
+    }
+
+    /**
+     * 设置ViewPager的滑动速度
+     *
+     * */
+    private void setViewPagerScrollSpeed(ViewPager mViewPager) {
+        try {
+            Field mScroller = null;
+            mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext());
+            mScroller.set(mViewPager, scroller);
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalArgumentException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
     }
 
     private void InitView() {
