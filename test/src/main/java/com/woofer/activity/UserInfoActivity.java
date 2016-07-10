@@ -101,6 +101,8 @@ public class UserInfoActivity extends AppCompatActivity {
                             public void onResponse(Object response) {
                                 if(response instanceof UserInfoResponse) {
                                     Toast.makeText(UserInfoActivity.this, "用户名更新成功", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent("com.zaizai1.broadcast.userInfoUpdated");
+                                    sendBroadcast(i);
                                 }else{
                                     Toast.makeText(UserInfoActivity.this, "用户名更新失败,请重试", Toast.LENGTH_SHORT).show();
                                 }
@@ -310,6 +312,8 @@ public class UserInfoActivity extends AppCompatActivity {
                                         public void onResponse(Object response) {
                                             if (response instanceof UserInfoResponse) {
                                                 Toast.makeText(UserInfoActivity.this, "签名更新成功", Toast.LENGTH_SHORT).show();
+                                                Intent i = new Intent("com.zaizai1.broadcast.userInfoUpdated");
+                                                sendBroadcast(i);
                                             } else {
                                                 Toast.makeText(UserInfoActivity.this, "签名更新失败 请重试 ", Toast.LENGTH_SHORT).show();
                                             }

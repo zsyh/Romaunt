@@ -1,7 +1,10 @@
 package com.woofer.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -58,6 +61,7 @@ public class Activity_four extends Activity {
     private String following;
     private String follower;
 
+    private BroadcastReceiver broadcastReceiverUserInfo;
 
     private RomauntNetWork romauntNetWork=new RomauntNetWork();
 
@@ -65,6 +69,7 @@ public class Activity_four extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e("RomauntAlarmTest","Activity_four onDestroy()");
+        unregisterReceiver(broadcastReceiverUserInfo);
     }
 
     @Override
@@ -102,6 +107,20 @@ public class Activity_four extends Activity {
         setContentView(R.layout.activity_activity_four);
 
         Log.e("RomauntAlarmTest", "Activity_four onCreate()");
+
+        broadcastReceiverUserInfo=new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+                String sign = sp.getString("USERSIGN","");
+                String username = sp.getString("USERNAME","");
+                btn1.setText(username);
+                textView.setText(sign);
+
+            }
+        };
+        registerReceiver(broadcastReceiverUserInfo, new IntentFilter("com.zaizai1.broadcast.userInfoUpdated"));
+
 
         textView = (TextView)findViewById(R.id.activity_four_tV2);
         textView.setText(userInfo.signature);
