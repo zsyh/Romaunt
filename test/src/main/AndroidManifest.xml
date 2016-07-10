@@ -46,6 +46,7 @@
         <activity android:name="com.woofer.activity.userhomepage.FansActivity" />
         <activity android:name="com.woofer.activity.userhomepage.FollowingsActivity" />
         <activity android:name="com.woofer.activity.userhomepage.ParhsActivity" />
+        <activity android:name="com.woofer.activity.ConversationActivity" />
         <activity android:name="com.woofer.activity.CommentActivity"
             android:windowSoftInputMode="adjustResize"
             ></activity>

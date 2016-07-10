@@ -898,8 +898,8 @@ public class RomauntNetWork {
 
     }
 
-    public void commentReply(String LoginToken, String storyID, String replyContent) {
-        String url = "http://139.129.131.240:3000/api/token/reply/" + storyID;
+    public void commentReply(String LoginToken, String commentID, String replyContent) {
+        String url = "http://139.129.131.240:3000/api/token/reply/" + commentID;
         OkHttpUtils
                 .post()
                 .url(url)

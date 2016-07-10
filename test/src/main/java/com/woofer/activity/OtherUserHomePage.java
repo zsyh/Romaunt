@@ -248,7 +248,7 @@ public class OtherUserHomePage extends Activity {
 
 
         });
-      
+
         InformTitle = (TextView)findViewById(R.id.OT_home_item);
 
         tv1 = (TextView)findViewById(R.id.OT_home_tv1);
