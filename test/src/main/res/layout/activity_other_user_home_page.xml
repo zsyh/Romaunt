@@ -178,7 +178,7 @@
             android:gravity="center"
             android:layout_height="30dp"
             android:layout_weight="0.01"/>
-        <ImageButton
+        <!--<ImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@null"
@@ -196,7 +196,13 @@
             android:textColor="#9A909A"
 
             android:id="@+id/OT_home_addfollow_btn"
-            />
+            />-->
+        <com.woofer.ui.Followbtnstyle
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.494"
+
+                android:id="@+id/OT_home_followbtn"></com.woofer.ui.Followbtnstyle>
 
     </LinearLayout>
 

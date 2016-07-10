@@ -31,6 +31,7 @@ import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
 import com.woofer.refreshlayout.model.ParhsModel;
 import com.woofer.titlebar.TitleBar;
+import com.woofer.ui.Followbtnstyle;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public class OtherUserHomePage extends Activity {
 
     private int followingEnable;
     private int fansEnable ;
-
+    private Followbtnstyle followbtnstyle;
 
     public static OtherUserHomePageTransfer otherUserHomePageTransfer;
 
@@ -151,15 +152,80 @@ public class OtherUserHomePage extends Activity {
 
     }
     protected void InitView() {
+        followbtnstyle = (Followbtnstyle)findViewById(R.id.OT_home_followbtn);
         // TODO Auto-generated method stub
-        followImgbtn = (ImageButton)findViewById(R.id.OT_home_follow_btn);
-        followbtn =(Button)findViewById(R.id.OT_home_addfollow_btn);
-        followbtn.setOnClickListener(new OnClickListener() {
+        followbtnstyle.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fansEnable == 1) {
                     if (hasmyself) {
                         /**取消关注*/
+                                RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        AddFollowResponse addFollowResponse = (AddFollowResponse) response;
+                                        Log.e("cancelfollow", addFollowResponse.status);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                followbtnstyle.setImage(R.drawable.icon_plus_grey);
+                                                hasmyself = false;
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(Object error) {
+                                        Toast.makeText(OtherUserHomePage.this, "网络连接错误，请检查您的网络", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                romauntNetWork.delFollow(LoginToken, Integer.toString(UserId));
+
+
+                    } else {
+                                RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        if (!(response instanceof AddFollowResponse)) {
+                                            return;
+                                        }
+                                        AddFollowResponse addFollowResponse = (AddFollowResponse) response;
+                                        if (addFollowResponse.status.equals("true")) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    followbtnstyle.setImage(R.drawable.icon_plus_green);
+                                                    hasmyself = true;
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Object error) {
+                                        Toast.makeText(OtherUserHomePage.this, "网络连接错误，请检查您的网络", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                romauntNetWork.addFollow(LoginToken, Integer.toString(UserId));
+                    }
+                } else {
+                    Toast.makeText(OtherUserHomePage.this, "该用户已设置为不可添加粉丝", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+        });
+        /*followImgbtn = (ImageButton)findViewById(R.id.OT_home_follow_btn);
+        followbtn =(Button)findViewById(R.id.OT_home_addfollow_btn);
+        followbtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (fansEnable == 1) {
+                    if (hasmyself) {
+                        *//**取消关注*//*
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -224,7 +290,7 @@ public class OtherUserHomePage extends Activity {
                     Toast.makeText(OtherUserHomePage.this, "该用户已设置为不可添加粉丝", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
         InformTitle = (TextView)findViewById(R.id.OT_home_item);
 
         tv1 = (TextView)findViewById(R.id.OT_home_tv1);
@@ -439,14 +505,14 @@ public class OtherUserHomePage extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    followImgbtn.setImageResource(R.drawable.icon_plus_green);
+                                    followbtnstyle.setImage(R.drawable.icon_plus_green);
                                 }
                             });
                         }else{
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    followImgbtn.setImageResource(R.drawable.icon_plus_grey);
+                                    followbtnstyle.setImage(R.drawable.icon_plus_grey);
                                 }
                             });
                         }

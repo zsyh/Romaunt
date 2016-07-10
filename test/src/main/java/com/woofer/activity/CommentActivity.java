@@ -198,30 +198,6 @@ public class CommentActivity extends AppCompatActivity {
                                                     list.get(j).sign = userInfoResponse.msg.user.sign;
                                                 }
                                             }
-                                        /*for(int i=0;i<list.size();i++){
-                                            for(int j=0;j<i;j++){
-                                                if(Long.parseLong(list.get(j).origintimestamp)>Long.parseLong(list.get(i).origintimestamp)){
-                                                    List<Commentdate> temp =list;
-                                                    list.get(j).positon=temp.get(i).positon;
-                                                    list.get(j).commnetAccount = temp.get(i).commnetAccount;
-                                                    list.get(j).commentNickname = temp.get(i).commentNickname;
-                                                    list.get(j).commentTime = temp.get(i).commentTime;
-                                                    list.get(j).commentContent =temp.get(i).commentContent;
-                                                    list.get(j).sign = temp.get(i).sign;
-                                                    list.get(j).avatar = temp.get(i).avatar;
-                                                    list.get(j).storyid = temp.get(i).storyid;
-
-                                                    list.get(i).positon=temp.get(j).positon;
-                                                    list.get(i).commnetAccount = temp.get(j).commnetAccount;
-                                                    list.get(i).commentNickname = temp.get(j).commentNickname;
-                                                    list.get(i).commentTime = temp.get(j).commentTime;
-                                                    list.get(i).commentContent =temp.get(j).commentContent;
-                                                    list.get(i).sign = temp.get(j).sign;
-                                                    list.get(i).avatar = temp.get(j).avatar;
-                                                    list.get(i).storyid = temp.get(j).storyid;
-                                                }
-                                            }
-                                        }*/
                                     }
                                     @Override
                                     public void onError(Object error) {
