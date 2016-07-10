@@ -55,9 +55,11 @@ public class Utils {
                         e.printStackTrace();
                     }
                     BufferedOutputStream bos = new BufferedOutputStream(fos);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 80, bos);
-                    bos.flush();
-                    bos.close();
+                    if(bitmap!=null) {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 80, bos);
+                        bos.flush();
+                        bos.close();
+                    }
                 }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
