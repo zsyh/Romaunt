@@ -81,39 +81,41 @@ public  class  App extends Application{
 
                         String token = sp.getString("TOKEN", "");
 
+                        if(!token.equals("")) {
+                            RomauntNetWork romauntNetWork = new RomauntNetWork();
+                            Object object = romauntNetWork.getTokenSync(token);
 
-                        RomauntNetWork romauntNetWork = new RomauntNetWork();
-                        Object object = romauntNetWork.getTokenSync(token);
+                            String newLoginToken = "";
+                            String newToken = "";
+                            if (object instanceof LoginResponse) {
+                                LoginResponse loginResponse = (LoginResponse) object;
+                                newLoginToken = loginResponse.msg.LoginToken;
+                                newToken = loginResponse.msg.token;
+                                Log.e("Romaunt", "Interceptor获取的新token：" + newToken);
+                                Log.e("Romaunt", "Interceptor获取的新LoginToken：" + newLoginToken);
+                            } else {
+                                Log.e("Romaunt", "Interceptor 尝试获取新LoginToken时返回不是LoginResponse");
+                                return originalResponse;//抛出status false
+                            }
 
-                        String newLoginToken="";
-                        String newToken="";
-                        if(object instanceof LoginResponse){
-                            LoginResponse loginResponse=(LoginResponse)object;
-                            newLoginToken = loginResponse.msg.LoginToken;
-                            newToken= loginResponse.msg.token;
-                            Log.e("Romaunt", "Interceptor获取的新token："+newToken);
-                            Log.e("Romaunt", "Interceptor获取的新LoginToken："+newLoginToken);
+
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("LOGINTOKEN", newLoginToken);
+                            editor.putString("TOKEN", newToken);
+
+
+                            // create a new request and modify it accordingly using the new token
+                            Request newRequest = request.newBuilder().header("LoginToken", newLoginToken)
+                                    .build();
+
+                            // retry the request
+
+                            originalResponse.body().close();
+                            return chain.proceed(newRequest);
                         }
-                        else {
-                            Log.e("Romaunt","Interceptor 尝试获取新LoginToken时返回不是LoginResponse");
-                            return originalResponse;//抛出status false
+                        else {//token为空
+                            return originalResponse;
                         }
-
-
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("LOGINTOKEN",newLoginToken);
-                        editor.putString("TOKEN",newToken);
-
-
-                        // create a new request and modify it accordingly using the new token
-                        Request newRequest = request.newBuilder().header("LoginToken", newLoginToken)
-                                .build();
-
-                        // retry the request
-
-                        originalResponse.body().close();
-                        return chain.proceed(newRequest);
-
 
                     }
 

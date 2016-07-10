@@ -119,8 +119,9 @@ public class Activity_four extends Activity {
         registerReceiver(broadcastReceiverUserInfo, new IntentFilter("com.zaizai1.broadcast.userInfoUpdated"));
 
 
+        SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         textView = (TextView)findViewById(R.id.activity_four_tV2);
-        textView.setText(userInfo.signature);
+        textView.setText(sp.getString("USERSIGN",""));
 
         tvfollower = (TextView)findViewById(R.id.act_four_followerNUM);
         tvfollinger = (TextView)findViewById(R.id.act_four_followingNUM);
@@ -166,12 +167,22 @@ public class Activity_four extends Activity {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sp = getSharedPreferences("userinfo",MODE_PRIVATE);
+
                 switch (v.getId()){
                     case R.id.act_four_tit_one:
+                        if(sp.getString("TOKEN","").equals("")) {
+                            Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         Intent intent = new Intent(Activity_four.this, personHomeActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.act_four_tit_two:
+                        if(sp.getString("TOKEN","").equals("")) {
+                            Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         intent = new Intent(Activity_four.this, UserInfoActivity.class);
                         startActivity(intent);
                         break;
@@ -185,6 +196,10 @@ public class Activity_four extends Activity {
                     case R.id.act_four_tit_five:
                         break;
                     case R.id.act_four_tit_six:
+                        if(sp.getString("TOKEN","").equals("")) {
+                            Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         intent = new Intent(Activity_four.this, configActivity.class);
                         startActivity(intent);
                         break;
@@ -234,6 +249,8 @@ public class Activity_four extends Activity {
         /*webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
         *//**设置webview监听事件，监听URL*//*
         webView.setWebViewClient(new WebViewClientDemo());*/
+
+
         btn1=(Button)findViewById(R.id.activity_four_btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,23 +259,20 @@ public class Activity_four extends Activity {
                 startActivity(intent);
             }
         });
-        SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+
         username = sp.getString("USERNAME", "");
-        if(btn1.getText().equals("   点此登录")&&!username.equals("")){
+
+        if(!sp.getString("TOKEN","").equals("")){
+            //若已登录
             btn1.setText(username);
             signatre = sp.getString("USERSIGN", "");
-//            follower = sp.getString("FOLLOWERNUM", "");
-//            following = sp.getString("FOLLOWINGNUM", "");
 
             textView.setText(signatre);
-//            tvfollinger.setText(following);
-//            tvfollower.setText(follower);
+
             btn1.setClickable(false);
         }else{
+            //若未登录
             btn1.setClickable(true);
-            userInfo.username="";
-
-            Toast.makeText(Activity_four.this, "当前登录状态"+userInfo.username, Toast.LENGTH_SHORT).show();
             btn1.setText("   点此登录");
         }
         imageView=(ImageView)findViewById(R.id.activity_four_img1);
@@ -266,6 +280,14 @@ public class Activity_four extends Activity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                SharedPreferences sp = getSharedPreferences("userinfo",MODE_PRIVATE);
+
+                if(sp.getString("TOKEN","").equals("")) {
+                    Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(Activity_four.this, UserInfoActivity.class);
                 startActivity(intent);
 

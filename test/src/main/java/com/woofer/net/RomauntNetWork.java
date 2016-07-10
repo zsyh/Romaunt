@@ -115,12 +115,13 @@ public class RomauntNetWork {
                             }
 
                         } else {
-                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {
-                            }.getType();
-                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
-
+                            //若密码错误，return不是statusFalseResponse的标准格式，因为msg:{}
+//                            java.lang.reflect.Type type = new TypeToken<StatusFalseResponse>() {
+//                            }.getType();
+//                            StatusFalseResponse statusFalseResponse = gson.fromJson(s, type);
+                            //此处只能返回Null来表示
                             if (romauntNetworkCallback != null) {
-                                romauntNetworkCallback.onResponse(statusFalseResponse);
+                                romauntNetworkCallback.onResponse(null);
                             }
 
                         }

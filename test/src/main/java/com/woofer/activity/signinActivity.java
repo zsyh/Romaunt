@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,7 +30,7 @@ public class signinActivity extends AppCompatActivity {
     private EditText password;
     private EditText phone;
     private String username;
-    private String key;
+
     private String logintoken;
     private String token;
     private String userID;
@@ -104,6 +105,8 @@ public class signinActivity extends AppCompatActivity {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String key;
                 username = phone.getText().toString();
                 key = password.getText().toString();
                 if (username.equals("") | key.equals("")) {
@@ -113,21 +116,45 @@ public class signinActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Object response) {
 
-                            LoginResponse loginResponse = (LoginResponse) response;
-                            System.out.println("status:" + loginResponse.status);
-                            System.out.println(loginResponse.msg.userID);
-                            System.out.println("LoginToken:" + loginResponse.msg.LoginToken);
-                            System.out.println("token:" + loginResponse.msg.token);
+                            if(response==null) {
+                                //用户名或密码错误
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(signinActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return;
+                            }
+                            if(response instanceof LoginResponse) {
+                                LoginResponse loginResponse = (LoginResponse) response;
+                                System.out.println("status:" + loginResponse.status);
+                                System.out.println(loginResponse.msg.userID);
+                                System.out.println("LoginToken:" + loginResponse.msg.LoginToken);
+                                System.out.println("token:" + loginResponse.msg.token);
 
 
-                            logintoken = loginResponse.msg.LoginToken;
-                            token = loginResponse.msg.token;
-                            userID = loginResponse.msg.userID;
-                            userInfo.status = 1;
-                            saveInfo();
-                            Intent intent = new Intent(signinActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            signinActivity.this.finish();
+                                logintoken = loginResponse.msg.LoginToken;
+                                token = loginResponse.msg.token;
+                                userID = loginResponse.msg.userID;
+
+
+                                editor = sp.edit();
+                                editor.putString("USERID", userID);
+                                editor.putString("phone", username);
+                                editor.putString("LOGINTOKEN", logintoken);
+                                editor.putString("TOKEN", token);
+
+                                editor.apply();
+
+                                Intent intent = new Intent(signinActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                signinActivity.this.finish();
+                            }
+                            else {
+                                Log.e("Romaunt","登录时response类型不符合LoginResponse");
+                            }
 
 
                         }
@@ -181,19 +208,6 @@ public class signinActivity extends AppCompatActivity {
 
     }
 
-    private void saveInfo(){
-
-            editor = sp.edit();
-            userInfo.username = username;
-            userInfo.key = key;
-            editor.putString("USERID",userID );
-            editor.putString("phone", username);
-            editor.putString("LOGINTOKEN",logintoken);
-            editor.putString("TOKEN",token);
-
-            editor.apply();
-
-    }
 
 
 

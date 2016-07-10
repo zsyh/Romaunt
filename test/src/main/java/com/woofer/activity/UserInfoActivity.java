@@ -79,6 +79,10 @@ public class UserInfoActivity extends AppCompatActivity {
         nicheng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(sp.getString("TOKEN","").equals("")) {
+                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 LayoutInflater layoutInflater = LayoutInflater.from(UserInfoActivity.this);
                 View conView = layoutInflater.inflate(R.layout.dialog_layoutforlabel, null);
                 final EditText editText = (EditText)conView.findViewById(R.id.dialog_ET);
@@ -143,9 +147,16 @@ public class UserInfoActivity extends AppCompatActivity {
         msex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(sp.getString("TOKEN","").equals("")) {
+                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 CustomDialogsexchoose.Builder builder = new CustomDialogsexchoose.Builder(UserInfoActivity.this);
                 builder.setPositiveButton("男", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+
+
                         msex.setText(1,"男");
                         editor = sp.edit();
                         editor.putInt("SEX", 1);
@@ -176,6 +187,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 builder.setNegativeButton("女",
                         new android.content.DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+
                                 msex.setText(1,"女");
                                 editor = sp.edit();
                                 editor.putInt("SEX", 2);
@@ -215,6 +227,10 @@ public class UserInfoActivity extends AppCompatActivity {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(sp.getString("TOKEN","").equals("")) {
+                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 CustomDialogsexchoose.Builder builder = new CustomDialogsexchoose.Builder(UserInfoActivity.this);
                 builder.setPositiveButton("照相机", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -281,6 +297,10 @@ public class UserInfoActivity extends AppCompatActivity {
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(sp.getString("TOKEN","").equals("")) {
+                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 LayoutInflater layoutInflater = LayoutInflater.from(UserInfoActivity.this);
                 View conView = layoutInflater.inflate(R.layout.dialog_layoutforlabel, null);
                 final EditText editText = (EditText)conView.findViewById(R.id.dialog_ET);

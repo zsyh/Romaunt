@@ -3,6 +3,7 @@ package com.woofer.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,21 +59,33 @@ public class LoginActivity extends AppCompatActivity {
 
                             if(response instanceof LoginResponse){
                                 LoginResponse loginResponse=(LoginResponse)response;
-                                System.out.println("status:"+loginResponse.status);
-                                System.out.println("userID:"+loginResponse.msg.userID);
-                                System.out.println("LoginToken:"+loginResponse.msg.LoginToken);
-                                System.out.println("token:"+loginResponse.msg.token);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(LoginActivity.this,"注册成功!",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 LoginActivity.this.finish();
                             }
-                            else{
+                            else if(response instanceof StatusFalseResponse){
                                 StatusFalseResponse statusFalseResponse=(StatusFalseResponse)response;
                                 System.out.println("status:"+statusFalseResponse.status);
-                            }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(LoginActivity.this,"注册失败,该用户名已被注册",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
 
+                            }
+                            else {
+                                Log.e("Romaunt","注册时返回对象类型不符");
+                            }
 
                         }
 

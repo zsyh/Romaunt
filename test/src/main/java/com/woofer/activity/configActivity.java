@@ -48,6 +48,7 @@ public class configActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
          sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+        editor=sp.edit();
         initconpement();
     }
     private void initconpement(){
@@ -72,7 +73,6 @@ public class configActivity extends AppCompatActivity {
         syncinwifionly.setText("仅wifi下上传");
         syncinwifionly.setImage(R.drawable.wifisynconly);
 
-        final SharedPreferences sp  = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
         NOTICEENABLE = sp.getInt("NOTICEENABLE", 1);
         FOLLOWINGENABLE = sp.getInt("FOLLOWINGENABLE", 1);
         FOLLOWERENABLE = sp.getInt("FOLLOWERENABLE", 1);
@@ -116,12 +116,11 @@ public class configActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     FOLLOWERENABLE =1-FOLLOWERENABLE;
-                    editor = sp.edit();
                     editor.putInt("FOLLOWERENABLE" ,1);
                     editor.apply();
                 }else{
                     FOLLOWERENABLE =1-FOLLOWERENABLE;
-                    editor = sp.edit();
+
                     editor.putInt("FOLLOWERENABLE" ,0);
                     editor.apply();
                 }
@@ -133,12 +132,12 @@ public class configActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     FOLLOWINGENABLE = 1-FOLLOWINGENABLE;
-                    editor = sp.edit();
+
                     editor.putInt("FOLLOWINGENABLE" ,1);
                     editor.apply();
                 }else{
                     FOLLOWINGENABLE = 1-FOLLOWINGENABLE;
-                    editor = sp.edit();
+
                     editor.putInt("FOLLOWINGENABLE" ,0);
                     editor.apply();
                 }
@@ -149,12 +148,12 @@ public class configActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     NOTICEENABLE = 1-NOTICEENABLE;
-                    editor = sp.edit();
+
                     editor.putInt("NOTICEENABLE" ,1);
                     editor.apply();
                 }else{
                     NOTICEENABLE = 1-NOTICEENABLE;
-                    editor = sp.edit();
+
                     editor.putInt("NOTICEENABLE" ,0);
                     editor.apply();
                 }
@@ -165,12 +164,12 @@ public class configActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     UPDATENOTICE = 1-UPDATENOTICE;
-                    editor = sp.edit();
+
                     editor.putInt("UPDATENOTICE",1);
                     editor.apply();
                 }else{
                     UPDATENOTICE = 1-UPDATENOTICE;
-                    editor = sp.edit();
+
                     editor.putInt("UPDATENOTICE",0);
                     editor.apply();
                 }
@@ -181,12 +180,12 @@ public class configActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     ABOUTENABLE = 1-ABOUTENABLE;
-                    editor = sp.edit();
+
                     editor.putInt("ABOUTENABLE",1);
                     editor.apply();
                 }else{
                     ABOUTENABLE = 1-ABOUTENABLE;
-                    editor = sp.edit();
+
                     editor.putInt("ABOUTENABLE",0);
                     editor.apply();
                 }
@@ -196,10 +195,10 @@ public class configActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    editor = sp.edit();
+
                     editor.apply();
                 }else{
-                    editor = sp.edit();
+
                     editor.apply();
                 }
             }
@@ -217,13 +216,23 @@ public class configActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userInfo.status==0){
+                if (!sp.getString("TOKEN","").equals("")){
                     CustomDialog.Builder builder = new CustomDialog.Builder(configActivity.this);
-                    builder.setMessage("您还没有登录,是否现在登录？");
+                    builder.setMessage("是否确认退出登录？");
                     builder.setTitle("提示");
-                    builder.setPositiveButton("登录", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            tosigninActivity();
+                            editor.putString("LOGINTOKEN","");
+                            editor.putString("TOKEN","");
+                            editor.putString("USERNAME","");
+                            editor.putString("USERSIGN","");
+                            editor.apply();
+                            dialog.dismiss();
+                            Intent intent = new Intent(configActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            configActivity.this.finish();
+
                         }
                     });
                     builder.setNegativeButton("取消",
@@ -234,23 +243,22 @@ public class configActivity extends AppCompatActivity {
                             });
                     builder.create().show();
                 }else {
-                    userInfo.status = 0;
-                    Intent intent = new Intent(configActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    configActivity.this.finish();
+                  //token为空，即不处于登录状态
+                    Toast.makeText(configActivity.this,"您尚未登录!",Toast.LENGTH_SHORT).show();
+
                 }
 
             }
         });
 
     }
-    private void tosigninActivity(){
-        Intent intent = new Intent(configActivity.this, signinActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        configActivity.this.finish();
-
-    }
+//    private void tosigninActivity(){
+//        Intent intent = new Intent(configActivity.this, signinActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        configActivity.this.finish();
+//
+//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
