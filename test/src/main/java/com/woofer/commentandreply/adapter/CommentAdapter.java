@@ -34,7 +34,7 @@ public class CommentAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ViewHolder mholder = null;
     /**是否可以删除*/
-    private Map<Integer, Boolean> isVisible;
+//    private Map<Integer, Boolean> isVisible;
 
     private android.view.animation.Animation animation;//动画效果的
 
@@ -45,20 +45,19 @@ public class CommentAdapter extends BaseAdapter {
         this.handler = handler;
         this.resourceId = resourceId;
         inflater = LayoutInflater.from(context);
-        setPaise();
     }
-
-    public void addMap(int id) {
-        isVisible.put(id, false);
-    }
-
-    private void setPaise() {
-        isVisible = new HashMap<Integer, Boolean>();
-        for (int i = 0; i < list.size(); i++) {
-            //规避ID重复的风险
-            addMap(list.get(i).getPositon());
-        }
-    }
+//
+//    public void addMap(int id) {
+//        isVisible.put(id, false);
+//    }
+//
+//    private void setPaise() {
+//        isVisible = new HashMap<Integer, Boolean>();
+//        for (int i = 0; i < list.size(); i++) {
+//            //规避ID重复的风险
+//            addMap(list.get(i).getPositon());
+//        }
+//    }
 
 
 
