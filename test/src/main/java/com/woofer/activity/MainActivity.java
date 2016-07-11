@@ -104,14 +104,6 @@ public class MainActivity extends Activity {
         Log.e("RomauntAlarmTest","MainActivity onCreate()");
 
 
-        SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
-        logintoken = sp.getString("LOGINTOKEN","");
-        Log.e("Romaunt", "LoginToken:" + logintoken);
-        token = sp.getString("TOKEN","");
-        Log.e("Romaunt","token:"+token);
-        userID = sp.getString("USERID", "");
-        Log.e("USERID",userID);
-
         manager = new LocalActivityManager(this, true);
         manager.dispatchCreate(savedInstanceState);
 
@@ -119,82 +111,6 @@ public class MainActivity extends Activity {
 
         //设定viewPager滑动动画时间为0
         setViewPagerScrollSpeed(vp);
-
-
-        if(logintoken.equals("")){
-            Log.e("Romaunt","本地未存储有LoginToken");
-        }else{
-
-            //启动新线程！
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    final RomauntNetWork romauntNetWork = new RomauntNetWork()
-                            ;
-
-                    Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
-                    if(response==null){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return ;
-                    }
-                    if (response instanceof UserInfoResponse) {
-                        UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-                        Log.e("Romaunt", userInfoResponse.msg.user.mobile);
-                        String signature = userInfoResponse.msg.user.sign;
-                        String avaterurl = userInfoResponse.msg.user.avatar;
-                        String username = userInfoResponse.msg.user.userName;
-                        int sex = userInfoResponse.msg.user.sex;
-                        int noticeEnable =userInfoResponse.msg.user.noticeEnable;
-                        int followingEnable =userInfoResponse.msg.user.followingEnable;
-                        int followerEnable =userInfoResponse.msg.user.followerEnable;
-                        int aboutNotice =userInfoResponse.msg.user.aboutNotice;
-                        int updateNotice =userInfoResponse.msg.user.updateNotice;
-
-
-                        SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-                        editor = sp.edit();
-                            /*editor.putString("FOLLOWERNUM",num1);
-                            editor.putString("FOLLOWINGNUM", num2);*/
-                        editor.putString("USERNAME",username);
-                        editor.putInt("SEX", sex);
-                        editor.putString("AVATERURL", avaterurl);
-                        editor.putString("USERSIGN", signature);
-                        editor.putInt("NOTICEENABLE",noticeEnable);
-                        editor.putInt("FOLLOWINGENABLE",followingEnable);
-                        editor.putInt("FOLLOWERENABLE",followerEnable);
-                        editor.putInt("ABOUTENABLE",aboutNotice);
-                        editor.putInt("UPDATENOTICE",updateNotice);
-
-                        editor.apply();
-                        Log.e("AVA", avaterurl);
-                    }
-                    else if(response instanceof StatusFalseResponse )
-                    {
-                        Log.e("Romaunt","MainActivity中getUserInfo StatusFalse");
-                    }
-                    else
-                    {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(MainActivity.this,"网络无连接",Toast.LENGTH_SHORT);
-                            }
-                        });
-                    }
-
-
-                }
-            }).start();
-
-
-
-        }
 
 
         InitView();

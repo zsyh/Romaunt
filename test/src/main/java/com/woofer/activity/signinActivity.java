@@ -31,9 +31,7 @@ public class signinActivity extends AppCompatActivity {
     private EditText phone;
     private String username;
 
-    private String logintoken;
-    private String token;
-    private String userID;
+
 
     private SharedPreferences sp;
     private CheckBox storagekey;
@@ -134,10 +132,10 @@ public class signinActivity extends AppCompatActivity {
                                 System.out.println("token:" + loginResponse.msg.token);
 
 
-                                logintoken = loginResponse.msg.LoginToken;
-                                token = loginResponse.msg.token;
-                                userID = loginResponse.msg.userID;
 
+                                String logintoken = loginResponse.msg.LoginToken;
+                                String token = loginResponse.msg.token;
+                                String userID = loginResponse.msg.userID;
 
                                 editor = sp.edit();
                                 editor.putString("USERID", userID);

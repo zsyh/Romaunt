@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.woofer.net.RomauntNetWork;
+import com.woofer.net.StatusFalseResponse;
+import com.woofer.net.UserInfoResponse;
 import com.woofer.util.Utils;
 import com.woofer.ui.imagetextimage;
 import com.woofer.userInfo;
@@ -51,12 +53,7 @@ public class Activity_four extends Activity {
     private imagetextimage img6;
 
 
-    private String username;
-    private String signatre;
-    private String avacterurl;
     private URL url;
-    private String following;
-    private String follower;
 
     private BroadcastReceiver broadcastReceiverUserInfo;
 
@@ -119,7 +116,8 @@ public class Activity_four extends Activity {
         registerReceiver(broadcastReceiverUserInfo, new IntentFilter("com.zaizai1.broadcast.userInfoUpdated"));
 
 
-        SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+        final SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+
         textView = (TextView)findViewById(R.id.activity_four_tV2);
         textView.setText(sp.getString("USERSIGN",""));
 
@@ -251,6 +249,12 @@ public class Activity_four extends Activity {
         webView.setWebViewClient(new WebViewClientDemo());*/
 
 
+
+
+
+
+
+
         btn1=(Button)findViewById(R.id.activity_four_btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,13 +264,13 @@ public class Activity_four extends Activity {
             }
         });
 
-        username = sp.getString("USERNAME", "");
+
 
         if(!sp.getString("TOKEN","").equals("")){
             //若已登录
+            String username = sp.getString("USERNAME", "");
+            String signatre = sp.getString("USERSIGN", "");
             btn1.setText(username);
-            signatre = sp.getString("USERSIGN", "");
-
             textView.setText(signatre);
 
             btn1.setClickable(false);
@@ -293,7 +297,9 @@ public class Activity_four extends Activity {
 
             }
         });
-        avacterurl = sp.getString("AVATERURL", "");
+
+
+        String avacterurl = sp.getString("AVATERURL", "");
         if(!avacterurl.equals("")) {
             try {
                 url = new URL(avacterurl);
@@ -318,7 +324,100 @@ public class Activity_four extends Activity {
         }
 */
 
+
+
+        String logintoken = sp.getString("LOGINTOKEN","");
+        String userID=sp.getString("USERID","");
+
+        if(logintoken.equals("")){
+            Log.e("Romaunt","本地未存储有LoginToken");
+        }else{
+
+            //启动新线程！
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    final RomauntNetWork romauntNetWork = new RomauntNetWork();
+
+                    String logintoken = sp.getString("LOGINTOKEN","");
+                    String userID=sp.getString("USERID","");
+
+                    Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
+                    if(response==null){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(Activity_four.this,"网络无连接",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return ;
+                    }
+                    if (response instanceof UserInfoResponse) {
+                        UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                        final String signature = userInfoResponse.msg.user.sign;
+                        final String avaterurl = userInfoResponse.msg.user.avatar;
+                        final String username = userInfoResponse.msg.user.userName;
+
+                        final int sex = userInfoResponse.msg.user.sex;
+                        final int noticeEnable =userInfoResponse.msg.user.noticeEnable;
+                        final int followingEnable =userInfoResponse.msg.user.followingEnable;
+                        final int followerEnable =userInfoResponse.msg.user.followerEnable;
+                        final int aboutNotice =userInfoResponse.msg.user.aboutNotice;
+                        final int updateNotice =userInfoResponse.msg.user.updateNotice;
+
+
+                        SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("USERNAME",username);
+                        editor.putInt("SEX", sex);
+                        editor.putString("AVATERURL", avaterurl);
+                        editor.putString("USERSIGN", signature);
+                        editor.putInt("NOTICEENABLE",noticeEnable);
+                        editor.putInt("FOLLOWINGENABLE",followingEnable);
+                        editor.putInt("FOLLOWERENABLE",followerEnable);
+                        editor.putInt("ABOUTENABLE",aboutNotice);
+                        editor.putInt("UPDATENOTICE",updateNotice);
+
+                        editor.apply();
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btn1.setText(username);
+                                textView.setText(signature);
+
+                            }
+                        });
+
+                    }
+                    else if(response instanceof StatusFalseResponse)
+                    {
+                        Log.e("Romaunt","MainActivity中getUserInfo StatusFalse");
+                    }
+                    else
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(Activity_four.this,"网络无连接",Toast.LENGTH_SHORT);
+                            }
+                        });
+                    }
+
+
+                }
+            }).start();
+
+        }
+
+
+
+
+
+
     }
+
 
 /*
     public static Bitmap getHttpBitmap(String url){
