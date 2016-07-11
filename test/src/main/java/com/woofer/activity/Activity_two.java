@@ -260,7 +260,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     /*手向下拉*/
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        showLoadingDialog();
+//        showLoadingDialog();
 
 
 //        mEngine.loadNewData(mNewPageNumber).enqueue(new Callback<List<RefreshModel>>() {
@@ -322,7 +322,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
 
                             mRefreshLayout.endRefreshing();
-                            dismissLoadingDialog();
+//                            dismissLoadingDialog();
                             final PublicStoryListResponse publicStoryListResponse = (PublicStoryListResponse) finalResponse;
                             listNewData = new ArrayList<>();
 
@@ -410,7 +410,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         mMorePageNumber++;
 
-        showLoadingDialog();
+//        showLoadingDialog();
 
 
 //        mEngine.loadMoreData(mMorePageNumber).enqueue(new Callback<List<RefreshModel>>() {
@@ -481,7 +481,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
 
                     mRefreshLayout.endLoadingMore();
-                    dismissLoadingDialog();
+//                    dismissLoadingDialog();
                     mAdapter.addMoreDatas(listMoreData);
                 }
 
