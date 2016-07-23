@@ -11,8 +11,8 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ListView;
 import com.woofer.activity.OtherUserHomePage;
-import com.woofer.activity.storydegitalActivity;
-import com.woofer.adapter.fansAdapter;
+import com.woofer.activity.StorydegitalActivity;
+import com.woofer.adapter.FansAdapter;
 
 import java.util.List;
 import java.util.Map;
@@ -23,10 +23,9 @@ public class FansActivity extends Activity{
     private ListView mDataLV;
     private int fansEnable ;
     private List<Map<String,Object>> dataList;
-    /**记录当前适listview中item个数 去重 为多步加载做准备*/
     private BroadcastReceiver mBroadcastReceiver;
     private BroadcastReceiver BroadcastReceiverFansListRefresh;
-    private fansAdapter mfansAdapter;
+    private FansAdapter mfansAdapter;
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -38,14 +37,12 @@ public class FansActivity extends Activity{
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_fans);
         mDataLV = (ListView)findViewById(R.id.data);
-        //List<Map<String,Object>> list = getData();
-       // mDataLV.setAdapter(new fansAdapter(this , list));
         //透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //透明导航栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        SharedPreferences sp1 = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
-        fansEnable = sp1.getInt("FANSENABLE", 1);
+        SharedPreferences EnableSp = getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
+        fansEnable = EnableSp.getInt("FANSENABLE", 1);
         if(fansEnable==0){
             mDataLV.setBackgroundResource(R.drawable.fansunavilible);
         }else {
@@ -53,7 +50,7 @@ public class FansActivity extends Activity{
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     dataList = OtherUserHomePage.otherUserHomePageTransfer.fansList;
-                    mfansAdapter=new fansAdapter(FansActivity.this, dataList);
+                    mfansAdapter=new FansAdapter(FansActivity.this, dataList);
                     mDataLV.setAdapter(mfansAdapter);
                     unregisterReceiver(mBroadcastReceiver);
                 }
@@ -67,17 +64,13 @@ public class FansActivity extends Activity{
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     mfansAdapter.notifyDataSetChanged();
+
                     Log.e("Romaunt","FansActivity的fanslist更新广播接收");
                 }
             };
             IntentFilter intentFilterFansListRefresh = new IntentFilter();
             intentFilterFansListRefresh.addAction("com.zaizai1.broadcast.notifyFansRefresh");
             registerReceiver(BroadcastReceiverFansListRefresh, intentFilterFansListRefresh);
-
-
-
-
-
         }
 
 

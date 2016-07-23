@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 import woofer.com.test.R;
 
-public class chooseActivity extends AppCompatActivity {
+public class ChooseActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private  Button btn1;
     private Button btn2;
@@ -24,20 +24,20 @@ public class chooseActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               chooseActivity.this.finish();
+               ChooseActivity.this.finish();
             }
         });
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(chooseActivity.this, LoginActivity.class);
+                Intent intent = new Intent(ChooseActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(chooseActivity.this,signinActivity.class);
+                Intent intent = new Intent(ChooseActivity.this,SigninActivity.class);
                 startActivity(intent);
             }
         });

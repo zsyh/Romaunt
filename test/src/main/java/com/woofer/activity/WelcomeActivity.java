@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 
 import woofer.com.test.R;
 
-public class welcomeActivyty extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
     private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +21,9 @@ public class welcomeActivyty extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(welcomeActivyty.this, MainActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                 startActivity(intent);
-                welcomeActivyty.this.finish();
+                WelcomeActivity.this.finish();
             }
         },1000);
 

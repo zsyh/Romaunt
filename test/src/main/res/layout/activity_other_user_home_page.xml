@@ -163,7 +163,7 @@
         android:id="@+id/OT_home_menu"
         android:layout_below="@id/OT_home_VP_menu">
 
-        <Button
+       <!-- <Button
             android:paddingLeft="50dp"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -171,7 +171,15 @@
             android:text="私信"
             android:background="#ECE9EC"
             android:textColor="#9A909A"
-            android:drawableLeft="@drawable/icon_message_grey"/>
+            android:drawableLeft="@drawable/icon_message_grey"/>-->
+        <com.woofer.ui.Otuserhomebtnstyle
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.494"
+
+            android:id="@+id/OT_home_privatebtn">
+
+        </com.woofer.ui.Otuserhomebtnstyle>
         <TextView
             android:background="#9A909A"
             android:layout_width="0dp"
@@ -197,12 +205,12 @@
 
             android:id="@+id/OT_home_addfollow_btn"
             />-->
-        <com.woofer.ui.Followbtnstyle
+        <com.woofer.ui.Otuserhomebtnstyle
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="0.494"
 
-                android:id="@+id/OT_home_followbtn"></com.woofer.ui.Followbtnstyle>
+                android:id="@+id/OT_home_followbtn"></com.woofer.ui.Otuserhomebtnstyle>
 
     </LinearLayout>
 

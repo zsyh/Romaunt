@@ -1,11 +1,8 @@
 package com.woofer.Scroll;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by Administrator on 2016/7/10.

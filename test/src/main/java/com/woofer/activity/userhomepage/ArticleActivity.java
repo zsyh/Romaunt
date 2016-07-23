@@ -9,18 +9,14 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.woofer.activity.OtherUserHomePage;
-import com.woofer.adapter.OtherUserHomePageTransfer;
 import com.woofer.adapter.ParasAdapter;
 import com.woofer.refreshlayout.model.ParhsModel;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import woofer.com.test.R;
-public class ParhsActivity extends Activity{
+public class ArticleActivity extends Activity{
     private ListView mDataLV;
-    private int headofadapter = 0;
     private BroadcastReceiver mBroadcastReceiver;
     private List<ParhsModel> dataList;
     @Override
@@ -41,7 +37,7 @@ public class ParhsActivity extends Activity{
             public void onReceive(Context context, Intent intent) {
 
                 dataList= OtherUserHomePage.otherUserHomePageTransfer.parhsList;
-                mDataLV.setAdapter(new ParasAdapter(ParhsActivity.this,dataList));
+                mDataLV.setAdapter(new ParasAdapter(ArticleActivity.this,dataList));
 
                 unregisterReceiver(mBroadcastReceiver);
             }
@@ -49,16 +45,5 @@ public class ParhsActivity extends Activity{
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.zaizai1.broadcast.notifyParasGot");
         registerReceiver(mBroadcastReceiver, intentFilter);
-
     }
-
-    private String datetotime(String time){
-        SimpleDateFormat sdr = new SimpleDateFormat("yyyyMMdd HH:mm");
-        long lcc = Long.valueOf(time);
-        int i = Integer.parseInt(time);
-        String times = sdr.format(new Date(i * 1000L));
-        return times;
-
-    }
-
 }

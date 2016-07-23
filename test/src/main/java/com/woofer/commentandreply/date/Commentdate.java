@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Commentdate {
     public int positon;					    //记录listview中位置
-    public int commnetAccount;	       //评论人账号
+    public int commnetAccount;	       //评论人id
     public String commentNickname;	   //评论人昵称
     public String commentTime;		   //评论时间
     public String commentContent;	   //评论内容
@@ -28,7 +28,7 @@ public class Commentdate {
 
     }
 
-    public Commentdate (int positon,int commnetAccount, String commentNickname, String commentTime, String commentContent, String sign, String avatar,int commentid){
+    public Commentdate (int positon,int commnetAccount, String commentNickname, String commentTime, String commentContent, String sign, String avatar,int commentid ){
         this.positon = positon;
         this.commnetAccount = commnetAccount;
         this.commentNickname = commentNickname;
@@ -36,7 +36,6 @@ public class Commentdate {
         this.commentContent = commentContent;
         this.sign = sign;
         this.commentid = commentid;
-
         this.avatar = avatar;
     }
     public int getStoryid(){

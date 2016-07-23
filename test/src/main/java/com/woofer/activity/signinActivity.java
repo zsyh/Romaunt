@@ -19,11 +19,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import com.woofer.net.LoginResponse;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
-import com.woofer.userInfo;
 
 import woofer.com.test.R;
 
-public class signinActivity extends AppCompatActivity {
+public class SigninActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private String Tag ="signinAc";
     private Button buttonSignIn;
@@ -72,7 +71,7 @@ public class signinActivity extends AppCompatActivity {
 
 
         /*存储密码*/
-        sp = this.getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+        sp = this.getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
 
         showkey.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -91,7 +90,7 @@ public class signinActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                signinActivity.this.finish();
+                SigninActivity.this.finish();
             }
         });
 
@@ -108,7 +107,7 @@ public class signinActivity extends AppCompatActivity {
                 username = phone.getText().toString();
                 key = password.getText().toString();
                 if (username.equals("") | key.equals("")) {
-                    Toast.makeText(signinActivity.this, "请输入用户名或密码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SigninActivity.this, "请输入用户名或密码", Toast.LENGTH_SHORT).show();
                 } else {
                     romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                         @Override
@@ -119,7 +118,7 @@ public class signinActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(signinActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SigninActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 return;
@@ -145,10 +144,10 @@ public class signinActivity extends AppCompatActivity {
 
                                 editor.apply();
 
-                                Intent intent = new Intent(signinActivity.this, MainActivity.class);
+                                Intent intent = new Intent(SigninActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                                signinActivity.this.finish();
+                                SigninActivity.this.finish();
                             }
                             else {
                                 Log.e("Romaunt","登录时response类型不符合LoginResponse");
@@ -159,7 +158,7 @@ public class signinActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(Object error) {
-                            Toast.makeText(signinActivity.this, "网络无连接，登录失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SigninActivity.this, "网络无连接，登录失败", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -179,7 +178,7 @@ public class signinActivity extends AppCompatActivity {
 //                username = phone.getText().toString();
 //                key = password.getText().toString();
 //                if (username.equals("") | key.equals("")) {
-//                    Toast.makeText(signinActivity.this, "请输入用户名或密码", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SigninActivity.this, "请输入用户名或密码", Toast.LENGTH_SHORT).show();
 //                } else {
 //                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
 //                        @Override
@@ -194,7 +193,7 @@ public class signinActivity extends AppCompatActivity {
 //
 //                        @Override
 //                        public void onError(Object error) {
-//                            Toast.makeText(signinActivity.this, "网络无连接，登录失败", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(SigninActivity.this, "网络无连接，登录失败", Toast.LENGTH_SHORT).show();
 //                        }
 //                    });
 //

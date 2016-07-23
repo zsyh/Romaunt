@@ -1,17 +1,17 @@
 package com.woofer.refreshlayout.model;
 
 
-public class fansinfoModel {
+public class FansinfoModel {
     public int userID;
     public String username;
     public String sign;
     public int sex;
     public String avater;
-    public fansinfoModel() {
+    public FansinfoModel() {
     }
 
 
-    public fansinfoModel(int userID , String username ,String sign ,int sex , String avater) {
+    public FansinfoModel(int userID , String username , String sign , int sex , String avater) {
         this.userID = userID;
         this.username = username;
         this.sign = sign;

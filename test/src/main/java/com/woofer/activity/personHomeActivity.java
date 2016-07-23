@@ -43,7 +43,7 @@ import com.woofer.adapter.ActivitymyhomepageAdapter;
 
 import woofer.com.test.R;
 
-public class personHomeActivity extends Activity implements PullScrollView.OnTurnListener {
+public class PersonHomeActivity extends Activity implements PullScrollView.OnTurnListener {
     /**就是监听ScrollView的滚动条设定头部的透明度
      */
     //private NotifyingScrollView scrollview;
@@ -83,7 +83,7 @@ public class personHomeActivity extends Activity implements PullScrollView.OnTur
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(personHomeActivity.this,"点击了头像", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PersonHomeActivity.this,"点击了头像", Toast.LENGTH_SHORT).show();
             }
         });
         mMainLayout = (TableLayout) findViewById(R.id.table_layout);
@@ -95,7 +95,7 @@ public class personHomeActivity extends Activity implements PullScrollView.OnTur
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                personHomeActivity.this.finish();
+                PersonHomeActivity.this.finish();
             }
         });
         backgroundIMG=(ImageView)findViewById(R.id.background_img);
@@ -192,7 +192,7 @@ public class personHomeActivity extends Activity implements PullScrollView.OnTur
             tableRow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(personHomeActivity.this, "Click item " + n, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonHomeActivity.this, "Click item " + n, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -209,7 +209,7 @@ public class personHomeActivity extends Activity implements PullScrollView.OnTur
             tableRow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(personHomeActivity.this, "Click item " + n, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonHomeActivity.this, "Click item " + n, Toast.LENGTH_SHORT).show();
                 }
             });
             mMainLayout.addView(tableRow1);

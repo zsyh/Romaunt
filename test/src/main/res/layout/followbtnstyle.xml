@@ -10,7 +10,7 @@
         android:orientation="horizontal"
         >
     <ImageView
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="50dp"
         android:layout_width="30dp"
         android:layout_marginTop="5dp"
         android:layout_height="30dp"
@@ -19,7 +19,7 @@
         android:src="@drawable/icon_plus_green"/>
         <TextView
 
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:textSize="16sp"
             android:text="加关注"
             android:layout_gravity="center"

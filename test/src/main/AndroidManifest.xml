@@ -24,7 +24,7 @@
         <activity
             android:name="com.woofer.activity.EditNoteActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.woofer.activity.welcomeActivyty">
+        <activity android:name="com.woofer.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,20 +32,20 @@
             </intent-filter>
         </activity>
         <activity android:name="com.woofer.activity.LoginActivity" />
-        <activity android:name="com.woofer.activity.signinActivity" />
-        <activity android:name="com.woofer.activity.chooseActivity" />
+        <activity android:name="com.woofer.activity.SigninActivity" />
+        <activity android:name="com.woofer.activity.ChooseActivity" />
         <activity android:name="com.woofer.activity.UserInfoActivity" />
-        <activity android:name="com.woofer.activity.configActivity" />
-        <activity android:name="com.woofer.activity.aboutusActivity" />
-        <activity android:name="com.woofer.activity.personHomeActivity" />
-        <activity android:name="com.woofer.activity.signatureActivity" />
+        <activity android:name="com.woofer.activity.ConfigActivity" />
+        <activity android:name="com.woofer.activity.AboutusActivity" />
+        <activity android:name="com.woofer.activity.PersonHomeActivity" />
+        <activity android:name="com.woofer.activity.SignatureActivity" />
         <activity android:name="com.woofer.activity.InformActivity" />
         <activity android:name="com.woofer.activity.PrivateLetterActivity" />
-        <activity android:name="com.woofer.activity.storydegitalActivity" />
+        <activity android:name="com.woofer.activity.StorydegitalActivity" />
         <activity android:name="com.woofer.activity.OtherUserHomePage" />
         <activity android:name="com.woofer.activity.userhomepage.FansActivity" />
         <activity android:name="com.woofer.activity.userhomepage.FollowingsActivity" />
-        <activity android:name="com.woofer.activity.userhomepage.ParhsActivity" />
+        <activity android:name="com.woofer.activity.userhomepage.ArticleActivity" />
         <activity android:name="com.woofer.activity.ConversationActivity" />
         <activity android:name="com.woofer.activity.CommentActivity"
             android:windowSoftInputMode="adjustResize"

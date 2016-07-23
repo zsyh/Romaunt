@@ -81,10 +81,6 @@ public class EditNoteActivity extends Activity {
         setContentView(R.layout.editnote);
         /**获取时间的操作**/
         time.setToNow();
-        /*
-        *这句话是用来做什么?
-        *将该项目中包含的原始intent检索出来????
-        */
         Intent intent =getIntent();
         noteID =intent.getIntExtra("id",-1);
         dataBase = new DatabaseManager(this);

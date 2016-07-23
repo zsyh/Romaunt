@@ -41,11 +41,11 @@
         android:id="@+id/activity_one_itemTV2"/>
     <ImageView
         android:layout_below="@id/activity_one_itemTV1"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="20dp"
 
-        android:src="@drawable/img_my"
+        android:src="@drawable/img_defaultavatar"
         android:id="@+id/activity_one_itemIV4"
         />
     <TextView

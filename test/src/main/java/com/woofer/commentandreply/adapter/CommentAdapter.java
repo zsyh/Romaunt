@@ -1,7 +1,10 @@
 package com.woofer.commentandreply.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +17,12 @@ import android.widget.TextView;
 import com.woofer.commentandreply.date.Commentdate;
 import com.woofer.commentandreply.date.Replydate;
 import com.woofer.commentandreply.view.NoScrollListView;
+import com.woofer.util.Utils;
 
-import java.util.HashMap;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 import woofer.com.test.R;
 
@@ -33,6 +38,7 @@ public class CommentAdapter extends BaseAdapter {
     private List<Commentdate> list;
     private LayoutInflater inflater;
     private ViewHolder mholder = null;
+    private URL url;
     /**是否可以删除*/
 //    private Map<Integer, Boolean> isVisible;
 
@@ -80,6 +86,7 @@ public class CommentAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         Commentdate bean = list.get(position);
 //		ViewHolder mholder = null;
+
         if (convertView == null) {
             mholder = new ViewHolder();
             convertView = inflater.inflate(resourceId, null);
@@ -94,12 +101,46 @@ public class CommentAdapter extends BaseAdapter {
 
             mholder.replyBut = (Button)
                     convertView.findViewById(R.id.but_comment_reply);
+            mholder.avatarpic = (ImageView)convertView.findViewById(R.id.comment_area_avatar);
 
             convertView.setTag(mholder);
         } else {
             mholder = (ViewHolder) convertView.getTag();
         }
 
+        int userid = bean.getCommnetAccount();
+
+        //改写绑定数据 加载用户头像
+        if(!bean.avatar.equals("")){
+            File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userid + ".png");
+            if(imgfile.exists()){
+                Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userid + ".png");
+                mholder.avatarpic.setImageBitmap(bitmap);
+            }else {
+                try {
+                    url = new URL(bean.avatar);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Utils.onLoadImage(url,new Utils.OnLoadImageListener() {
+                    private Resources resources;
+
+                    public Resources getResources() {
+                        return resources;
+                    }
+
+                    @Override
+                    public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
+                        if (bitmap != null) {
+                            mholder.avatarpic.setImageBitmap(bitmap);
+                        } else {
+                            Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
+                        }
+                    }
+                },userid);
+            }
+        }
         mholder.commentNickname.setText(bean.getCommentNickname());
         mholder.commentItemTime.setText(bean.getCommentTime());
         mholder.commentItemContent.setText(bean.getCommentContent());

@@ -16,10 +16,11 @@ import android.os.Handler;
 import android.os.Message;
 
 public class Utils {
-    public static void onLoadImage(final URL bitmapUrl,final OnLoadImageListener onLoadImageListener){
+    /**多加了一个参数 方便命名 也方便调试的时候直接看到url*/
+        public static void onLoadImage(final URL bitmapUrl,final OnLoadImageListener onLoadImageListener,final int userid){
             final Handler handler = new Handler(){
                 public void handleMessage(Message msg){
-                onLoadImageListener.OnLoadImage((Bitmap) msg.obj, null);
+                onLoadImageListener.OnLoadImage((Bitmap) msg.obj, null,userid);
             }
     };
 
@@ -40,6 +41,8 @@ public class Utils {
                 Message msg = new Message();
                 msg.obj = bitmap;
                 handler.sendMessage(msg);
+                // 已挂载sd卡
+                if(bitmap!=null){
                 if (Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                     System.out.println("存在sd卡");
                     File cacheFile = new File(Environment.getExternalStorageDirectory() + "/cacheFile");
@@ -47,7 +50,8 @@ public class Utils {
                     if (!cacheFile.exists())
                         cacheFile.mkdir();
                     System.out.println(cacheFile.exists());
-                    File imageCache = new File(cacheFile.getPath() + "/netwrok.png");
+
+                    File imageCache = new File(cacheFile.getPath() + "/cache"+userid+".png");
                     FileOutputStream fos = null;
                     try {
                         fos = new FileOutputStream(imageCache);
@@ -55,7 +59,6 @@ public class Utils {
                         e.printStackTrace();
                     }
                     BufferedOutputStream bos = new BufferedOutputStream(fos);
-                    if(bitmap!=null) {
                         bitmap.compress(Bitmap.CompressFormat.PNG, 80, bos);
                         bos.flush();
                         bos.close();
@@ -71,6 +74,6 @@ public class Utils {
         }
 
     public interface OnLoadImageListener{
-    public void OnLoadImage(Bitmap bitmap,String bitmapPath);
+        public void OnLoadImage(Bitmap bitmap,String bitmapPath,int userid);
     }
 }

@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import woofer.com.test.R;
 
-public class Followbtnstyle extends RelativeLayout{
+public class Otuserhomebtnstyle extends RelativeLayout{
     private TextView textView1;
     private ImageView imageView1;
-   public Followbtnstyle(Context context){
+   public Otuserhomebtnstyle(Context context){
         super(context, null);
     }
 
-    public Followbtnstyle(Context context, AttributeSet attributeSet){
+    public Otuserhomebtnstyle(Context context, AttributeSet attributeSet){
         super(context, attributeSet);
         LayoutInflater.from(context).inflate(R.layout.followbtnstyle, this, true);
         this.imageView1=(ImageView)findViewById(R.id.imgtextswitch_pic);

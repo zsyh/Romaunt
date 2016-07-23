@@ -10,9 +10,9 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import woofer.com.test.R;
 
 
-public class parhsAdapter extends BGAAdapterViewAdapter<ParhsModel> {
+public class ParhsAdapter extends BGAAdapterViewAdapter<ParhsModel> {
 
-    public parhsAdapter(Context context) {
+    public ParhsAdapter(Context context) {
         super(context, R.layout.parhsitem);
     }
 

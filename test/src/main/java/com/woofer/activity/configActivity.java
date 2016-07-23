@@ -16,14 +16,12 @@ import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
 import com.woofer.ui.CustomDialog;
-import com.woofer.ui.ImageTextforconfig;
 import com.woofer.ui.imagetextswichbtn;
-import com.woofer.userInfo;
 
 import woofer.com.test.R;
 import com.woofer.titlebar.TitleBar;
 
-public class configActivity extends AppCompatActivity {
+public class ConfigActivity extends AppCompatActivity {
     private TitleBar titleBar;
     private Button btn1;
     private String  flag;
@@ -47,7 +45,7 @@ public class configActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
-         sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+         sp  = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
         editor=sp.edit();
         initconpement();
     }
@@ -209,7 +207,7 @@ public class configActivity extends AppCompatActivity {
         titleBar.leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                configActivity.this.finish();
+                ConfigActivity.this.finish();
             }
         });
         btn1=(Button)findViewById(R.id.activity_config_btn);
@@ -217,7 +215,7 @@ public class configActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!sp.getString("TOKEN","").equals("")){
-                    CustomDialog.Builder builder = new CustomDialog.Builder(configActivity.this);
+                    CustomDialog.Builder builder = new CustomDialog.Builder(ConfigActivity.this);
                     builder.setMessage("是否确认退出登录？");
                     builder.setTitle("提示");
                     builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
@@ -228,10 +226,10 @@ public class configActivity extends AppCompatActivity {
                             editor.putString("USERSIGN","");
                             editor.apply();
                             dialog.dismiss();
-                            Intent intent = new Intent(configActivity.this, MainActivity.class);
+                            Intent intent = new Intent(ConfigActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-                            configActivity.this.finish();
+                            ConfigActivity.this.finish();
 
                         }
                     });
@@ -244,7 +242,7 @@ public class configActivity extends AppCompatActivity {
                     builder.create().show();
                 }else {
                   //token为空，即不处于登录状态
-                    Toast.makeText(configActivity.this,"您尚未登录!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfigActivity.this,"您尚未登录!",Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -253,10 +251,10 @@ public class configActivity extends AppCompatActivity {
 
     }
 //    private void tosigninActivity(){
-//        Intent intent = new Intent(configActivity.this, signinActivity.class);
+//        Intent intent = new Intent(ConfigActivity.this, SigninActivity.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        startActivity(intent);
-//        configActivity.this.finish();
+//        ConfigActivity.this.finish();
 //
 //    }
 
@@ -269,9 +267,9 @@ public class configActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Object response) {
                             if (response instanceof UserInfoResponse) {
-                                Toast.makeText(configActivity.this, "设置更新成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ConfigActivity.this, "设置更新成功", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(configActivity.this, "设置更新失败,请重试", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ConfigActivity.this, "设置更新失败,请重试", Toast.LENGTH_SHORT).show();
                             }
                         }
 

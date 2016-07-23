@@ -6,36 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.woofer.activity.BaseActivity;
 import com.woofer.activity.OtherUserHomePage;
-import com.woofer.activity.signinActivity;
-import com.woofer.activity.storydegitalActivity;
-import com.woofer.net.RomauntNetWork;
-import com.woofer.net.UserInfoResponse;
-import com.woofer.refreshlayout.adapter.fansAdapter;
-import com.woofer.refreshlayout.model.fansinfoModel;
-import com.woofer.net.RomauntNetworkCallback;
+import com.woofer.activity.StorydegitalActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
 import woofer.com.test.R;
-
-
+import com.woofer.adapter.FansAdapter;
 public class FollowingsActivity extends Activity{
     private ListView mDataLV;
     private List<Map<String,Object>> dataList;
@@ -59,8 +41,8 @@ public class FollowingsActivity extends Activity{
 
         mDataLV = (ListView) findViewById(R.id.OT_fans_data);
 
-        SharedPreferences sp1 = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
-        followingEnable = sp1.getInt("FOLLOWINGENABLE", 1);
+        SharedPreferences EnableSp = getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
+        followingEnable = EnableSp.getInt("FOLLOWINGENABLE", 1);
         if(followingEnable==0){
             mDataLV.setBackgroundResource(R.drawable.followingunavalible);
         }
@@ -70,7 +52,7 @@ public class FollowingsActivity extends Activity{
                 public void onReceive(Context context, Intent intent) {
 
                     dataList= OtherUserHomePage.otherUserHomePageTransfer.followingList;
-                    mDataLV.setAdapter(new com.woofer.adapter.fansAdapter(FollowingsActivity.this,dataList));
+                    mDataLV.setAdapter(new FansAdapter(FollowingsActivity.this,dataList));
 
                     //unregisterReceiver(mBroadcastReceiver);
                 }

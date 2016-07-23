@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,7 +19,6 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +27,8 @@ import com.woofer.net.StatusFalseResponse;
 import com.woofer.net.UserInfoResponse;
 import com.woofer.util.Utils;
 import com.woofer.ui.imagetextimage;
-import com.woofer.userInfo;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -36,29 +37,24 @@ import woofer.com.test.R;
 public class Activity_four extends Activity {
     private final Handler handler = new Handler();
     private WebView webView;
-    private ImageView imageView;
+
+    private ImageView avatarimg;
     private long firstbacktime = 0;
-    private TextView textView;
-    private TextView tvfollower;
-    private TextView tvfollinger;
+    private TextView signTV;
+    private TextView followernumTV;
+    private TextView follingernumTV;
 
-    private ListView listView = null;
-    private Button btn1;
+    private Button Loginbtn;
 
-    private imagetextimage img1;
-    private imagetextimage img2;
-    private imagetextimage img3;
-    private imagetextimage img4;
-    private imagetextimage img5;
-    private imagetextimage img6;
-
+    private imagetextimage diybtn_myhomepage;
+    private imagetextimage ditbtn_personaldata;
+    private imagetextimage diybtn_aboutus;
+    private imagetextimage diybtn_collect;
+    private imagetextimage diybtn_work;
+    private imagetextimage diybtn_configAndlogout;
 
     private URL url;
-
     private BroadcastReceiver broadcastReceiverUserInfo;
-
-    private RomauntNetWork romauntNetWork=new RomauntNetWork();
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -105,31 +101,31 @@ public class Activity_four extends Activity {
         broadcastReceiverUserInfo=new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+                SharedPreferences sp  = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                 String sign = sp.getString("USERSIGN","");
                 String username = sp.getString("USERNAME","");
-                btn1.setText(username);
-                textView.setText(sign);
+                Loginbtn.setText(username);
+                signTV.setText(sign);
 
             }
         };
         registerReceiver(broadcastReceiverUserInfo, new IntentFilter("com.zaizai1.broadcast.userInfoUpdated"));
 
 
-        final SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+        final SharedPreferences Userinfosp  = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
 
-        textView = (TextView)findViewById(R.id.activity_four_tV2);
-        textView.setText(sp.getString("USERSIGN",""));
+        signTV = (TextView)findViewById(R.id.activity_four_tV2);
+        signTV.setText(Userinfosp.getString("USERSIGN", ""));
 
-        tvfollower = (TextView)findViewById(R.id.act_four_followerNUM);
-        tvfollinger = (TextView)findViewById(R.id.act_four_followingNUM);
+        followernumTV = (TextView)findViewById(R.id.act_four_followerNUM);
+        follingernumTV = (TextView)findViewById(R.id.act_four_followingNUM);
 
-        img1 = (imagetextimage)findViewById(R.id.act_four_tit_one);
-        img2 = (imagetextimage)findViewById(R.id.act_four_tit_two);
-        img3 = (imagetextimage)findViewById(R.id.act_four_tit_three);
-        img4 = (imagetextimage)findViewById(R.id.act_four_tit_four);
-        img5 = (imagetextimage)findViewById(R.id.act_four_tit_five);
-        img6 = (imagetextimage)findViewById(R.id.act_four_tit_six);
+        diybtn_myhomepage = (imagetextimage)findViewById(R.id.act_four_tit_one);
+        ditbtn_personaldata = (imagetextimage)findViewById(R.id.act_four_tit_two);
+        diybtn_aboutus = (imagetextimage)findViewById(R.id.act_four_tit_three);
+        diybtn_collect = (imagetextimage)findViewById(R.id.act_four_tit_four);
+        diybtn_work = (imagetextimage)findViewById(R.id.act_four_tit_five);
+        diybtn_configAndlogout = (imagetextimage)findViewById(R.id.act_four_tit_six);
 
 
     /*private class WebViewClientDemo extends WebViewClient {
@@ -137,12 +133,12 @@ public class Activity_four extends Activity {
         // 在WebView中而不是默认浏览器中显示页面
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url.trim().equals("https://www.config.com/")) {
-                Intent intent = new Intent(Activity_four.this, configActivity.class);
+                Intent intent = new Intent(Activity_four.this, ConfigActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 *//**不要对Activity进行finish操作 留在栈中*//*
             } else if(url.trim().equals("https://www.aboutus.com/")){
-                Intent intent = new Intent(Activity_four.this, aboutusActivity.class);
+                Intent intent = new Intent(Activity_four.this, AboutusActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }else if(url.trim().equals("https://www.user_info.com/")){
@@ -150,7 +146,7 @@ public class Activity_four extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }else if(url.trim().equals("https://www.myhomepage.com/")){
-                Intent intent = new Intent(Activity_four.this, personHomeActivity.class);
+                Intent intent = new Intent(Activity_four.this, PersonHomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }else{
@@ -173,7 +169,7 @@ public class Activity_four extends Activity {
                             Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
                             break;
                         }
-                        Intent intent = new Intent(Activity_four.this, personHomeActivity.class);
+                        Intent intent = new Intent(Activity_four.this, PersonHomeActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.act_four_tit_two:
@@ -185,7 +181,7 @@ public class Activity_four extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.act_four_tit_three:
-                        intent = new Intent(Activity_four.this, aboutusActivity.class);
+                        intent = new Intent(Activity_four.this, AboutusActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.act_four_tit_four:
@@ -198,7 +194,7 @@ public class Activity_four extends Activity {
                             Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
                             break;
                         }
-                        intent = new Intent(Activity_four.this, configActivity.class);
+                        intent = new Intent(Activity_four.this, ConfigActivity.class);
                         startActivity(intent);
                         break;
 
@@ -206,25 +202,25 @@ public class Activity_four extends Activity {
                 }
             }
         };
-        img1.setOnClickListener(clickListener);
-        img2.setOnClickListener(clickListener);
-        img3.setOnClickListener(clickListener);
-        img4.setOnClickListener(clickListener);
-        img5.setOnClickListener(clickListener);
-        img6.setOnClickListener(clickListener);
-        img1.setImage(R.drawable.icon_my_homepage);
-        img1.setText("我的主页");
-        img2.setImage(R.drawable.img_defaultavatar);
-        img2.setText("个人资料");
+        diybtn_myhomepage.setOnClickListener(clickListener);
+        ditbtn_personaldata.setOnClickListener(clickListener);
+        diybtn_aboutus.setOnClickListener(clickListener);
+        diybtn_collect.setOnClickListener(clickListener);
+        diybtn_work.setOnClickListener(clickListener);
+        diybtn_configAndlogout.setOnClickListener(clickListener);
+        diybtn_myhomepage.setImage(R.drawable.icon_my_homepage);
+        diybtn_myhomepage.setText("我的主页");
+        ditbtn_personaldata.setImage(R.drawable.img_defaultavatar);
+        ditbtn_personaldata.setText("个人资料");
 
-        img3.setText("关于");
-        img3.setImage(R.drawable.about);
-        img4.setText("收藏");
-        img4.setImage(R.drawable.icon_collection);
-        img5.setText("作品");
-        img5.setImage(R.drawable.icon_open_book);
-        img6.setText("设置与登出");
-        img6.setImage(R.drawable.icon_setup);
+        diybtn_aboutus.setText("关于");
+        diybtn_aboutus.setImage(R.drawable.about);
+        diybtn_collect.setText("收藏");
+        diybtn_collect.setImage(R.drawable.icon_collection);
+        diybtn_work.setText("作品");
+        diybtn_work.setImage(R.drawable.icon_open_book);
+        diybtn_configAndlogout.setText("设置与登出");
+        diybtn_configAndlogout.setImage(R.drawable.icon_setup);
 
 
 
@@ -248,48 +244,41 @@ public class Activity_four extends Activity {
         *//**设置webview监听事件，监听URL*//*
         webView.setWebViewClient(new WebViewClientDemo());*/
 
-
-
-
-
-
-
-
-        btn1=(Button)findViewById(R.id.activity_four_btn1);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        Loginbtn =(Button)findViewById(R.id.activity_four_btn1);
+        Loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_four.this, chooseActivity.class);
+                Intent intent = new Intent(Activity_four.this, ChooseActivity.class);
                 startActivity(intent);
             }
         });
 
 
 
-        if(!sp.getString("TOKEN","").equals("")){
+        if(!Userinfosp.getString("TOKEN","").equals("")){
             //若已登录
-            String username = sp.getString("USERNAME", "");
-            String signatre = sp.getString("USERSIGN", "");
-            btn1.setText(username);
-            textView.setText(signatre);
+            String username = Userinfosp.getString("USERNAME", "");
+            String signatre = Userinfosp.getString("USERSIGN", "");
+            Loginbtn.setText(username);
+            signTV.setText(signatre);
 
-            btn1.setClickable(false);
+            Loginbtn.setClickable(false);
         }else{
             //若未登录
-            btn1.setClickable(true);
-            btn1.setText("   点此登录");
+            Loginbtn.setClickable(true);
+            Loginbtn.setText("   点此登录");
         }
-        imageView=(ImageView)findViewById(R.id.activity_four_img1);
+        avatarimg=(ImageView)findViewById(R.id.activity_four_img1);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        avatarimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                SharedPreferences sp = getSharedPreferences("userinfo",MODE_PRIVATE);
+                SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
 
-                if(sp.getString("TOKEN","").equals("")) {
-                    Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                if (sp.getString("TOKEN", "").equals("")) {
+                    Toast.makeText(Activity_four.this, "你尚未登录!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent intent = new Intent(Activity_four.this, UserInfoActivity.class);
@@ -299,36 +288,32 @@ public class Activity_four extends Activity {
         });
 
 
-        String avacterurl = sp.getString("AVATERURL", "");
+        final String avacterurl = Userinfosp.getString("AVATERURL", "");
+        final int myid =Userinfosp.getInt("userID",0);
         if(!avacterurl.equals("")) {
-            try {
-                url = new URL(avacterurl);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
-                @Override
-                public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
-                    if (bitmap != null) {
-                        imageView.setImageBitmap(bitmap);
+            File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
+            if (imgfile.exists()) {
+                Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
+                avatarimg.setImageBitmap(bmp);
+
+            } else {
+                    try {
+                        url = new URL(avacterurl);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
                     }
-                }
-            });
+                Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
+                    @Override
+                    public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
+                        if (bitmap != null) {
+                            avatarimg.setImageBitmap(bitmap);
+                        }
+                    }
+                }, myid);
+            }
         }
-/*
-        有错
-        if(!avacterurl.equals("")){
-            Toast.makeText(Activity_four.this, avacterurl, Toast.LENGTH_SHORT).show();
-            Bitmap bitmap = getHttpBitmap(avacterurl);
-            imageView.setImageBitmap(bitmap);
-        }
-*/
 
-
-
-        String logintoken = sp.getString("LOGINTOKEN","");
-        String userID=sp.getString("USERID","");
-
+        String logintoken = Userinfosp.getString("LOGINTOKEN","");
         if(logintoken.equals("")){
             Log.e("Romaunt","本地未存储有LoginToken");
         }else{
@@ -340,8 +325,8 @@ public class Activity_four extends Activity {
 
                     final RomauntNetWork romauntNetWork = new RomauntNetWork();
 
-                    String logintoken = sp.getString("LOGINTOKEN","");
-                    String userID=sp.getString("USERID","");
+                    String logintoken = Userinfosp.getString("LOGINTOKEN","");
+                    String userID=Userinfosp.getString("USERID","");
 
                     Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
                     if(response==null){
@@ -365,10 +350,12 @@ public class Activity_four extends Activity {
                         final int followerEnable =userInfoResponse.msg.user.followerEnable;
                         final int aboutNotice =userInfoResponse.msg.user.aboutNotice;
                         final int updateNotice =userInfoResponse.msg.user.updateNotice;
+                        final int userid = userInfoResponse.msg.user.id;
 
 
-                        SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                        SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
+                        editor.putInt("userID",userid);
                         editor.putString("USERNAME",username);
                         editor.putInt("SEX", sex);
                         editor.putString("AVATERURL", avaterurl);
@@ -378,18 +365,14 @@ public class Activity_four extends Activity {
                         editor.putInt("FOLLOWERENABLE",followerEnable);
                         editor.putInt("ABOUTENABLE",aboutNotice);
                         editor.putInt("UPDATENOTICE",updateNotice);
-
                         editor.apply();
-
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                btn1.setText(username);
-                                textView.setText(signature);
-
+                                Loginbtn.setText(username);
+                                signTV.setText(signature);
                             }
                         });
-
                     }
                     else if(response instanceof StatusFalseResponse)
                     {
@@ -404,18 +387,9 @@ public class Activity_four extends Activity {
                             }
                         });
                     }
-
-
                 }
             }).start();
-
         }
-
-
-
-
-
-
     }
 
 

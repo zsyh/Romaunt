@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,9 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -35,6 +34,7 @@ import com.woofer.net.UserInfoResponse;
 import com.woofer.refreshlayout.adapter.NormalAdapterViewAdapter;
 import com.woofer.refreshlayout.model.RefreshModel;
 import com.woofer.userInfo;
+import com.woofer.util.Utils;
 
 import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
 import woofer.com.test.R;
@@ -50,6 +50,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
     private String Authorsign;
     private String Authorname;
     private String token;
+    private URL url;
 
     @Override
     protected void onDestroy() {
@@ -156,7 +157,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                 @Override
                 public void onResponse(Object response) {
 
-                    if(! (response instanceof PublicStoryListResponse)) {//
+                    if(! (response instanceof PublicStoryListResponse)) {
                         Log.e("Romaunt","初次加载广场故事列表时返回结果非正确，为防止崩溃直接取消初次加载");
                         return;
                     }
@@ -176,13 +177,51 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                         romauntNetWork1.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                             @Override
                             public void onResponse(Object response) {
-                                UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                                final UserInfoResponse userInfoResponse = (UserInfoResponse) response;
 
                                 for (int j = 0; j < listLogic.size(); j++) {
                                     if (listLogic.get(j).userID == userInfoResponse.msg.user.id) {
                                         listLogic.get(j).authorname = userInfoResponse.msg.user.userName;
                                         listLogic.get(j).sign = userInfoResponse.msg.user.sign;
                                         listLogic.get(j).avater = userInfoResponse.msg.user.avatar;
+                                        Log.e("AVATAR",listLogic.get(j).avater+j);
+                                        if(!userInfoResponse.msg.user.avatar.equals("")) {
+                                            File  imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userInfoResponse.msg.user.id + ".png");
+                                            if(imgfile.exists()) {
+                                                Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userInfoResponse.msg.
+                                                        user.id + ".png");
+                                                listLogic.get(j).bitmap = bmp;
+                                            }
+                                            else{
+                                                try{
+                                                    url = new URL(userInfoResponse.msg.user.avatar);
+                                                }
+                                                catch (MalformedURLException e){
+                                                    e.printStackTrace();
+                                                }
+                                                Utils.onLoadImage(url,  new Utils.OnLoadImageListener(){
+
+                                                    @Override
+                                                    public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
+                                                        if(bitmap!=null){
+                                                            for(int i =0; i<listLogic.size();i++){
+                                                                if(listLogic.get(i).userID==userid){
+                                                                        listLogic.get(i).bitmap=bitmap;
+                                                                }
+                                                            }
+                                                        }
+                                                        else{
+                                                            for(int i =0; i<listLogic.size();i++){
+                                                                if (listLogic.get(i).userID == userid) {
+                                                                    Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
+                                                                    listLogic.get(i).bitmap = bitmap1;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },listLogic.get(j).userID);
+                                            }
+                                        }
                                     }
                                 }
                                 mAdapter.notifyDataSetChanged();
@@ -222,7 +261,7 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(Activity_two.this, storydegitalActivity.class);
+        Intent intent = new Intent(Activity_two.this, StorydegitalActivity.class);
         intent.putExtra("USERID", mAdapter.getItem(position).userID);
         intent.putExtra("ID", mAdapter.getItem(position).id);
         intent.putExtra("LoginToken", loginToken);
@@ -363,6 +402,49 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                             if (listNewData.get(j).userID == userInfoResponse.msg.user.id) {
                                                 listNewData.get(j).authorname = userInfoResponse.msg.user.userName;
                                                 listNewData.get(j).sign = userInfoResponse.msg.user.sign;
+
+                                                listNewData.get(j).avater = userInfoResponse.msg.user.avatar;
+                                                if(!userInfoResponse.msg.user.avatar.equals("")) {
+                                                    File  imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userInfoResponse.msg.user.id + ".png");
+                                                    if(imgfile.exists()) {
+                                                        Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userInfoResponse.msg.
+                                                                user.id + ".png");
+                                                        listNewData.get(j).bitmap = bmp;
+                                                    }
+                                                    else{
+                                                        try{
+                                                            url = new URL(userInfoResponse.msg.user.avatar);
+                                                        }
+                                                        catch (MalformedURLException e){
+                                                            e.printStackTrace();
+                                                        }
+                                                        /**
+                                                         *遗留问题: 当url为http://139.129.131.240:3000/upload/file/985139_dog.jpg这样的url时 无法加载出图片
+                                                         * 但是基本一样的写法在storydegital中是对的*/
+                                                        Utils.onLoadImage(url, new Utils.OnLoadImageListener(){
+
+                                                            @Override
+                                                            public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
+                                                                if(bitmap!=null){
+                                                                    for(int i =0; i<listNewData.size();i++){
+                                                                        if(listNewData.get(i).userID==userid){
+                                                                                listNewData.get(i).bitmap=bitmap;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                else{
+                                                                    for(int i = 0;i<listNewData.size(); i++) {
+                                                                        if(listNewData.get(i).userID==userid) {
+                                                                            Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
+                                                                            listNewData.get(i).bitmap = bitmap1;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },listNewData.get(j).userID);
+                                                    }
+                                                }
+
                                             }
                                         }
                                         mAdapter.notifyDataSetChanged();
@@ -461,6 +543,44 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                                     if (listMoreData.get(j).userID == userInfoResponse.msg.user.id) {
                                         listMoreData.get(j).authorname = userInfoResponse.msg.user.userName;
                                         listMoreData.get(j).sign = userInfoResponse.msg.user.sign;
+                                        listMoreData.get(j).avater = userInfoResponse.msg.user.avatar;
+                                        if(!userInfoResponse.msg.user.avatar.equals("")) {
+                                            File  imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userInfoResponse.msg.user.id + ".png");
+                                            if(imgfile.exists()) {
+                                                Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userInfoResponse.msg.
+                                                        user.id + ".png");
+                                                listMoreData.get(j).bitmap = bmp;
+                                            }
+                                            else{
+                                                try{
+                                                    url = new URL(userInfoResponse.msg.user.avatar);
+                                                }
+                                                catch (MalformedURLException e){
+                                                    e.printStackTrace();
+                                                }
+                                                Utils.onLoadImage(url, new Utils.OnLoadImageListener(){
+
+                                                    @Override
+                                                    public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
+                                                        if(bitmap!=null){
+                                                            for(int i =0; i<listMoreData.size();i++){
+                                                                if(listMoreData.get(i).userID==userid){
+                                                                    listMoreData.get(i).bitmap=bitmap;
+                                                                }
+                                                            }
+                                                        }
+                                                        else{
+                                                            for(int i= 0;i<listMoreData.size();i++){
+                                                                if(listMoreData.get(i).userID==userid){
+                                                                    Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
+                                                                    listMoreData.get(i).bitmap = bitmap1;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },listMoreData.get(j).userID);
+                                            }
+                                        }
                                     }
 
                                 }
