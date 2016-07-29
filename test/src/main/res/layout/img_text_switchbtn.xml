@@ -31,11 +31,10 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:targetApi="ice_cream_sandwich"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
 
         android:id="@+id/imgtextswitch_switch"
-        />
+        tools:targetApi="ice_cream_sandwich" />
 
 </RelativeLayout>

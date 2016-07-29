@@ -1,11 +1,11 @@
 package com.woofer.activity;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +16,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.woofer.adapter.OtherUserHomePageTransfer;
-import com.woofer.adapter.fansAdapter;
 import com.woofer.commentandreply.adapter.CommentAdapter;
 import com.woofer.commentandreply.date.Commentdate;
 import com.woofer.commentandreply.date.Replydate;
@@ -33,10 +32,8 @@ import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
 import com.woofer.titlebar.TitleBar;
-import com.woofer.ui.Texttextimg;
 
-import org.w3c.dom.Text;
-
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +47,7 @@ public class CommentActivity extends AppCompatActivity {
     private NoTouchLinearLayout mLytEdittextVG;
     public static EditText mCommentEdittext;
     private Button mSendBut;
+    private ImageView avatar;
 
     private CommentAdapter adapter;
     private int count;                    //记录评论ID
@@ -80,7 +78,8 @@ public class CommentActivity extends AppCompatActivity {
         initView();
         Intent intent = getIntent();
         Logintoken = intent.getStringExtra("LOGINTOKEN");
-        Userid = intent.getIntExtra("USERID", 1);
+        //这个id是发表该故事的用户的id
+        Userid = intent.getIntExtra("USERID", 0);
         username = intent.getStringExtra("Username");
         time = intent.getStringExtra("Time");
         content = intent.getStringExtra("Content");
@@ -103,6 +102,34 @@ public class CommentActivity extends AppCompatActivity {
         mLytCommentVG.setOnClickListener(cl);
 
     }
+    /**
+     * 事件点击监听器
+     */
+    private final class ClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.but_comment_send:        //发表评论按钮
+                    if (isEditEmply()) {        //判断用户是否输入内容
+                        if (isReply) {
+                            replyComment();
+                        } else {
+                            publishComment();
+                        }
+                        mLytCommentVG.setVisibility(View.VISIBLE);
+                        mLytEdittextVG.setVisibility(View.GONE);
+                        onFocusChange(false);
+                    }
+                    break;
+                case R.id.comment_vg_lyt:        //底部评论按钮
+                    isReply = false;
+                    mLytEdittextVG.setVisibility(View.VISIBLE);
+                    mLytCommentVG.setVisibility(View.GONE);
+                    onFocusChange(true);
+                    break;
+            }
+        }
+    }
 
     private void InitCompement() {
         nametv = (TextView) findViewById(R.id.comment_username);
@@ -121,6 +148,12 @@ public class CommentActivity extends AppCompatActivity {
                 CommentActivity.this.finish();
             }
         });
+        avatar = (ImageView)findViewById(R.id.comment_avatar);
+        File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + Userid + ".png");
+        if(imgfile.exists()) {
+            Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + Userid + ".png");
+            avatar.setImageBitmap(bmp);
+        }
     }
 
     /**
@@ -141,8 +174,12 @@ public class CommentActivity extends AppCompatActivity {
                 String str = formatter.format(curDate);
 
                 SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
+                String username = sp.getString("USERNAME","");
 
-                Commentdate freshview = new Commentdate(count, Integer.parseInt(sp.getString("USERID", "")),"", str, comment, sp.getString("USERSIGN", ""),
+
+
+
+                Commentdate freshview = new Commentdate(count, Integer.parseInt(sp.getString("USERID", "")), username, str, comment, sp.getString("USERSIGN", ""),
                         sp.getString("AVATERURL", ""), commentResponse.msg.id);
                 list.add(0, freshview);//加载到list的最前面
 
@@ -289,7 +326,8 @@ public class CommentActivity extends AppCompatActivity {
                             SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
                             Replydate replydate = new Replydate();
                             replydate.setId(count + 100);
-                            replydate.setCommentNickname(list.get(position).getCommentNickname());
+                            replydate.setCommentNickname("");
+                            //list.get(position).getCommentNickname()
                             replydate.setReplyNickname(sp.getString("USERNAME", ""));
                             replydate.setReplyContent(comment);
                             adapter.getReplyComment(replydate, position);
@@ -415,34 +453,7 @@ public class CommentActivity extends AppCompatActivity {
         return false;
     }
 
-    /**
-     * 事件点击监听器
-     */
-    private final class ClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.but_comment_send:        //发表评论按钮
-                    if (isEditEmply()) {        //判断用户是否输入内容
-                        if (isReply) {
-                            replyComment();
-                        } else {
-                            publishComment();
-                        }
-                        mLytCommentVG.setVisibility(View.VISIBLE);
-                        mLytEdittextVG.setVisibility(View.GONE);
-                        onFocusChange(false);
-                    }
-                    break;
-                case R.id.comment_vg_lyt:        //底部评论按钮
-                    isReply = false;
-                    mLytEdittextVG.setVisibility(View.VISIBLE);
-                    mLytCommentVG.setVisibility(View.GONE);
-                    onFocusChange(true);
-                    break;
-            }
-        }
-    }
+
 
     @Override
     public void onBackPressed() {

@@ -64,7 +64,10 @@ public class UserInfoActivity extends AppCompatActivity {
         logintoken = UserinfoSp.getString("LOGINTOKEN","");
         username = UserinfoSp.getString("USERNAME","");
         avacterurl = UserinfoSp.getString("AVATERURL", "");
+<<<<<<< HEAD
+=======
         userid = UserinfoSp.getInt("userID",0);
+>>>>>>> origin/develop
         /**！！！！！！！*/
         signature = UserinfoSp.getString("USERSIGN", "")+" ";
         sex = UserinfoSp.getInt("SEX", 0);

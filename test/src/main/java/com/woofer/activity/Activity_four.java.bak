@@ -112,6 +112,7 @@ public class Activity_four extends Activity {
         registerReceiver(broadcastReceiverUserInfo, new IntentFilter("com.zaizai1.broadcast.userInfoUpdated"));
 
 
+        final SharedPreferences Userinfosp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
         final SharedPreferences Userinfosp  = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
 
         signTV = (TextView)findViewById(R.id.activity_four_tV2);

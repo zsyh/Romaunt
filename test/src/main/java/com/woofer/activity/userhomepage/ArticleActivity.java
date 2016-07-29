@@ -12,8 +12,6 @@ import com.woofer.activity.OtherUserHomePage;
 import com.woofer.adapter.ParasAdapter;
 import com.woofer.refreshlayout.model.ParhsModel;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import woofer.com.test.R;

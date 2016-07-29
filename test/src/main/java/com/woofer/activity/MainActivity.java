@@ -1,10 +1,7 @@
 package com.woofer.activity;
 
 import android.app.LocalActivityManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -19,15 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.woofer.Scroll.FixedSpeedScroller;
-import com.woofer.net.LoginResponse;
-import com.woofer.net.RomauntNetWork;
-import com.woofer.net.RomauntNetworkCallback;
-import com.woofer.net.StatusFalseResponse;
-import com.woofer.net.UserInfoResponse;
-import com.woofer.userInfo;
 
 import woofer.com.test.R;
 import com.woofer.adapter.ViewPagerAdapter;

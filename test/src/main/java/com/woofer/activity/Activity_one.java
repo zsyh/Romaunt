@@ -30,9 +30,7 @@ import com.woofer.SwipeMenu.SwipeMenuListView.OnMenuItemClickListener;
 
 import woofer.com.test.R;
 
-import com.woofer.net.GetStoryResponse;
 import com.woofer.net.RomauntNetWork;
-import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UploadStoryResponse;
 import com.woofer.titlebar.TitleBar;
 
@@ -155,7 +153,7 @@ public class Activity_one extends Activity {
                                 final String flags= noteDataList.get(i).getLable();
                                 final String content= noteDataList.get(i).getNoteData();
 
-                                SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+                                SharedPreferences sp  = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                                 String logintoken = sp.getString("LOGINTOKEN","");
 
                                 Object response =romauntNetWork.uploadStorySync(logintoken,title,flags,content,"1");

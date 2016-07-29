@@ -27,7 +27,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class storydegitalActivity extends AppCompatActivity {
+public class StorydegitalActivity extends AppCompatActivity {
     private TitleBar titleBar;
     private ImageView avater;
     private TextView username;
@@ -68,22 +68,22 @@ public class storydegitalActivity extends AppCompatActivity {
         LoginToken = intent.getStringExtra("LoginToken");
         setStoryInfo();
 
-        /*SharedPreferences sp  = getSharedPreferences("userinfo",signinActivity.MODE_PRIVATE);
+        /*SharedPreferences sp  = getSharedPreferences("userinfo",SigninActivity.MODE_PRIVATE);
         avaterurl = sp.getString("AVATERURL", "");*/
 
 
         avater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
-                SharedPreferences sp1 = storydegitalActivity.this.getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
+                SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
+                SharedPreferences sp1 = StorydegitalActivity.this.getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp1.edit();
                 editor.putInt("FOLLOWINGENABLE", followingEnable);
                 editor.putInt("FANSENABLE", fansEnable);
                 editor.apply();
 
                 String LoginToken = sp.getString("LOGINTOKEN", "");
-                Intent intent1 = new Intent(storydegitalActivity.this, OtherUserHomePage.class);
+                Intent intent1 = new Intent(StorydegitalActivity.this, OtherUserHomePage.class);
                 intent1.putExtra("LoginToken", LoginToken);
                 intent1.putExtra("UserID", UserId);
                 intent1.putExtra("Avater", avaterurl);
@@ -104,7 +104,7 @@ public class storydegitalActivity extends AppCompatActivity {
         commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(storydegitalActivity.this, CommentActivity.class);
+                Intent intent = new Intent(StorydegitalActivity.this, CommentActivity.class);
                 intent.putExtra("LOGINTOKEN",LoginToken);
                 intent.putExtra("USERID",UserId);
                 intent.putExtra("Username",UserName);
@@ -127,12 +127,12 @@ public class storydegitalActivity extends AppCompatActivity {
                     romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                         @Override
                         public void onResponse(Object response) {
-                            Toast.makeText(storydegitalActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StorydegitalActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onError(Object error) {
-                            Toast.makeText(storydegitalActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StorydegitalActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
                         }
                     });
                     romauntNetWork.storyCollect(LoginToken, Integer.toString(UserId), "0");
@@ -145,12 +145,12 @@ public class storydegitalActivity extends AppCompatActivity {
                     romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                         @Override
                         public void onResponse(Object response) {
-                            Toast.makeText(storydegitalActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StorydegitalActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onError(Object error) {
-                            Toast.makeText(storydegitalActivity.this, "收藏失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StorydegitalActivity.this, "收藏失败", Toast.LENGTH_SHORT).show();
                         }
                     });
                     romauntNetWork.storyCollect(LoginToken, Integer.toString(UserId), "1");
@@ -164,7 +164,7 @@ public class storydegitalActivity extends AppCompatActivity {
         titleBar.leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                storydegitalActivity.this.finish();
+                StorydegitalActivity.this.finish();
             }
         });
 
@@ -192,7 +192,8 @@ public class storydegitalActivity extends AppCompatActivity {
                 followingEnable = userInfoResponse.msg.user.followingEnable;
                 fansEnable = userInfoResponse.msg.user.followerEnable;
                 noticeEnable = userInfoResponse.msg.user.noticeEnable;
-
+                int userid = userInfoResponse.msg.user.id;
+                /**storydegital 中不读取本地缓存 为的是更新用户头像和本地缓存 针对用户上传了新头像的情况*/
                 if (!avaterurl.equals("")) {
                     try {
                         url = new URL(avaterurl);
@@ -202,15 +203,13 @@ public class storydegitalActivity extends AppCompatActivity {
                     }
                     Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
                         @Override
-                        public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
+                        public void OnLoadImage(Bitmap bitmap, String bitmapPath,int userid) {
                             if (bitmap != null) {
                                 avater.setImageBitmap(bitmap);
                             }
                         }
-                    });
+                    },userid);
                 }
-
-
             }
 
             @Override

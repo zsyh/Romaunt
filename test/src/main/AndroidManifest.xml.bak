@@ -24,9 +24,12 @@
         <activity
             android:name="com.woofer.activity.EditNoteActivity"
             android:windowSoftInputMode="adjustResize" />
-
+<<<<<<< HEAD
+        <activity android:name="com.woofer.activity.welcomeActivity">
+=======
         <activity android:name="com.woofer.activity.WelcomeActivity">
-		<intent-filter>
+>>>>>>> origin/develop
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

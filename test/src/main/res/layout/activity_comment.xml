@@ -25,8 +25,10 @@
             android:orientation="horizontal">
             <!-- 新闻作者头像-->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@drawable/ic_launcher"
 
                 android:id="@+id/comment_avatar"/>

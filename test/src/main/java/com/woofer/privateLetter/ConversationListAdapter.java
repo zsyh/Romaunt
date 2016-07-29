@@ -84,6 +84,7 @@ public class ConversationListAdapter extends BaseAdapter{
         }
         //绑定数据
 
+
         viewHolder.imageView.setImageResource(conversationListInfo.getList_img());
         viewHolder.textViewText.setText(conversationListInfo.getList_text());
 

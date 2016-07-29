@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -32,10 +35,10 @@ import com.woofer.net.UserInfoResponse;
 import com.woofer.refreshlayout.model.ParhsModel;
 import com.woofer.titlebar.TitleBar;
 
-import com.woofer.ui.Followbtnstyle;
+import com.woofer.ui.Otuserhomebtnstyle;
 
 
-
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,6 +63,7 @@ public class OtherUserHomePage extends Activity {
     private ImageView imgsex;
     private TextView sign;
     private TextView InformTitle;
+    private ImageView userAvatar;
 
 
     private TextView Toptv1;
@@ -84,7 +88,10 @@ public class OtherUserHomePage extends Activity {
 
     private int followingEnable;
     private int fansEnable ;
-    private Followbtnstyle followbtnstyle;
+    private Otuserhomebtnstyle followbtnstyle;
+    private Otuserhomebtnstyle privateletterbtn;
+    private String Username;
+
 
     public static OtherUserHomePageTransfer otherUserHomePageTransfer;
 
@@ -110,7 +117,7 @@ public class OtherUserHomePage extends Activity {
         String Id = intent.getStringExtra("ID");
         UserId = intent.getIntExtra("UserID", 0);
 
-        SharedPreferences sp1 = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
+        SharedPreferences sp1 = getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
         followingEnable = sp1.getInt("FOLLOWINGENABLE", 1);
         fansEnable = sp1.getInt("FANSENABLE", 1);
 
@@ -121,7 +128,7 @@ public class OtherUserHomePage extends Activity {
         LoginToken = intent.getStringExtra("LoginToken");
 
 
-        String Username = intent.getStringExtra("Username");
+        Username = intent.getStringExtra("Username");
         UserName = (TextView)findViewById(R.id.OT_home_username);
         UserName.setText(Username);
 
@@ -132,10 +139,20 @@ public class OtherUserHomePage extends Activity {
         String Avater = intent.getStringExtra("Avater");
 
         int sex = intent.getIntExtra("Sex", 3);
+        /**otheruserhongpage中直接读取本地缓存就行*/
+        userAvatar = (ImageView)findViewById(R.id.OT_home_avater);
+        File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + UserId + ".png");
+        if(imgfile.exists()) {
+            Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + UserId + ".png");
+            userAvatar.setImageBitmap(bmp);
+        }
+
+
+
         imgsex = (ImageView)findViewById(R.id.OT_home_sex);
         if(sex==3){
             imgsex.setVisibility(View.INVISIBLE);
-        }else if(sex==0){
+        }else if(sex==1){
             imgsex.setImageResource(R.drawable.img_small_male);
         }
         else
@@ -155,7 +172,7 @@ public class OtherUserHomePage extends Activity {
 
     }
     protected void InitView() {
-        followbtnstyle = (Followbtnstyle)findViewById(R.id.OT_home_followbtn);
+        followbtnstyle = (Otuserhomebtnstyle)findViewById(R.id.OT_home_followbtn);
         // TODO Auto-generated method stub
         followbtnstyle.setOnClickListener(new OnClickListener() {
             @Override
@@ -217,10 +234,12 @@ public class OtherUserHomePage extends Activity {
 
                                                     String username = sp.getString("USERNAME","");
                                                     String sign= sp.getString("USERSIGN", "");
+                                                    int sex = sp.getInt("SEX",3);
+                                                    String avatar = sp.getString("AVATERURL","");
 
                                                     Map<String, Object> map=new HashMap<>();
-                                                    map.put("AVATAR",  R.drawable.img_warning);
-                                                    map.put("SEX", R.drawable.img_warning);
+                                                    map.put("AVATAR",  avatar);
+                                                    map.put("SEX",sex );
                                                     map.put("USERNAME", username);
                                                     map.put("SIGN", sign);
                                                     OtherUserHomePage.otherUserHomePageTransfer.fansList.add(map);
@@ -245,6 +264,20 @@ public class OtherUserHomePage extends Activity {
 
 
         });
+        privateletterbtn = (Otuserhomebtnstyle)findViewById(R.id.OT_home_privatebtn);
+        privateletterbtn.setImage(R.drawable.icon_message_grey);
+        privateletterbtn.setText("私信");
+        privateletterbtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OtherUserHomePage.this,ConversationActivity.class);
+                intent.putExtra("USERID",UserId);
+                intent.putExtra("USERNAME",Username);
+                intent.putExtra("LOGINTOKEN",LoginToken);
+                startActivity(intent);
+            }
+        });
+
 
         InformTitle = (TextView)findViewById(R.id.OT_home_item);
 
@@ -416,10 +449,11 @@ public class OtherUserHomePage extends Activity {
 
                         for(int i = 0 ; i < fansNUM ; i++){
                             Map<String, Object> map=new HashMap<String, Object>();
-                            map.put("AVATAR",  R.drawable.img_warning);
-                            map.put("SEX", R.drawable.img_warning);
+                            map.put("AVATAR",  userInfoResponse.msg.follower.get(i).avatar);
+                            map.put("SEX", userInfoResponse.msg.follower.get(i).sex);
                             map.put("USERNAME", userInfoResponse.msg.follower.get(i).userName);
                             map.put("SIGN", userInfoResponse.msg.follower.get(i).sign);
+                            map.put("USERID",userInfoResponse.msg.follower.get(i).id);
                             otherUserHomePageTransfer.fansList.add(map);
                         }
 
@@ -428,10 +462,11 @@ public class OtherUserHomePage extends Activity {
 
                         for(int i = 0 ; i < followinsNUM ; i++){
                             Map<String, Object> map=new HashMap<String, Object>();
-                            map.put("AVATAR",  R.drawable.img_warning);
-                            map.put("SEX", R.drawable.img_warning);
+                            map.put("AVATAR",  userInfoResponse.msg.following.get(i).avatar);
+                            map.put("SEX", userInfoResponse.msg.following.get(i).sex);
                             map.put("USERNAME", userInfoResponse.msg.following.get(i).userName);
                             map.put("SIGN", userInfoResponse.msg.following.get(i).sign);
+                            map.put("USERID",userInfoResponse.msg.following.get(i).id);
                             otherUserHomePageTransfer.followingList.add(map);
                         }
 
@@ -439,7 +474,7 @@ public class OtherUserHomePage extends Activity {
                         sendBroadcast(i2);
 
 
-                        SharedPreferences sp  = getSharedPreferences("userinfo", signinActivity.MODE_PRIVATE);
+                        SharedPreferences sp  = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                         String username = sp.getString("USERNAME", "");
 
                         Map<String, Object> map1=new HashMap<String, Object>();

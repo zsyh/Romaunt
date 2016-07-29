@@ -41,9 +41,11 @@ public class FansActivity extends Activity{
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //透明导航栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-
+<<<<<<< HEAD
+        SharedPreferences EnableSp = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
+=======
         SharedPreferences EnableSp = getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
-
+>>>>>>> origin/develop
         fansEnable = EnableSp.getInt("FANSENABLE", 1);
         if(fansEnable==0){
             mDataLV.setBackgroundResource(R.drawable.fansunavilible);

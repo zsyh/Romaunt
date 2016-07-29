@@ -10,6 +10,4 @@ public class userInfo extends Application{
 
     public static int nowPage=1;
 
-
-
 }

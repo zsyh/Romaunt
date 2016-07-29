@@ -7,7 +7,7 @@ import android.view.View;
 import woofer.com.test.R;
 import com.woofer.titlebar.TitleBar;
 
-public class aboutusActivity extends AppCompatActivity {
+public class AboutusActivity extends AppCompatActivity {
     private TitleBar titleBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class aboutusActivity extends AppCompatActivity {
         titleBar.leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aboutusActivity.this.finish();
+                AboutusActivity.this.finish();
             }
         });
     }

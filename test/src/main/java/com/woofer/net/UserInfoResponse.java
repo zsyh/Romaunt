@@ -25,7 +25,7 @@ public class UserInfoResponse {
         public String sign;
         public String userName;
         public String token;
-        public int sex;
+        public int sex  ;
         public int noticeEnable;
         public int followingEnable;
         public int followerEnable;

@@ -2,16 +2,10 @@ package com.woofer.commentandreply.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
-
-import com.woofer.activity.CommentActivity;
-
 /**
  * Created by Admin on 2016/5/19.
  */
