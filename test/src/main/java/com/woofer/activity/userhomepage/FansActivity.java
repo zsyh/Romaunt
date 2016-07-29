@@ -23,7 +23,6 @@ public class FansActivity extends Activity{
     private ListView mDataLV;
     private int fansEnable ;
     private List<Map<String,Object>> dataList;
-    /**记录当前适listview中item个数 去重 为多步加载做准备*/
     private BroadcastReceiver mBroadcastReceiver;
     private BroadcastReceiver BroadcastReceiverFansListRefresh;
     private fansAdapter mfansAdapter;
@@ -44,8 +43,8 @@ public class FansActivity extends Activity{
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //透明导航栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        SharedPreferences sp1 = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
-        fansEnable = sp1.getInt("FANSENABLE", 1);
+        SharedPreferences EnableSp = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
+        fansEnable = EnableSp.getInt("FANSENABLE", 1);
         if(fansEnable==0){
             mDataLV.setBackgroundResource(R.drawable.fansunavilible);
         }else {

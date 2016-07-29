@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context="com.woofer.activity.welcomeActivyty">
+    tools:context="com.woofer.activity.welcomeActivity">
 
     <WebView
         android:layout_marginTop="80dp"

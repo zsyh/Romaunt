@@ -26,7 +26,7 @@ public class RomauntNetWork {
     }
 
     public void register(String mobile, String password, String userName, String avatar) {
-        String url = "http://139.129.131.240:3000/api/register";
+        String url = "http://139.129.131.240:3030/api/register";
 
         OkHttpUtils
                 .post()
@@ -80,7 +80,7 @@ public class RomauntNetWork {
 
     public void login(String mobile, String password) {
 
-        String url = "http://139.129.131.240:3000/api/login";
+        String url = "http://139.129.131.240:3030/api/login";
         OkHttpUtils
                 .post()
                 .url(url)
@@ -135,7 +135,7 @@ public class RomauntNetWork {
     public void getPersonStoryList(String LoginToken, String userID, String page, String Count) {
 
 
-        String url = "http://139.129.131.240:3000/api/token/storylist/" + page + "/" + Count;
+        String url = "http://139.129.131.240:3030/api/token/storylist/" + page + "/" + Count;
 
         OkHttpUtils
                 .post()
@@ -193,7 +193,7 @@ public class RomauntNetWork {
     }
 
     public void getPublicStoryList(String LoginToken, String timestamps, String page, String Count) {
-        String url = "http://139.129.131.240:3000/api/token/public/storylist/" + page + "/" + Count;
+        String url = "http://139.129.131.240:3030/api/token/public/storylist/" + page + "/" + Count;
 
         OkHttpUtils
                 .post()
@@ -252,7 +252,7 @@ public class RomauntNetWork {
 
     public void getToken(String token) {
 
-        String url = "http://139.129.131.240:3000/api/getToken";
+        String url = "http://139.129.131.240:3030/api/getToken";
 
         OkHttpUtils
                 .post()
@@ -307,7 +307,7 @@ public class RomauntNetWork {
     }
 
     public void getUserInfo(String LoginToken, String AuthorID) {
-        String url = "http://139.129.131.240:3000/api/token/userinfo";
+        String url = "http://139.129.131.240:3030/api/token/userinfo";
 
 
         OkHttpUtils
@@ -361,7 +361,7 @@ public class RomauntNetWork {
     }
 
     public void uploadStory(String LoginToken, String title, String flags, String content, String publicEnable) {
-        String url = "http://139.129.131.240:3000/api/token/addstory";
+        String url = "http://139.129.131.240:3030/api/token/addstory";
 
         OkHttpUtils
                 .post()
@@ -420,7 +420,7 @@ public class RomauntNetWork {
     }
 
     public void getStory(String LoginToken, String storyID, String AuthorID) {
-        String url = "http://139.129.131.240:3000/api/token/story";
+        String url = "http://139.129.131.240:3030/api/token/story";
 
         OkHttpUtils
                 .post()
@@ -476,7 +476,7 @@ public class RomauntNetWork {
     }
 
     public void addFollow(String LoginToken, String starID) {
-        String url = "http://139.129.131.240:3000/api/token/userinfo/addfollow";
+        String url = "http://139.129.131.240:3030/api/token/userinfo/addfollow";
         OkHttpUtils
                 .post()
                 .url(url)
@@ -531,7 +531,7 @@ public class RomauntNetWork {
     }
 
     public void delFollow(String LoginToken, String starID) {
-        String url = "http://139.129.131.240:3000/api/token/userinfo/delfollow";
+        String url = "http://139.129.131.240:3030/api/token/userinfo/delfollow";
         OkHttpUtils
                 .post()
                 .url(url)
@@ -586,7 +586,7 @@ public class RomauntNetWork {
 
 
     public void getChat(String LoginToken, String revID) {
-        String url = "http://139.129.131.240:3000/api/token/chat/get";
+        String url = "http://139.129.131.240:3030/api/token/chat/get";
         OkHttpUtils
                 .post()
                 .url(url)
@@ -641,7 +641,7 @@ public class RomauntNetWork {
     }
 
     public void sendChat(String LoginToken, String revID, String content) {
-        String url = "http://139.129.131.240:3000/api/token/chat/send";
+        String url = "http://139.129.131.240:3030/api/token/chat/send";
         OkHttpUtils
                 .post()
                 .url(url)
@@ -701,7 +701,7 @@ public class RomauntNetWork {
      */
 
     public void storyLike(String LoginToken, String storyID, String isLike) {
-        String url = "http://139.129.131.240:3000/api/token/story/like";
+        String url = "http://139.129.131.240:3030/api/token/story/like";
         OkHttpUtils
                 .post()
                 .url(url)
@@ -747,7 +747,7 @@ public class RomauntNetWork {
      * @param isCollect 数字0代表取消收藏，1代表收藏
      */
     public void storyCollect(String LoginToken, String storyID, String isCollect) {
-        String url = "http://139.129.131.240:3000/api/token/story/collect";
+        String url = "http://139.129.131.240:3030/api/token/story/collect";
         OkHttpUtils
                 .post()
                 .url(url)
@@ -790,7 +790,7 @@ public class RomauntNetWork {
     }
 
     public void getCommentlist(String LoginToken, String storyID) {
-        String url = "http://139.129.131.240:3000/api/token/commentlist/" + storyID;
+        String url = "http://139.129.131.240:3030/api/token/commentlist/" + storyID;
         OkHttpUtils
                 .post()
                 .url(url)
@@ -845,7 +845,7 @@ public class RomauntNetWork {
     }
 
     public void comment(String LoginToken, String storyID, String commentContent) {
-        String url = "http://139.129.131.240:3000/api/token/comment/" + storyID;
+        String url = "http://139.129.131.240:3030/api/token/comment/" + storyID;
         OkHttpUtils
                 .post()
                 .url(url)
@@ -900,7 +900,7 @@ public class RomauntNetWork {
     }
 
     public void commentReply(String LoginToken, String commentID, String replyContent) {
-        String url = "http://139.129.131.240:3000/api/token/reply/" + commentID;
+        String url = "http://139.129.131.240:3030/api/token/reply/" + commentID;
         OkHttpUtils
                 .post()
                 .url(url)
@@ -956,7 +956,7 @@ public class RomauntNetWork {
 
 
     public Object getUserInfoSync(String LoginToken, String AuthorID) {
-        String url = "http://139.129.131.240:3000/api/token/userinfo";
+        String url = "http://139.129.131.240:3030/api/token/userinfo";
 
         Response response;
         String s;
@@ -1002,7 +1002,7 @@ public class RomauntNetWork {
     }
 
     public Object getTokenSync(String token) {
-        String url = "http://139.129.131.240:3000/api/getToken";
+        String url = "http://139.129.131.240:3030/api/getToken";
         Response response;
         String s;
         try {
@@ -1045,7 +1045,7 @@ public class RomauntNetWork {
     }
 
     public Object uploadStorySync(String LoginToken, String title, String flags, String content, String publicEnable) {
-        String url = "http://139.129.131.240:3000/api/token/addstory";
+        String url = "http://139.129.131.240:3030/api/token/addstory";
         Response response;
         String s;
 
@@ -1091,7 +1091,7 @@ public class RomauntNetWork {
 
     public void updateUserInfo(String LoginToken,String userName, String avatar,String sign,String sex,
                                String updateNotice,String noticeEnable,String followingEnable,String followerEnable,String aboutNotice) {
-        String url = "http://139.129.131.240:3000/api/token/userinfo/update";
+        String url = "http://139.129.131.240:3030/api/token/userinfo/update";
 
 
         OkHttpUtils

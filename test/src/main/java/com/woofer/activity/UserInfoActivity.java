@@ -29,13 +29,13 @@ import woofer.com.test.R;
 import com.woofer.titlebar.TitleBar;
 
 public class UserInfoActivity extends AppCompatActivity {
-    private ImageTexttouxiang avatar;
-    private ImageText nicheng;
-    private ImageText msex;
-    private Texttextimg sign;
+    private ImageTexttouxiang item_avatar;
+    private ImageText item_username;
+    private ImageText item_sex;
+    private Texttextimg item_sign;
 
-    private ImageText imageText2;
-    private ImageText imageText3;
+    private ImageText item_linkphonenum;
+    private ImageText item_linkemail;
 
     private TitleBar titleBar;
 
@@ -58,43 +58,43 @@ public class UserInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        final SharedPreferences sp  = getSharedPreferences("userinfo", MODE_PRIVATE);
-        logintoken = sp.getString("LOGINTOKEN","");
-        username = sp.getString("USERNAME","");
-        avacterurl = sp.getString("AVATERURL", "");
+        final SharedPreferences UserinfoSp  = getSharedPreferences("userinfo", MODE_PRIVATE);
+        logintoken = UserinfoSp.getString("LOGINTOKEN","");
+        username = UserinfoSp.getString("USERNAME","");
+        avacterurl = UserinfoSp.getString("AVATERURL", "");
         /**！！！！！！！*/
-        signature = sp.getString("USERSIGN", "")+" ";
-        sex = sp.getInt("SEX", 0);
-        updatenotice = sp.getInt("UPDATENOTICE", 1);
-        noticeenable = sp.getInt("NOTICEENABLE",1);
-        followingenable = sp.getInt("FOLLOWINGENABLE",1);
-        followerenable = sp.getInt("FOLLOWERENABLE",1);
-        aboutnotice = sp.getInt("ABOUTENABLE",1);
+        signature = UserinfoSp.getString("USERSIGN", "")+" ";
+        sex = UserinfoSp.getInt("SEX", 0);
+        updatenotice = UserinfoSp.getInt("UPDATENOTICE", 1);
+        noticeenable = UserinfoSp.getInt("NOTICEENABLE",1);
+        followingenable = UserinfoSp.getInt("FOLLOWINGENABLE",1);
+        followerenable = UserinfoSp.getInt("FOLLOWERENABLE",1);
+        aboutnotice = UserinfoSp.getInt("ABOUTENABLE",1);
 
-        nicheng =(ImageText)findViewById(R.id.user_info_username);
-        nicheng.setText(0, "昵称");
-        nicheng.setText(1, sp.getString("USERNAME", ""));
-        nicheng.setImgResource(R.drawable.btn_right);
+        item_username =(ImageText)findViewById(R.id.user_info_username);
+        item_username.setText(0, "昵称");
+        item_username.setText(1, UserinfoSp.getString("USERNAME", ""));
+        item_username.setImgResource(R.drawable.btn_right);
         /**昵称 用户名*/
-        nicheng.setOnClickListener(new View.OnClickListener() {
+        item_username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sp.getString("TOKEN","").equals("")) {
-                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                if (UserinfoSp.getString("TOKEN", "").equals("")) {
+                    Toast.makeText(UserInfoActivity.this, "你尚未登录!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 LayoutInflater layoutInflater = LayoutInflater.from(UserInfoActivity.this);
                 View conView = layoutInflater.inflate(R.layout.dialog_layoutforlabel, null);
-                final EditText editText = (EditText)conView.findViewById(R.id.dialog_ET);
-                TextView textView =(TextView)conView.findViewById(R.id.title);
+                final EditText editText = (EditText) conView.findViewById(R.id.dialog_ET);
+                TextView textView = (TextView) conView.findViewById(R.id.title);
                 textView.setText("修改昵称");
                 new AlertDialog.Builder(UserInfoActivity.this)
                         .setIcon(android.R.drawable.ic_menu_gallery)
                         .setView(conView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         username = editText.getText().toString();
-                        nicheng.setText(1, username);
-                        editor = sp.edit();
+                        item_username.setText(1, username);
+                        editor = UserinfoSp.edit();
                         editor.putString("USERNAME", username);
                         editor.apply();
                         dialog.dismiss();
@@ -103,11 +103,11 @@ public class UserInfoActivity extends AppCompatActivity {
                         romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                             @Override
                             public void onResponse(Object response) {
-                                if(response instanceof UserInfoResponse) {
+                                if (response instanceof UserInfoResponse) {
                                     Toast.makeText(UserInfoActivity.this, "用户名更新成功", Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent("com.zaizai1.broadcast.userInfoUpdated");
                                     sendBroadcast(i);
-                                }else{
+                                } else {
                                     Toast.makeText(UserInfoActivity.this, "用户名更新失败,请重试", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -132,23 +132,23 @@ public class UserInfoActivity extends AppCompatActivity {
         });
 
 
-        msex =(ImageText)findViewById(R.id.user_info_sex);
-        msex.setText(0, "性别");
+        item_sex =(ImageText)findViewById(R.id.user_info_sex);
+        item_sex.setText(0, "性别");
         if(sex==1){
-            msex.setText(1, "男");
+            item_sex.setText(1, "男");
         }else if(sex==2){
-            msex.setText(1, "女");
+            item_sex.setText(1, "女");
         }else{
-            msex.setText(1, "");
+            item_sex.setText(1, "");
         }
 
-        msex.setImgResource(R.drawable.btn_right);
+        item_sex.setImgResource(R.drawable.btn_right);
         /**性别*/
-        msex.setOnClickListener(new View.OnClickListener() {
+        item_sex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sp.getString("TOKEN","").equals("")) {
-                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                if (UserinfoSp.getString("TOKEN", "").equals("")) {
+                    Toast.makeText(UserInfoActivity.this, "你尚未登录!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -157,8 +157,8 @@ public class UserInfoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
 
-                        msex.setText(1,"男");
-                        editor = sp.edit();
+                        item_sex.setText(1, "男");
+                        editor = UserinfoSp.edit();
                         editor.putInt("SEX", 1);
                         editor.apply();
 
@@ -188,8 +188,8 @@ public class UserInfoActivity extends AppCompatActivity {
                         new android.content.DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                msex.setText(1,"女");
-                                editor = sp.edit();
+                                item_sex.setText(1, "女");
+                                editor = UserinfoSp.edit();
                                 editor.putInt("SEX", 2);
                                 editor.apply();
 
@@ -221,14 +221,14 @@ public class UserInfoActivity extends AppCompatActivity {
         });
 
         /**头像*/
-        avatar =(ImageTexttouxiang)findViewById(R.id.user_info_avatar);
-        avatar.setText("头像");
-        avatar.setImage(0, R.drawable.img_defaultavatar);
-        avatar.setOnClickListener(new View.OnClickListener() {
+        item_avatar =(ImageTexttouxiang)findViewById(R.id.user_info_avatar);
+        item_avatar.setText("头像");
+        item_avatar.setImage(0, R.drawable.img_defaultavatar);
+        item_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sp.getString("TOKEN","").equals("")) {
-                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                if (UserinfoSp.getString("TOKEN", "").equals("")) {
+                    Toast.makeText(UserInfoActivity.this, "你尚未登录!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CustomDialogsexchoose.Builder builder = new CustomDialogsexchoose.Builder(UserInfoActivity.this);
@@ -256,23 +256,23 @@ public class UserInfoActivity extends AppCompatActivity {
                 @Override
                 public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
                     if (bitmap != null) {
-                        avatar.getAvatter().setImageBitmap(bitmap);
+                        item_avatar.getAvatter().setImageBitmap(bitmap);
                     }
                 }
             });
         }
 
-        imageText2=(ImageText)findViewById(R.id.user_info_IT3);
-        imageText2.setText(0, "绑定手机号");
-        imageText2.setOnClickListener(new View.OnClickListener() {
+        item_linkphonenum =(ImageText)findViewById(R.id.user_info_IT3);
+        item_linkphonenum.setText(0, "绑定手机号");
+        item_linkphonenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(UserInfoActivity.this, "被点击了", Toast.LENGTH_SHORT).show();
             }
         });
-        imageText3=(ImageText)findViewById(R.id.user_info_IT4);
-        imageText3.setText(0,"绑定邮箱");
-        imageText3.setOnClickListener(new View.OnClickListener() {
+        item_linkemail =(ImageText)findViewById(R.id.user_info_IT4);
+        item_linkemail.setText(0, "绑定邮箱");
+        item_linkemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserInfoActivity.this, signatureActivity.class);
@@ -289,22 +289,22 @@ public class UserInfoActivity extends AppCompatActivity {
                 UserInfoActivity.this.finish();
             }
         });
-        sign =(Texttextimg)findViewById(R.id.user_info_sign);
-        sign.setText(0, "个性签名");
+        item_sign =(Texttextimg)findViewById(R.id.user_info_sign);
+        item_sign.setText(0, "个性签名");
 
-        sign.setText(1, signature);
+        item_sign.setText(1, signature);
         /**个性签名*/
-        sign.setOnClickListener(new View.OnClickListener() {
+        item_sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sp.getString("TOKEN","").equals("")) {
-                    Toast.makeText(UserInfoActivity.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
+                if (UserinfoSp.getString("TOKEN", "").equals("")) {
+                    Toast.makeText(UserInfoActivity.this, "你尚未登录!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 LayoutInflater layoutInflater = LayoutInflater.from(UserInfoActivity.this);
                 View conView = layoutInflater.inflate(R.layout.dialog_layoutforlabel, null);
-                final EditText editText = (EditText)conView.findViewById(R.id.dialog_ET);
-                TextView textView =(TextView)conView.findViewById(R.id.title);
+                final EditText editText = (EditText) conView.findViewById(R.id.dialog_ET);
+                TextView textView = (TextView) conView.findViewById(R.id.title);
                 textView.setText("修改签名");
                 new AlertDialog.Builder(UserInfoActivity.this)
                         .setIcon(android.R.drawable.ic_menu_gallery)
@@ -312,8 +312,8 @@ public class UserInfoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         signature = editText.getText().toString();
                         if (!signature.equals("")) {
-                            sign.setText(1, signature);
-                            editor = sp.edit();
+                            item_sign.setText(1, signature);
+                            editor = UserinfoSp.edit();
                             editor.putString("USERSIGN", signature);
                             editor.apply();
                             dialog.dismiss();

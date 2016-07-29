@@ -13,7 +13,7 @@ import java.util.Map;
 
 import woofer.com.test.R;
 
-/**activity_two适配器*/
+/**隔壁老王适配器*/
 public class ActivitymyhomepageAdapter extends BaseAdapter {
 
 	private List<Map<String, Object>> data;

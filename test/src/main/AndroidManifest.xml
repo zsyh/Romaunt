@@ -24,7 +24,7 @@
         <activity
             android:name="com.woofer.activity.EditNoteActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.woofer.activity.welcomeActivyty">
+        <activity android:name="com.woofer.activity.welcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +45,7 @@
         <activity android:name="com.woofer.activity.OtherUserHomePage" />
         <activity android:name="com.woofer.activity.userhomepage.FansActivity" />
         <activity android:name="com.woofer.activity.userhomepage.FollowingsActivity" />
-        <activity android:name="com.woofer.activity.userhomepage.ParhsActivity" />
+        <activity android:name="com.woofer.activity.userhomepage.ArticleActivity" />
         <activity android:name="com.woofer.activity.ConversationActivity" />
         <activity android:name="com.woofer.activity.CommentActivity"
             android:windowSoftInputMode="adjustResize"

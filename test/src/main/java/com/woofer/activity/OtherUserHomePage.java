@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.woofer.activity.userhomepage.FansActivity;
 import com.woofer.activity.userhomepage.FollowingsActivity;
-import com.woofer.activity.userhomepage.ParhsActivity;
+import com.woofer.activity.userhomepage.ArticleActivity;
 import com.woofer.adapter.OtherUserHomePageTransfer;
 import com.woofer.adapter.ViewPagerAdapter;
 import com.woofer.net.AddFollowResponse;
@@ -42,7 +42,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import woofer.com.test.R;
 
@@ -378,7 +377,7 @@ public class OtherUserHomePage extends Activity {
         intent.putExtra("id", 2);
         mViews.add(getView("QualityActivity2", intent));
 
-        intent.setClass(this, ParhsActivity.class);
+        intent.setClass(this, ArticleActivity.class);
         intent.putExtra("id", 3);
         mViews.add(getView("QualityActivity3", intent));
 

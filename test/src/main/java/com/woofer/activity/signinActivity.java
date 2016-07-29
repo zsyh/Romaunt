@@ -2,16 +2,19 @@ package com.woofer.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.LabeledIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -30,6 +33,8 @@ public class signinActivity extends AppCompatActivity {
     private EditText password;
     private EditText phone;
     private String username;
+    private LinearLayout shake_phone;
+    private LinearLayout shake_pwd;
 
 
 
@@ -49,6 +54,9 @@ public class signinActivity extends AppCompatActivity {
         sp = this.getSharedPreferences("userinfo",MainActivity.MODE_PRIVATE);
 
         phone =(EditText)findViewById(R.id.signin_phone);
+
+        shake_phone = (LinearLayout)findViewById(R.id.signin_shake_phone);
+        shake_pwd = (LinearLayout)findViewById(R.id.signin_shake_pwd);
 
         password =(EditText)findViewById(R.id.signin_password);
 
@@ -119,6 +127,8 @@ public class signinActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        shake_phone.startAnimation(AnimationUtils.loadAnimation(signinActivity.this,R.anim.shake));
+                                        shake_pwd.startAnimation(AnimationUtils.loadAnimation(signinActivity.this,R.anim.shake));
                                         Toast.makeText(signinActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
                                     }
                                 });

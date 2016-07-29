@@ -59,8 +59,8 @@ public class FollowingsActivity extends Activity{
 
         mDataLV = (ListView) findViewById(R.id.OT_fans_data);
 
-        SharedPreferences sp1 = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
-        followingEnable = sp1.getInt("FOLLOWINGENABLE", 1);
+        SharedPreferences EnableSp = getSharedPreferences("ENABLE", storydegitalActivity.MODE_PRIVATE);
+        followingEnable = EnableSp.getInt("FOLLOWINGENABLE", 1);
         if(followingEnable==0){
             mDataLV.setBackgroundResource(R.drawable.followingunavalible);
         }
