@@ -126,9 +126,9 @@ public class SigninActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        shake_phone.startAnimation(AnimationUtils.loadAnimation(signinActivity.this,R.anim.shake));
-                                        shake_pwd.startAnimation(AnimationUtils.loadAnimation(signinActivity.this,R.anim.shake));
-                                        Toast.makeText(signinActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
+                                        shake_phone.startAnimation(AnimationUtils.loadAnimation(SigninActivity.this,R.anim.shake));
+                                        shake_pwd.startAnimation(AnimationUtils.loadAnimation(SigninActivity.this,R.anim.shake));
+                                        Toast.makeText(SigninActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 return;

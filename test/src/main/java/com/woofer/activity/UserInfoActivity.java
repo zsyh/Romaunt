@@ -252,19 +252,6 @@ public class UserInfoActivity extends AppCompatActivity {
         });
 
         if(!avacterurl.equals("")) {
-<<<<<<< HEAD
-            try {
-                url = new URL(avacterurl);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
-                @Override
-                public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
-                    if (bitmap != null) {
-                        item_avatar.getAvatter().setImageBitmap(bitmap);
-                    }
-=======
             File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userid + ".png");
             if (imgfile.exists()) {
                 Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userid + ".png");

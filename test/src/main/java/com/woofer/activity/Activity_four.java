@@ -77,7 +77,7 @@ public class Activity_four extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("RomauntAlarmTest","Activity_four onResume()");
+        Log.e("RomauntAlarmTest", "Activity_four onResume()");
     }
 
     @Override
@@ -89,7 +89,6 @@ public class Activity_four extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -253,23 +252,7 @@ public class Activity_four extends Activity {
             }
         });
 
-
-
-        if(!Userinfosp.getString("TOKEN","").equals("")){
-            //若已登录
-            String username = Userinfosp.getString("USERNAME", "");
-            String signatre = Userinfosp.getString("USERSIGN", "");
-            Loginbtn.setText(username);
-            signTV.setText(signatre);
-
-            Loginbtn.setClickable(false);
-        }else{
-            //若未登录
-            Loginbtn.setClickable(true);
-            Loginbtn.setText("   点此登录");
-        }
         avatarimg=(ImageView)findViewById(R.id.activity_four_img1);
-
         avatarimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,48 +271,6 @@ public class Activity_four extends Activity {
         });
 
 
-<<<<<<< HEAD
-        String avacterurl = Userinfosp.getString("AVATERURL", "");
-        if(!avacterurl.equals("")) {
-            try {
-                url = new URL(avacterurl);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
-                @Override
-                public void OnLoadImage(Bitmap bitmap, String bitmapPath) {
-                    if (bitmap != null) {
-                        avatarimg.setImageBitmap(bitmap);
-                    }
-                }
-            });
-=======
-        final String avacterurl = Userinfosp.getString("AVATERURL", "");
-        final int myid =Userinfosp.getInt("userID",0);
-        if(!avacterurl.equals("")) {
-            File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
-            if (imgfile.exists()) {
-                Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
-                avatarimg.setImageBitmap(bmp);
-
-            } else {
-                    try {
-                        url = new URL(avacterurl);
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
-                Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
-                    @Override
-                    public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
-                        if (bitmap != null) {
-                            avatarimg.setImageBitmap(bitmap);
-                        }
-                    }
-                }, myid);
-            }
->>>>>>> origin/develop
-        }
 
         String logintoken = Userinfosp.getString("LOGINTOKEN","");
         if(logintoken.equals("")){
@@ -408,7 +349,46 @@ public class Activity_four extends Activity {
                 }
             }).start();
         }
+
+        if(!Userinfosp.getString("TOKEN","").equals("")){
+            //若已登录
+            String username = Userinfosp.getString("USERNAME", "");
+            String signatre = Userinfosp.getString("USERSIGN", "");
+            Loginbtn.setText(username);
+            signTV.setText(signatre);
+
+            Loginbtn.setClickable(false);
+            final String avacterurl = Userinfosp.getString("AVATERURL", "");
+            final int myid =Userinfosp.getInt("userID",0);
+            if(!avacterurl.equals("")) {
+                File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
+                if (imgfile.exists()) {
+                    Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
+                    avatarimg.setImageBitmap(bmp);
+
+                } else {
+                    try {
+                        url = new URL(avacterurl);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
+                        @Override
+                        public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
+                            if (bitmap != null) {
+                                avatarimg.setImageBitmap(bitmap);
+                            }
+                        }
+                    }, myid);
+                }
+            }
+        }else{
+            //若未登录
+            Loginbtn.setClickable(true);
+            Loginbtn.setText("   点此登录");
+        }
     }
+
 
 
 /*
