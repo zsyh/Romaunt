@@ -57,7 +57,7 @@ public class ConversationActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         String username = intent.getStringExtra("USERNAME");
-        userid = intent.getIntExtra("USERID",0);
+        userid = intent.getIntExtra("USERID", 0);
         LoginToken = intent.getStringExtra("LOGINTOKEN");
         titleBar  = (TitleBar)findViewById(R.id.Conversation_titlebar);
         titleBar.setTitle(username);
@@ -79,9 +79,8 @@ public class ConversationActivity extends AppCompatActivity{
         mLytCommentVG.setOnClickListener(cl);
 
 
-        dataList.add(new ConversationListInfo(R.drawable.ic_launcher, "Hello World!!!!!这是第一条信息",false));
 
-
+        conversationListAdapter= new ConversationListAdapter(this,dataList);
         listViewConversationList.setAdapter(conversationListAdapter);
 
     }
@@ -104,7 +103,7 @@ public class ConversationActivity extends AppCompatActivity{
                                             @Override
                                             public void run() {
                                                 dataList.add(new ConversationListInfo(R.drawable.ic_launcher,comment,true));
-                               conversationListAdapter.notifyDataSetChanged();
+                                                conversationListAdapter.notifyDataSetChanged();
 
 
                                             }

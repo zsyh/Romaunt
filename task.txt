@@ -45,7 +45,6 @@ zaizai:
 
 
 待解决异常:
-个人主页中fansactivity能显示全Robbin~的信息 followingactivity中不行！？！？！？
 现在点击加关注会闪退
 私信界面的布局？？？
 
