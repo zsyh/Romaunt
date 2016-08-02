@@ -67,7 +67,6 @@ public class FansActivity extends Activity{
                 public void onReceive(Context context, Intent intent) {
                     mfansAdapter.notifyDataSetChanged();
 
-                    Log.e("Romaunt","FansActivity的fanslist更新广播接收");
                 }
             };
             IntentFilter intentFilterFansListRefresh = new IntentFilter();

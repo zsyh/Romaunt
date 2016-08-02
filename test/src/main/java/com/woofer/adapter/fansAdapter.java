@@ -115,8 +115,6 @@ public class FansAdapter extends BaseAdapter {
 					e.printStackTrace();
 				}
 				Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
-
-
 					@Override
 					public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
 						if (bitmap != null) {
@@ -124,17 +122,14 @@ public class FansAdapter extends BaseAdapter {
 						} else {
 							/*Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
 							zujian.image.setImageBitmap(bitmap1);
-							decodeResource 会读到一张空的图片 不清楚原因
+							**图片空白是因为用decodefile 会返回一张空白的图片 还不清楚原因
 							*/
 						}
-
 					}
 				}, userid);
 			}
 		}
-
 		//zujian.image1.setBackgroundResource((Integer) data.get(position).get("SEX"));
-
 		if (Integer.parseInt(String.valueOf(data.get(position).get("SEX"))) == 2) {
 			zujian.image1.setImageResource(R.drawable.img_small_female);
 		} else if (Integer.parseInt(String.valueOf(data.get(position).get("SEX"))) == 1) {
@@ -142,11 +137,8 @@ public class FansAdapter extends BaseAdapter {
 		} else {
 			zujian.image1.setVisibility(View.INVISIBLE);
 		}
-
 		zujian.textView.setText((String) data.get(position).get("USERNAME"));
 		zujian.textView1.setText((String) data.get(position).get("SIGN"));
-
-
 		return convertView;
 	}
 
