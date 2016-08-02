@@ -88,10 +88,10 @@ public class ConversationActivity extends AppCompatActivity{
         mSendBut.setOnClickListener(cl);
         mLytCommentVG.setOnClickListener(cl);
 
-        conversationListAdapter =new ConversationListAdapter(this, dataList);
 
+
+        conversationListAdapter= new ConversationListAdapter(this,dataList);
         listViewConversationList.setAdapter(conversationListAdapter);
-
 
     }
 
@@ -114,6 +114,7 @@ public class ConversationActivity extends AppCompatActivity{
                                             public void run() {
                                                 dataList.add(new ConversationListInfo(R.drawable.ic_launcher,comment,true));
                                                 conversationListAdapter.notifyDataSetChanged();
+
 
                                             }
                                         });

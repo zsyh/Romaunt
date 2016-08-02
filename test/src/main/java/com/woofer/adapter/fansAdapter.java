@@ -34,11 +34,22 @@ public class FansAdapter extends BaseAdapter {
 	private List<Map<String, Object>> data;
 	private LayoutInflater layoutInflater;
 	private Context context;
+	private Resources resources;
+
 	public FansAdapter(Context context, List<Map<String, Object>> data){
 		this.context=context;
 		this.data=data;
 		this.layoutInflater=LayoutInflater.from(context);
 	}
+
+	public Resources getResources() {
+		return resources;
+	}
+
+	public void setResources(Resources resources) {
+		this.resources = resources;
+	}
+
 	/**
 	 * 组件集合，对应list.xml中的控件
 	 * @author Administrator
@@ -71,77 +82,67 @@ public class FansAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		zujian=null;
-		if(convertView==null){
-			zujian=new Zujian();
+		zujian = null;
+		if (convertView == null) {
+			zujian = new Zujian();
 			//获得组件，实例化组件
-			convertView=layoutInflater.inflate(R.layout.fansitem, null);
-			zujian.image=(ImageView)convertView.findViewById(R.id.OT_fans_avater);
-			zujian.image1=(ImageView)convertView.findViewById(R.id.OT_fans_seximg);
+			convertView = layoutInflater.inflate(R.layout.fansitem, null);
+			zujian.image = (ImageView) convertView.findViewById(R.id.OT_fans_avater);
+			zujian.image1 = (ImageView) convertView.findViewById(R.id.OT_fans_seximg);
 
-			zujian.textView=(TextView)convertView.findViewById(R.id.OT_fans_UserName);
-			zujian.textView1=(TextView)convertView.findViewById(R.id.OT_fans_sign);
+			zujian.textView = (TextView) convertView.findViewById(R.id.OT_fans_UserName);
+			zujian.textView1 = (TextView) convertView.findViewById(R.id.OT_fans_sign);
 
 			convertView.setTag(zujian);
-		}else{
-			zujian=(Zujian)convertView.getTag();
+		} else {
+			zujian = (Zujian) convertView.getTag();
 		}
 		//绑定数据
 		//zujian.image.setBackgroundResource((Integer) data.get(position).get("AVATAR"));
 		avatar = String.valueOf(data.get(position).get("AVATAR"));
 		userid = Integer.parseInt(String.valueOf(data.get(position).get("USERID")));
 
-		if(!avatar.equals("")){
+		if (!avatar.equals("")) {
 			File imgfile = new File(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userid + ".png");
-			if(imgfile.exists()){
+			if (imgfile.exists()) {
 				Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + userid + ".png");
 				zujian.image.setImageBitmap(bitmap);
-			}else{
-				try{
+
+			} else {
+				try {
 					url = new URL(avatar);
-				}catch (MalformedURLException e) {
+				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}
 				Utils.onLoadImage(url, new Utils.OnLoadImageListener() {
-
-
-					public void setResources(Resources resources) {
-						this.resources = resources;
-					}
-
-					private Resources resources;
-
-					public Resources getResources() {
-						return resources;
-					}
-
 					@Override
 					public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
 						if (bitmap != null) {
 							zujian.image.setImageBitmap(bitmap);
 						} else {
-							Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
+							/*Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
 							zujian.image.setImageBitmap(bitmap1);
+							**图片空白是因为用decodefile 会返回一张空白的图片 还不清楚原因
+							*/
 						}
-
 					}
-				},userid);
+				}, userid);
 			}
 		}
 		//zujian.image1.setBackgroundResource((Integer) data.get(position).get("SEX"));
-
-		if(Integer.parseInt(String.valueOf(data.get(position).get("SEX")))==2){
+		if (Integer.parseInt(String.valueOf(data.get(position).get("SEX"))) == 2) {
 			zujian.image1.setImageResource(R.drawable.img_small_female);
-		}else if(Integer.parseInt(String.valueOf(data.get(position).get("SEX")))==1){
+		} else if (Integer.parseInt(String.valueOf(data.get(position).get("SEX"))) == 1) {
 			zujian.image1.setImageResource(R.drawable.img_small_male);
-		}else{
+		} else {
 			zujian.image1.setVisibility(View.INVISIBLE);
 		}
 		zujian.textView.setText((String) data.get(position).get("USERNAME"));
-		zujian.textView1.setText((String)data.get(position).get("SIGN"));
-
-
+		zujian.textView1.setText((String) data.get(position).get("SIGN"));
 		return convertView;
 	}
+
+
+
 
 }

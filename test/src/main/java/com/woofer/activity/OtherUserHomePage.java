@@ -191,8 +191,10 @@ public class OtherUserHomePage extends Activity {
                                             public void run() {
                                                 followbtnstyle.setImage(R.drawable.icon_plus_grey);
                                                 hasmyself = false;
-                                                SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
 
+                                                fans.setText(Integer.toString(--fansNUM));
+
+                                                SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
 
                                                 String username = sp.getString("USERNAME","");
                                                 List<Map<String,Object>> fansList=OtherUserHomePage.otherUserHomePageTransfer.fansList;
@@ -230,18 +232,23 @@ public class OtherUserHomePage extends Activity {
                                                 public void run() {
                                                     followbtnstyle.setImage(R.drawable.icon_plus_green);
                                                     hasmyself = true;
+
+                                                    fans.setText(Integer.toString(++fansNUM));
+
                                                     SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);
 
-                                                    String username = sp.getString("USERNAME","");
+                                                    String username = sp.getString("USERNAME", "");
                                                     String sign= sp.getString("USERSIGN", "");
-                                                    int sex = sp.getInt("SEX",3);
-                                                    String avatar = sp.getString("AVATERURL","");
+                                                    int sex = sp.getInt("SEX", 3);
+                                                    String avatar = sp.getString("AVATERURL", "");
+                                                    int userid = sp.getInt("userID",0);
 
                                                     Map<String, Object> map=new HashMap<>();
                                                     map.put("AVATAR",  avatar);
                                                     map.put("SEX",sex );
                                                     map.put("USERNAME", username);
                                                     map.put("SIGN", sign);
+                                                    map.put("USERID",userid);
                                                     OtherUserHomePage.otherUserHomePageTransfer.fansList.add(map);
 
 
