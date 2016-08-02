@@ -46,7 +46,7 @@ public class ConversationActivity extends AppCompatActivity{
     ArrayList<ConversationListInfo> dataList = new ArrayList<ConversationListInfo>();
     private int userid;
     private String LoginToken;
-
+    private ConversationListAdapter conversationListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,10 +78,9 @@ public class ConversationActivity extends AppCompatActivity{
         mSendBut.setOnClickListener(cl);
         mLytCommentVG.setOnClickListener(cl);
 
-        dataList.add(new ConversationListInfo(R.drawable.ic_launcher, "Hello World!!!!!这是第一条信息", false));
+        conversationListAdapter =new ConversationListAdapter(this, dataList);
 
-        dataList.add(new ConversationListInfo(R.drawable.ic_launcher, "这是第三条信息", false));
-        listViewConversationList.setAdapter(new ConversationListAdapter(this, dataList));
+        listViewConversationList.setAdapter(conversationListAdapter);
 
 
     }
@@ -104,8 +103,7 @@ public class ConversationActivity extends AppCompatActivity{
                                             @Override
                                             public void run() {
                                                 dataList.add(new ConversationListInfo(R.drawable.ic_launcher,comment,true));
-                                                dataList.add(new ConversationListInfo(R.drawable.ic_launcher, comment, true));
-
+                                                conversationListAdapter.notifyDataSetChanged();
 
                                             }
                                         });
