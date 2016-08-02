@@ -101,6 +101,16 @@ public class CommentActivity extends AppCompatActivity {
         mSendBut.setOnClickListener(cl);
         mLytCommentVG.setOnClickListener(cl);
 
+        mLytEdittextVG.setOnResizeListener(new NoTouchLinearLayout.OnResizeListener() {
+            @Override
+            public void OnResize() {
+
+                onFocusChange(false);
+
+            }
+        });
+
+
     }
     /**
      * 事件点击监听器

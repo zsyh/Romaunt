@@ -74,6 +74,16 @@ public class ConversationActivity extends AppCompatActivity{
         mCommentEdittext = (EditText) findViewById(R.id.Conversation_edit_comment);
         mSendBut = (Button) findViewById(R.id.Conversation_but_comment_send);
 
+
+        mLytEdittextVG.setOnResizeListener(new NoTouchLinearLayout.OnResizeListener() {
+            @Override
+            public void OnResize() {
+
+                onFocusChange(false);
+
+            }
+        });
+
         ClickListener cl = new ClickListener();
         mSendBut.setOnClickListener(cl);
         mLytCommentVG.setOnClickListener(cl);
