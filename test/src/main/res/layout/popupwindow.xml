@@ -20,8 +20,13 @@
             android:layout_width="fill_parent"
             android:layout_height="80dp"
             android:weightSum="1"
+            android:orientation="horizontal"
+            android:divider="@drawable/solid_transmit_line"
+            android:showDividers="middle"
             >
             <LinearLayout
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="0.25"
@@ -43,12 +48,17 @@
                     android:gravity="center"/>
             </LinearLayout>
             <LinearLayout
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="0.25"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/btnstyleactfour">
+                android:background="@drawable/btnstyleactfour"
+
+
+                android:id="@+id/popupwindow_wechat">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -62,12 +72,16 @@
                     android:gravity="center"/>
             </LinearLayout>
             <LinearLayout
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="0.25"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/btnstyleactfour">
+                android:background="@drawable/btnstyleactfour"
+
+                android:id="@+id/popupwindow_qq">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -86,7 +100,11 @@
                 android:layout_weight="0.25"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/btnstyleactfour">
+                android:background="@drawable/btnstyleactfour"
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
+                android:id="@+id/popupwindow_sinaweibo"
+                >
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -105,6 +123,8 @@
             android:layout_width="fill_parent"
             android:layout_height="80dp"
             android:weightSum="1"
+            android:divider="@drawable/solid_transmit_line"
+            android:showDividers="middle"
             >
             <LinearLayout
                 android:layout_width="0dp"
@@ -112,7 +132,11 @@
                 android:layout_weight="0.25"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/btnstyleactfour">
+                android:background="@drawable/btnstyleactfour"
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
+
+                android:id="@+id/popupwindow_url">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -131,7 +155,10 @@
                 android:layout_weight="0.25"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/btnstyleactfour">
+                android:background="@drawable/btnstyleactfour"
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
+                android:id="@+id/popupwindow_sms">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -150,7 +177,10 @@
                 android:layout_weight="0.25"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/btnstyleactfour">
+                android:background="@drawable/btnstyleactfour"
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
+                android:id="@+id/popupwindow_douban">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -169,7 +199,10 @@
                 android:layout_weight="0.25"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/btnstyleactfour">
+                android:background="@drawable/btnstyleactfour"
+                android:divider="@drawable/solid_transmit_line"
+                android:showDividers="beginning"
+                android:id="@+id/popupwindow_email">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

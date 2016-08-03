@@ -2,6 +2,7 @@ package com.woofer.ui.popupwindow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,13 +22,29 @@ public class SelectPicPopupWindow extends PopupWindow {
 
                 private View mMenuView;
                 private LinearLayout wxcycle;
+                private LinearLayout wechat;
+                private LinearLayout qq;
+                private LinearLayout sinaweibo;
+                private LinearLayout url;
+                private LinearLayout sms;
+                private LinearLayout douban;
+                private LinearLayout email;
 
                 public SelectPicPopupWindow(Activity context,OnClickListener itemsOnClick) {
                 super(context);
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 mMenuView = inflater.inflate(R.layout.popupwindow, null);
-                wxcycle = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_wxcycle);
+                    wxcycle = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_wxcycle);
+                    wechat = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_wechat);
+                    qq = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_qq);
+                    sinaweibo = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_sinaweibo);
+                    url = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_url);
+                    sms = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_sms);
+                    douban = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_douban);
+                    email = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_email);
+
+                /*wxcycle = (LinearLayout) mMenuView.findViewById(R.id.popupwindow_wxcycle);
                //取消按钮
                 wxcycle.setOnClickListener(new OnClickListener() {
 
@@ -35,10 +52,16 @@ public class SelectPicPopupWindow extends PopupWindow {
                                 //销毁弹出框
                                 dismiss();
                             }
-                    });
+                    });*/
                 //设置按钮监听
-                //btn_pick_photo.setOnClickListener(itemsOnClick);
-                //btn_take_photo.setOnClickListener(itemsOnClick);
+                    wxcycle.setOnClickListener(itemsOnClick);
+                    wechat.setOnClickListener(itemsOnClick);
+                    qq.setOnClickListener(itemsOnClick);
+                    sinaweibo.setOnClickListener(itemsOnClick);
+                    url.setOnClickListener(itemsOnClick);
+                    sms.setOnClickListener(itemsOnClick);
+                    douban.setOnClickListener(itemsOnClick);
+                    email.setOnClickListener(itemsOnClick);
                 //设置SelectPicPopupWindow的View
                 this.setContentView(mMenuView);
                 //设置SelectPicPopupWindow弹出窗体的宽

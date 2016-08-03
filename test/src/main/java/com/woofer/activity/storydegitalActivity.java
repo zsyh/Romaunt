@@ -110,7 +110,30 @@ public class StorydegitalActivity extends AppCompatActivity {
         public void onClick(View v) {
             menuwindow.dismiss();
             switch (v.getId()) {
-
+                case R.id.popupwindow_wxcycle:
+                    Toast.makeText(StorydegitalActivity.this, "点击了朋友圈", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_wechat:
+                    Toast.makeText(StorydegitalActivity.this, "点击了微信", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_qq:
+                    Toast.makeText(StorydegitalActivity.this, "qq", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_sinaweibo:
+                    Toast.makeText(StorydegitalActivity.this, "sina", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_url:
+                    Toast.makeText(StorydegitalActivity.this, "url", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_sms:
+                    Toast.makeText(StorydegitalActivity.this, "sms", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_douban:
+                    Toast.makeText(StorydegitalActivity.this, "douban", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_email:
+                    Toast.makeText(StorydegitalActivity.this, "email", Toast.LENGTH_SHORT).show();
+                    break;
                 default:
                     break;
             }
