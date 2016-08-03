@@ -5,15 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.woofer.activity.OtherUserHomePage;
-import com.woofer.activity.SigninActivity;
-import com.woofer.activity.StorydegitalActivity;
 import com.woofer.adapter.ParasAdapter;
 import com.woofer.refreshlayout.model.ParhsModel;
 
@@ -50,17 +45,5 @@ public class ArticleActivity extends Activity{
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.zaizai1.broadcast.notifyParasGot");
         registerReceiver(mBroadcastReceiver, intentFilter);
-        mDataLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
-                SharedPreferences sp1 = getSharedPreferences("USERID", OtherUserHomePage.MODE_PRIVATE);
-                Intent intent = new Intent(ArticleActivity.this, StorydegitalActivity.class);
-                intent.putExtra("USERID", sp1.getInt("USERID",0));
-                intent.putExtra("ID", dataList.get(position).storyid);
-                intent.putExtra("LoginToken", sp.getString("LOGINTOKEN", ""));
-                startActivity(intent);
-            }
-        });
     }
 }
