@@ -9,7 +9,8 @@
 
 woofer:
 	1.转发
-		popupwindow的实现
+		短信 和邮件中 插入url 实现点击能跳转至浏览器
+		再通过url加载回应用
 	2.个人主页
 		最简单的框架已经实现 有空考虑更换为personhomeactivity的效果！！！！
 	3.//编辑标签框中可以把edirttext的样式改为loginactivity中的样式

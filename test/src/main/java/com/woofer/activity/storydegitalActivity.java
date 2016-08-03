@@ -1,11 +1,14 @@
 package com.woofer.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.ClipboardManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -125,7 +128,9 @@ public class StorydegitalActivity extends AppCompatActivity {
                     Toast.makeText(StorydegitalActivity.this, "sina", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.popupwindow_url:
-                    Toast.makeText(StorydegitalActivity.this, "url", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StorydegitalActivity.this, "链接已复制到剪切板", Toast.LENGTH_SHORT).show();
+                    ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setText("ID:"+Id+",USERRID:"+UserId);
                     break;
                 case R.id.popupwindow_sms:
                           Uri smsToUri = Uri.parse( "smsto:" );
@@ -133,7 +138,8 @@ public class StorydegitalActivity extends AppCompatActivity {
                            /*sendIntent.putExtra("address", "123456");
                             默认电话号码
                              */
-                          sendIntent.putExtra( "sms_body" ,  "分享自:"+username.getText()+" 的“"+title+"”"+"\n来自Romaunt的分享" );
+                          sendIntent.putExtra( "sms_body" ,  "分享自:"+username.getText()+" 的“"+title+"”"+"\n来自Romaunt的分享\n:"+"ID:"+Id+",USERRID:"+UserId
+                          +"\n(复制地址到浏览器中打开)");
                           sendIntent.setType( "vnd.android-dir/mms-sms" );
                           startActivityForResult(sendIntent, 1002 );
                     break;
@@ -149,7 +155,9 @@ public class StorydegitalActivity extends AppCompatActivity {
                     //设置邮件默认标题
                     email.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
                     //设置要默认发送的内容
-                    email.putExtra(android.content.Intent.EXTRA_TEXT, Content.getText().append("\n\n\n\n\n\n\n\n来自Romaunt的分享"));
+
+                    email.putExtra(android.content.Intent.EXTRA_TEXT, Content.getText()+"\n\n\n\n\n\n\n\n来自Romaunt的分享n\n:"+"ID:"+Id+",USERRID:"+UserId
+                            +"\n(复制地址到浏览器中打开)");
                     //调用系统的邮件系统
                     startActivityForResult(Intent.createChooser(email,  "请选择邮件发送软件" ), 1001 );
                     break;
