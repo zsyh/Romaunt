@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +20,7 @@ import com.woofer.net.GetStoryResponse;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
+import com.woofer.ui.popupwindow.SelectPicPopupWindow;
 import com.woofer.util.Utils;
 import com.woofer.titlebar.TitleBar;
 
@@ -51,8 +53,12 @@ public class StorydegitalActivity extends AppCompatActivity {
 
     private ImageButton collectbtn;
     private ImageButton commentbtn;
+    private ImageButton transmit;
     private String content;
     private String time;
+
+    SelectPicPopupWindow menuwindow;
+
 
 
     @Override
@@ -98,8 +104,32 @@ public class StorydegitalActivity extends AppCompatActivity {
 
 
     }
+    //为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
+
+        public void onClick(View v) {
+            menuwindow.dismiss();
+            switch (v.getId()) {
+
+                default:
+                    break;
+            }
+
+
+        }
+
+    };
 
     private void Initcompement() {
+        transmit = (ImageButton)findViewById(R.id.story_degital_transmit);
+        transmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuwindow = new SelectPicPopupWindow(StorydegitalActivity.this, itemsOnClick);
+                menuwindow.showAtLocation(StorydegitalActivity.this.findViewById(R.id.activity_storydegital_container), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                //设置layout在PopupWindow中显示的位置  )
+            }
+        });
         commentbtn=(ImageButton)findViewById(R.id.story_degital_comment);
         commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
