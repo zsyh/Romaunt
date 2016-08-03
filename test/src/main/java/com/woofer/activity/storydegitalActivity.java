@@ -3,6 +3,7 @@ package com.woofer.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class StorydegitalActivity extends AppCompatActivity {
     private ImageButton transmit;
     private String content;
     private String time;
+    private String title;
 
     SelectPicPopupWindow menuwindow;
 
@@ -126,13 +128,30 @@ public class StorydegitalActivity extends AppCompatActivity {
                     Toast.makeText(StorydegitalActivity.this, "url", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.popupwindow_sms:
-                    Toast.makeText(StorydegitalActivity.this, "sms", Toast.LENGTH_SHORT).show();
+                          Uri smsToUri = Uri.parse( "smsto:" );
+                          Intent sendIntent =  new  Intent(Intent.ACTION_VIEW, smsToUri);
+                           /*sendIntent.putExtra("address", "123456");
+                            默认电话号码
+                             */
+                          sendIntent.putExtra( "sms_body" ,  "分享自:"+username.getText()+" 的“"+title+"”"+"\n来自Romaunt的分享" );
+                          sendIntent.setType( "vnd.android-dir/mms-sms" );
+                          startActivityForResult(sendIntent, 1002 );
                     break;
                 case R.id.popupwindow_douban:
                     Toast.makeText(StorydegitalActivity.this, "douban", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.popupwindow_email:
-                    Toast.makeText(StorydegitalActivity.this, "email", Toast.LENGTH_SHORT).show();
+                    Intent email =  new  Intent(android.content.Intent.ACTION_SEND);
+                    email.setType( "plain/text" );
+                    String  emailSubject =  "分享自:"+username.getText()+" 的“"+title+"”";
+                    //设置邮件默认地址
+                    // email.putExtra(android.content.Intent.EXTRA_EMAIL, emailReciver);
+                    //设置邮件默认标题
+                    email.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
+                    //设置要默认发送的内容
+                    email.putExtra(android.content.Intent.EXTRA_TEXT, Content.getText().append("\n\n\n\n\n\n\n\n来自Romaunt的分享"));
+                    //调用系统的邮件系统
+                    startActivityForResult(Intent.createChooser(email,  "请选择邮件发送软件" ), 1001 );
                     break;
                 default:
                     break;
@@ -280,7 +299,7 @@ public class StorydegitalActivity extends AppCompatActivity {
                     final int likeNUM = getStoryResponse.msg.likeCount;
                     Log.e("publicEnable", Integer.toString(getStoryResponse.msg.story.publicEnable));
                     content = getStoryResponse.msg.story.content;
-                    final String title = getStoryResponse.msg.story.title;
+                    title = getStoryResponse.msg.story.title;
                     final String flag = getStoryResponse.msg.story.flags;
                     isown = getStoryResponse.msg.story.isOwn;
                     time = datetotime(getStoryResponse.msg.story.createdAt);
