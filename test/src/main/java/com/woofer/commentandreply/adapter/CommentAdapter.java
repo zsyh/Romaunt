@@ -124,18 +124,12 @@ public class CommentAdapter extends BaseAdapter {
                     e.printStackTrace();
                 }
                 Utils.onLoadImage(url,new Utils.OnLoadImageListener() {
-                    private Resources resources;
-
-                    public Resources getResources() {
-                        return resources;
-                    }
-
                     @Override
                     public void OnLoadImage(Bitmap bitmap, String bitmapPath, int userid) {
                         if (bitmap != null) {
                             mholder.avatarpic.setImageBitmap(bitmap);
                         } else {
-                            Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_defaultavatar);
+
                         }
                     }
                 },userid);

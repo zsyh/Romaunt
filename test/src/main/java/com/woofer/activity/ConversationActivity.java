@@ -76,7 +76,6 @@ public class ConversationActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 if(isEditEmply()){
-                    //第一条还是会加载到左边
                     RomauntNetWork romauntNetWork = new RomauntNetWork();
                     romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
                         @Override
@@ -103,21 +102,9 @@ public class ConversationActivity extends AppCompatActivity{
                         }
                     });
                     romauntNetWork.sendChat(LoginToken,Integer.toString(userid),comment);
-                        /*dataList.add(new ConversationListInfo(R.drawable.ic_launcher, "5456",true));
-                        dataList.add(new ConversationListInfo(R.drawable.ic_launcher, "5456",true));
-                        dataList.add(new ConversationListInfo(R.drawable.ic_launcher, "5456",true));
-                        dataList.add(new ConversationListInfo(R.drawable.ic_launcher, "5456",true));
-                    dataList.add(new ConversationListInfo(R.drawable.ic_launcher,comment,true));*/
                 }
-
-
-
             }
         });
-
-
-
-
 
         conversationListAdapter= new ConversationListAdapter(this,dataList);
         listViewConversationList.setAdapter(conversationListAdapter);
@@ -174,8 +161,6 @@ public class ConversationActivity extends AppCompatActivity{
                 if (isOpen) {
                     imm.hideSoftInputFromWindow(editTextSend.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 }
-
-
             }
             return super.dispatchTouchEvent(ev);
         }
