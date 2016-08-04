@@ -138,7 +138,7 @@ public class StorydegitalActivity extends AppCompatActivity {
                            /*sendIntent.putExtra("address", "123456");
                             默认电话号码
                              */
-                          sendIntent.putExtra( "sms_body" ,  "分享自:"+username.getText()+" 的“"+title+"”"+"\n来自Romaunt的分享\n:"+"ID:"+Id+",USERRID:"+UserId
+                          sendIntent.putExtra( "sms_body" ,  "分享自:"+username.getText()+" 的“"+title+"”"+"\n来自Romaunt的分享\n"+"ID:"+Id+",USERRID:"+UserId
                           +"\n(复制地址到浏览器中打开)");
                           sendIntent.setType( "vnd.android-dir/mms-sms" );
                           startActivityForResult(sendIntent, 1002 );
@@ -156,10 +156,10 @@ public class StorydegitalActivity extends AppCompatActivity {
                     email.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
                     //设置要默认发送的内容
 
-                    email.putExtra(android.content.Intent.EXTRA_TEXT, Content.getText()+"\n\n\n\n\n\n\n\n来自Romaunt的分享n\n:"+"ID:"+Id+",USERRID:"+UserId
+                    email.putExtra(android.content.Intent.EXTRA_TEXT, Content.getText()+"\n\n\n\n\n\n\n\n来自Romaunt的分享n\n"+"ID:"+Id+",USERRID:"+UserId
                             +"\n(复制地址到浏览器中打开)");
                     //调用系统的邮件系统
-                    startActivityForResult(Intent.createChooser(email,  "请选择邮件发送软件" ), 1001 );
+                    startActivityForResult(Intent.createChooser(email,  "分享至" ), 1001 );
                     break;
                 default:
                     break;

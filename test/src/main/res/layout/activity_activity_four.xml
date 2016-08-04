@@ -132,7 +132,7 @@
             android:background="@drawable/btnstyle2"
             android:textColor="#FFFFFF"
 
-            android:id="@+id/activity_four_btn"/>
+            android:id="@+id/activity_four_addressbtn" />
 
     </LinearLayout>
     <RelativeLayout

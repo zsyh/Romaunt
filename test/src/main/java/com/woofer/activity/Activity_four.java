@@ -45,6 +45,7 @@ public class Activity_four extends Activity {
     private TextView follingernumTV;
 
     private Button Loginbtn;
+    private Button addressbtn;
 
     private imagetextimage diybtn_myhomepage;
     private imagetextimage ditbtn_personaldata;
@@ -248,6 +249,14 @@ public class Activity_four extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Activity_four.this, ChooseActivity.class);
+                startActivity(intent);
+            }
+        });
+        addressbtn = (Button)findViewById(R.id.activity_four_addressbtn);
+        addressbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Activity_four.this,GithubAboutActivity.class);
                 startActivity(intent);
             }
         });
