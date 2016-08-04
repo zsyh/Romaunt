@@ -4,7 +4,6 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.util.Log;
-import android.widget.TextView;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -86,7 +85,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_TEXTURE_2D);
 
         // Load the cube's texture from a bitmap
-        GLCube.loadTexture(gl, context, R.drawable.laozhu);
+        GLCube.loadTexture(gl, context, R.drawable.icon_romaunt);
 
     }
 

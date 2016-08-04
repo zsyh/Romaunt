@@ -10,7 +10,7 @@
     <!-- 指定边框，边框必须要的-->
     <stroke
     android:width="0.5dp"
-    android:color="#CDCDCE" />
+    android:color="#198E7B" />
     <!-- 填充颜色，选中和未选中的区别就在这里还有文字颜色-->
     <solid
     android:color="#198E7B" />

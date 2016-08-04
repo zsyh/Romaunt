@@ -34,11 +34,14 @@ public class GithubAboutActivity extends Activity {
 
         url = new TextView(this);
         url.setText("https://github.com/zsyh9612/Romaunt");
+        url.setTextColor(Color.rgb(255,255,255));
         url.setId(1);
-        url.setTextSize(16);
+        url.setTextSize(20);
         copyurl = new Button(this);
-        copyurl.setText("拷贝链接到剪贴板");
+        copyurl.setText(" 拷贝链接到剪贴板 ");
         copyurl.setId(2);
+        copyurl.setBackgroundResource(R.drawable.btnstylegithub);
+        copyurl.setTextColor(Color.rgb(255,255,255));
         titleBar = new TitleBar(this);
         titleBar.leftButton.setImageResource(R.drawable.icon_return_white);
         titleBar.leftButton.setOnClickListener(new View.OnClickListener() {
@@ -49,17 +52,20 @@ public class GithubAboutActivity extends Activity {
         });
         From = new TextView(this);
         From.setText("From OUREDA Embeded in Android");
+        From.setTextColor(Color.rgb(255,255,255));
         From.setId(5);
         From.setTextSize(14);
 
         By = new TextView(this);
         By.setText("By Zaizai && woofer");
+        By.setTextColor(Color.rgb(255,255,255));
         By.setId(6);
-        By.setTextSize(14);
+        By.setTextSize(18);
 
 
         RelativeLayout mLayout = new RelativeLayout(this);
-        mLayout.setBackgroundColor(Color.rgb(25,142,123 ));
+        //mLayout.setBackgroundColor(Color.rgb(255,147,59));
+        mLayout.setBackgroundResource(R.drawable.setbackground);
         mLayout.setId(4);
       /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mLayout.setBackground(Color.rgb(Color.parseColor()));
