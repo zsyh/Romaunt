@@ -177,6 +177,7 @@ public class Activity_four extends Activity {
                         Intent intent = new Intent(Activity_four.this, OtherUserHomePage.class);
                         //Intent intent1 = new Intent(Activity_four.this, PersonHomeActivity.class);
                         intent.putExtra("LoginToken", sp.getString("LOGINTOKEN",""));
+
                         intent.putExtra("UserID", sp.getInt("userID",0));
                         intent.putExtra("Avater", sp.getString("AVATERURL",""));
                         intent.putExtra("Sign", sp.getString("USERSIGN",""));
@@ -309,6 +310,7 @@ public class Activity_four extends Activity {
 
                     String logintoken = Userinfosp.getString("LOGINTOKEN","");
                     String userID=Userinfosp.getString("USERID","");
+                    Log.e("LOGINTOKEN",logintoken);
 
                     Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
                     if(response==null){
@@ -374,6 +376,7 @@ public class Activity_four extends Activity {
         }
 
         if(!Userinfosp.getString("TOKEN","").equals("")){
+            Log.e("TOKEN",Userinfosp.getString("TOKEN",""));
             //若已登录
             String username = Userinfosp.getString("USERNAME", "");
             String signatre = Userinfosp.getString("USERSIGN", "");

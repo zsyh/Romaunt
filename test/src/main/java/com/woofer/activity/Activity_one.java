@@ -32,6 +32,7 @@ import com.woofer.SwipeMenu.SwipeMenuListView.OnMenuItemClickListener;
 import woofer.com.test.R;
 
 import com.woofer.net.RomauntNetWork;
+import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UploadStoryResponse;
 import com.woofer.titlebar.TitleBar;
 import com.woofer.ui.CustomDialog;
@@ -265,6 +266,20 @@ public class Activity_one extends Activity {
                     builder.setNegativeButton("同时删除服务器数据",
                             new android.content.DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    /*SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
+                                    RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                        @Override
+                                        public void onResponse(Object response) {
+                                            Toast.makeText(Activity_one.this, "", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onError(Object error) {
+
+                                        }
+                                    });
+                                    romauntNetWork.Deletestory(sp.getString("LOGINTOKEN",""),"5d5fda60-5aa7-11e6-9310-afcff28e05cb");*/
                                     dialog.dismiss();
                                 }
                             });
