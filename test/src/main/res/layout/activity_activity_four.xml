@@ -3,7 +3,7 @@
     xmlns:hint="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.woofer.activity.MainActivity"
+    tools:context="com.woofer.activity.Activity_four"
     android:background="#FFFFFF"
     >
     <com.woofer.titlebar.TitleBar
@@ -66,17 +66,24 @@
 
     <!--必须用LinearLayout实现平分屏幕-->
     <LinearLayout
+        android:divider="@drawable/solid_transmit_line"
+        android:showDividers="middle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/activity_four_Lin1"
         android:layout_below="@id/activity_four_Rel1"
         android:weightSum="1">
         <LinearLayout
+            android:background="@drawable/btnstyleactfour"
+            android:divider="@drawable/solid_transmit_line"
+            android:showDividers="beginning"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="0.5"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            >
             <TextView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -93,11 +100,17 @@
             />
         </LinearLayout>
         <LinearLayout
+
+            android:background="@drawable/btnstyleactfour"
+            android:divider="@drawable/solid_transmit_line"
+            android:showDividers="beginning"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="0.5"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            >
             <TextView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"

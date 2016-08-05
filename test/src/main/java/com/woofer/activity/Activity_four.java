@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class Activity_four extends Activity {
     private imagetextimage diybtn_work;
     private imagetextimage diybtn_configAndlogout;
 
+    private LinearLayout fansandfollowingArea;
 
     private URL url;
     private BroadcastReceiver broadcastReceiverUserInfo;
@@ -128,6 +130,8 @@ public class Activity_four extends Activity {
         diybtn_collect = (imagetextimage)findViewById(R.id.act_four_tit_four);
         diybtn_work = (imagetextimage)findViewById(R.id.act_four_tit_five);
         diybtn_configAndlogout = (imagetextimage)findViewById(R.id.act_four_tit_six);
+
+        fansandfollowingArea =(LinearLayout)findViewById(R.id.activity_four_Lin1);
 
 
     /*private class WebViewClientDemo extends WebViewClient {
@@ -430,6 +434,7 @@ public class Activity_four extends Activity {
             //若未登录
             Loginbtn.setClickable(true);
             Loginbtn.setText("   点此登录");
+            fansandfollowingArea.setVisibility(View.GONE);
         }
     }
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.woofer.activity.MainActivity"
+    tools:context="com.woofer.activity.Activity_three"
     android:background="#ECE9EC"
     >
 
