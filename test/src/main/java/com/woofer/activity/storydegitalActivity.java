@@ -89,8 +89,13 @@ public class StorydegitalActivity extends AppCompatActivity {
                 SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                 SharedPreferences sp1 = StorydegitalActivity.this.getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp1.edit();
-                editor.putInt("FOLLOWINGENABLE", followingEnable);
-                editor.putInt("FANSENABLE", fansEnable);
+                if(UserId!=sp.getInt("userID",0)) {
+                    editor.putInt("FOLLOWINGENABLE", followingEnable);
+                    editor.putInt("FANSENABLE", fansEnable);
+                }else{
+                    editor.putInt("FOLLOWINGENABLE", 1);
+                    editor.putInt("FANSENABLE", 1);
+                }
                 editor.apply();
 
                 String LoginToken = sp.getString("LOGINTOKEN", "");

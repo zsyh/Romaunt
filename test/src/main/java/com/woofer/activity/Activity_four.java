@@ -169,7 +169,21 @@ public class Activity_four extends Activity {
                             Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
                             break;
                         }
-                        Intent intent = new Intent(Activity_four.this, PersonHomeActivity.class);
+                        SharedPreferences sp1 = Activity_four.this.getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp1.edit();
+                        editor.putInt("FOLLOWINGENABLE", 1);
+                        editor.putInt("FANSENABLE", 1);
+                        editor.apply();
+                        Intent intent = new Intent(Activity_four.this, OtherUserHomePage.class);
+                        //Intent intent1 = new Intent(Activity_four.this, PersonHomeActivity.class);
+                        intent.putExtra("LoginToken", sp.getString("LOGINTOKEN",""));
+                        intent.putExtra("UserID", sp.getInt("userID",0));
+                        intent.putExtra("Avater", sp.getString("AVATERURL",""));
+                        intent.putExtra("Sign", sp.getString("USERSIGN",""));
+                        intent.putExtra("Username", sp.getString("USERNAME",""));
+                        intent.putExtra("Sex", sp.getInt("SEX",3));
+                        intent.putExtra("FOLLOWINGENABLE", sp.getInt("FOLLOWINGENABLE",3));
+                        intent.putExtra("FANSENABLE", sp.getInt("FOLLOWERENABLE",3));
                         startActivity(intent);
                         break;
                     case R.id.act_four_tit_two:
