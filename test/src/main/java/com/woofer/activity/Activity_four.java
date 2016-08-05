@@ -415,6 +415,9 @@ public class Activity_four extends Activity {
                     avatarimg.setImageBitmap(bmp);
 
                 } else {
+                    /**
+                     * 第一次登录某账号且本地没有改用户头像缓存时头像加载不出来？和文件流有关？
+                     * */
                     try {
                         url = new URL(avacterurl);
                     } catch (MalformedURLException e) {
