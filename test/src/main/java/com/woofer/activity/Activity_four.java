@@ -428,6 +428,8 @@ public class Activity_four extends Activity {
                             }
                         }
                     }, myid);
+                    Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
+                    avatarimg.setImageBitmap(bmp);
                 }
             }
         }else{
