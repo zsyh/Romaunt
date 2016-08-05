@@ -3,6 +3,7 @@ package com.woofer.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -32,6 +33,7 @@ public class CustomDialog extends Dialog {
         private View contentView;
         private OnClickListener positiveButtonClickListener;
         private OnClickListener negativeButtonClickListener;
+        private int AlertOrNot;
 
         public Builder(Context context) {
             this.context = context;
@@ -39,6 +41,10 @@ public class CustomDialog extends Dialog {
 
         public Builder setMessage(String message) {
             this.message = message;
+            return this;
+        }
+        public Builder setAlert (int AlertOrNot){
+            this.AlertOrNot = AlertOrNot;
             return this;
         }
 
@@ -52,6 +58,7 @@ public class CustomDialog extends Dialog {
             this.message = (String) context.getText(message);
             return this;
         }
+
 
         /**
          * Set the Dialog title from resource
@@ -127,6 +134,10 @@ public class CustomDialog extends Dialog {
                     LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
             // set the dialog title
             ((TextView) layout.findViewById(R.id.title)).setText(title);
+            ((TextView) layout.findViewById(R.id.title)).setText(title);
+            if(AlertOrNot==1) {
+                ((TextView) layout.findViewById(R.id.title)).setBackgroundColor(Color.rgb( 220,20,60 ));
+            }
             // set the confirm button
             if (positiveButtonText != null) {
                 ((Button) layout.findViewById(R.id.positiveButton))
@@ -165,7 +176,7 @@ public class CustomDialog extends Dialog {
             }
             // set the content message
             if (message != null) {
-                ((TextView) layout.findViewById(R.id.message)).setText(message);
+                    ((TextView) layout.findViewById(R.id.message)).setText(message);
             } else if (contentView != null) {
                 // if no message set
                 // add the contentView to the dialog body
