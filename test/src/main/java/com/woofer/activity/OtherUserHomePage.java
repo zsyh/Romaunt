@@ -449,10 +449,8 @@ public class OtherUserHomePage extends Activity {
                 }
                 if (response instanceof UserInfoResponse) {
                     final UserInfoResponse userInfoResponse = (UserInfoResponse) response;
-                    if(userInfoResponse.msg.following!=null){
-                        followinsNUM = userInfoResponse.msg.following.size();
+                    if(userInfoResponse.msg.follower!=null){
                         fansNUM = userInfoResponse.msg.follower.size();
-                        Log.e("followinsNUM", Integer.toString(followinsNUM));
 
                         for(int i = 0 ; i < fansNUM ; i++){
                             Map<String, Object> map=new HashMap<String, Object>();
@@ -466,19 +464,6 @@ public class OtherUserHomePage extends Activity {
 
                         Intent i1 = new Intent("com.zaizai1.broadcast.notifyFansGot");
                         sendBroadcast(i1);
-
-                        for(int i = 0 ; i < followinsNUM ; i++){
-                            Map<String, Object> map=new HashMap<String, Object>();
-                            map.put("AVATAR",  userInfoResponse.msg.following.get(i).avatar);
-                            map.put("SEX", userInfoResponse.msg.following.get(i).sex);
-                            map.put("USERNAME", userInfoResponse.msg.following.get(i).userName);
-                            map.put("SIGN", userInfoResponse.msg.following.get(i).sign);
-                            map.put("USERID",userInfoResponse.msg.following.get(i).id);
-                            otherUserHomePageTransfer.followingList.add(map);
-                        }
-
-                        Intent i2 = new Intent("com.zaizai1.broadcast.notifyFollowingsGot");
-                        sendBroadcast(i2);
 
 
                         SharedPreferences sp  = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
@@ -513,22 +498,37 @@ public class OtherUserHomePage extends Activity {
                                 }
                             });
                         }
+                    }else{
+                        fansNUM=0;
+                    }
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                followings.setText(Integer.toString(followinsNUM));
-                                fans.setText(Integer.toString(fansNUM));
-                            }
-                        });
+                    if(userInfoResponse.msg.following!=null){
+                        followinsNUM = userInfoResponse.msg.following.size();
+
+                        for(int i = 0 ; i < followinsNUM ; i++){
+                            Map<String, Object> map=new HashMap<String, Object>();
+                            map.put("AVATAR",  userInfoResponse.msg.following.get(i).avatar);
+                            map.put("SEX", userInfoResponse.msg.following.get(i).sex);
+                            map.put("USERNAME", userInfoResponse.msg.following.get(i).userName);
+                            map.put("SIGN", userInfoResponse.msg.following.get(i).sign);
+                            map.put("USERID",userInfoResponse.msg.following.get(i).id);
+                            otherUserHomePageTransfer.followingList.add(map);
+                        }
+
+                        Intent i2 = new Intent("com.zaizai1.broadcast.notifyFollowingsGot");
+                        sendBroadcast(i2);
 
                     }else{
                         followinsNUM = 0;
-                        fansNUM  = 0;
                     }
 
-                    String username = userInfoResponse.msg.user.userName;
-                    int sex = userInfoResponse.msg.user.sex;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            followings.setText(Integer.toString(followinsNUM));
+                            fans.setText(Integer.toString(fansNUM));
+                        }
+                    });
 
                 }
                 else
@@ -541,15 +541,7 @@ public class OtherUserHomePage extends Activity {
         }).start();
     }
 
-
-
-
-
-
-
     public void getParas(){
-
-
 
         RomauntNetWork romauntNetWork = new RomauntNetWork();
         SharedPreferences sp = getSharedPreferences("userinfo", MODE_PRIVATE);

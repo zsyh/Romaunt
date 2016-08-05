@@ -35,8 +35,8 @@ import java.net.URL;
 import woofer.com.test.R;
 
 public class Activity_four extends Activity {
-    private final Handler handler = new Handler();
-    private WebView webView;
+    /*private final Handler handler = new Handler();
+    private WebView webView;*/
 
     private ImageView avatarimg;
     private long firstbacktime = 0;
@@ -53,6 +53,7 @@ public class Activity_four extends Activity {
     private imagetextimage diybtn_collect;
     private imagetextimage diybtn_work;
     private imagetextimage diybtn_configAndlogout;
+
 
     private URL url;
     private BroadcastReceiver broadcastReceiverUserInfo;
@@ -118,6 +119,7 @@ public class Activity_four extends Activity {
         signTV.setText(Userinfosp.getString("USERSIGN", ""));
 
         followernumTV = (TextView)findViewById(R.id.act_four_followerNUM);
+
         follingernumTV = (TextView)findViewById(R.id.act_four_followingNUM);
 
         diybtn_myhomepage = (imagetextimage)findViewById(R.id.act_four_tit_one);
@@ -327,6 +329,8 @@ public class Activity_four extends Activity {
                         final String signature = userInfoResponse.msg.user.sign;
                         final String avaterurl = userInfoResponse.msg.user.avatar;
                         final String username = userInfoResponse.msg.user.userName;
+                        final int fansNUM;
+                        final int followingNUM;
 
                         final int sex = userInfoResponse.msg.user.sex;
                         final int noticeEnable =userInfoResponse.msg.user.noticeEnable;
@@ -336,7 +340,18 @@ public class Activity_four extends Activity {
                         final int updateNotice =userInfoResponse.msg.user.updateNotice;
                         final int userid = userInfoResponse.msg.user.id;
 
-
+                        if(userInfoResponse.msg.follower!=null){
+                            fansNUM = userInfoResponse.msg.follower.size();
+                        }
+                        else{
+                            fansNUM = 0;
+                        }
+                        if(userInfoResponse.msg.following!=null){
+                            followingNUM = userInfoResponse.msg.following.size();
+                        }
+                        else{
+                            followingNUM = 0;
+                        }
                         SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putInt("userID",userid);
@@ -355,6 +370,9 @@ public class Activity_four extends Activity {
                             public void run() {
                                 Loginbtn.setText(username);
                                 signTV.setText(signature);
+                                followernumTV.setText(Integer.toString(fansNUM));
+                                follingernumTV.setText(Integer.toString(followingNUM));
+
                             }
                         });
                     }
