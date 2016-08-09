@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -112,12 +113,14 @@ public class GithubAboutActivity extends Activity {
         copyurl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(GithubAboutActivity.this, "链接已复制到剪贴板", Toast.LENGTH_SHORT).show();
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText("https://github.com/zsyh9612/Romaunt");
-                Toast.makeText(GithubAboutActivity.this, "链接已复制到剪贴板", Toast.LENGTH_SHORT).show();
+
             }
         });
 
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(mLayout);
 
