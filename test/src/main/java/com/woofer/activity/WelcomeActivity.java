@@ -41,7 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_empyt_activyty);
+        setContentView(R.layout.activity_welcome);
         webView=(WebView)findViewById(R.id.welcome_activity_web);
         webView.getSettings().setJavaScriptEnabled(true);
         try {
