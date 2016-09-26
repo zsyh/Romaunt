@@ -3,6 +3,7 @@ package com.woofer.activity;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -31,8 +32,10 @@ import com.woofer.SwipeMenu.SwipeMenuListView.OnMenuItemClickListener;
 import woofer.com.test.R;
 
 import com.woofer.net.RomauntNetWork;
+import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UploadStoryResponse;
 import com.woofer.titlebar.TitleBar;
+import com.woofer.ui.CustomDialog;
 
 import java.util.List;
 
@@ -181,19 +184,13 @@ public class Activity_one extends Activity {
                                            }
                                        });
 
-
                                     }
-
                                 }
                                 else{
                                     Log.e("Romaunt","upload story status false");
-
                                 }
 
-
                             }
-
-
 
                         }
 
@@ -236,7 +233,7 @@ public class Activity_one extends Activity {
                 item2.setTitleSize(28);
                 item2.setTitleColor(R.color.colorwrite);
                 item2.setWidth(dp2px(116));
-                item2.setBackground(new ColorDrawable(Color.rgb(251, 102, 102)));
+                item2.setBackground(new ColorDrawable(Color.rgb(220,20,60)));
                 menu.addMenuItem(item2);
             }
         };
@@ -252,9 +249,63 @@ public class Activity_one extends Activity {
                 /**
                  * 注意三句话的顺序 写错会导致数据库无法删除
                  */
-                databaseManager.deleteNote(notedata.getNoteDataList().get(position).getID());
-                notedata.getNoteDataList().remove(position);//注意匿名内部类的写法
-                madapeter.notifyDataSetChanged();
+                if(notedata.getNoteDataList().get(position).getPublicstatus()==1
+                        && (notedata.getNoteDataList().get(position).getUploadflag()!=0)) {
+                    CustomDialog.Builder builder = new CustomDialog.Builder(Activity_one.this);
+                    builder.setMessage("确定删除？？？\n (单击屏幕其他区域进行取消)");
+                    builder.setTitle("警告");
+                    builder.setAlert(1);
+                    builder.setPositiveButton("仅本地删除", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            databaseManager.deleteNote(notedata.getNoteDataList().get(position).getID());
+                            notedata.getNoteDataList().remove(position);//注意匿名内部类的写法
+                            madapeter.notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("同时删除服务器数据",
+                            new android.content.DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    /*SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
+                                    RomauntNetWork romauntNetWork = new RomauntNetWork();
+                                    romauntNetWork.setRomauntNetworkCallback(new RomauntNetworkCallback() {
+                                        @Override
+                                        public void onResponse(Object response) {
+                                            Toast.makeText(Activity_one.this, "", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onError(Object error) {
+
+                                        }
+                                    });
+                                    romauntNetWork.Deletestory(sp.getString("LOGINTOKEN",""),"5d5fda60-5aa7-11e6-9310-afcff28e05cb");*/
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }else{
+                    CustomDialog.Builder builder = new CustomDialog.Builder(Activity_one.this);
+                    builder.setMessage("确定删除？？？");
+                    builder.setTitle("警告");
+                    builder.setAlert(1);
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            databaseManager.deleteNote(notedata.getNoteDataList().get(position).getID());
+                            notedata.getNoteDataList().remove(position);//注意匿名内部类的写法
+                            madapeter.notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("取消",
+                            new android.content.DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
+
 
                 //绑定侧滑icon的事件
                 /*switch (index) {

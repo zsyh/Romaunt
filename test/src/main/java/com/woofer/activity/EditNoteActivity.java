@@ -233,7 +233,7 @@ public class EditNoteActivity extends Activity {
                 onBackPressed();
             }
         });
-        edittitleBar.setRightImageResource(R.drawable.imgsrc);
+        edittitleBar.setRightImageResource(R.drawable.img_tick);
         edittitleBar.rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

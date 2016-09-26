@@ -1,11 +1,16 @@
 package com.woofer.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.ClipboardManager;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +24,7 @@ import com.woofer.net.GetStoryResponse;
 import com.woofer.net.RomauntNetWork;
 import com.woofer.net.RomauntNetworkCallback;
 import com.woofer.net.UserInfoResponse;
+import com.woofer.ui.popupwindow.SelectPicPopupWindow;
 import com.woofer.util.Utils;
 import com.woofer.titlebar.TitleBar;
 
@@ -51,8 +57,13 @@ public class StorydegitalActivity extends AppCompatActivity {
 
     private ImageButton collectbtn;
     private ImageButton commentbtn;
+    private ImageButton transmit;
     private String content;
     private String time;
+    private String title;
+
+    SelectPicPopupWindow menuwindow;
+
 
 
     @Override
@@ -78,8 +89,13 @@ public class StorydegitalActivity extends AppCompatActivity {
                 SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                 SharedPreferences sp1 = StorydegitalActivity.this.getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp1.edit();
-                editor.putInt("FOLLOWINGENABLE", followingEnable);
-                editor.putInt("FANSENABLE", fansEnable);
+                if(UserId!=sp.getInt("userID",0)) {
+                    editor.putInt("FOLLOWINGENABLE", followingEnable);
+                    editor.putInt("FANSENABLE", fansEnable);
+                }else{
+                    editor.putInt("FOLLOWINGENABLE", 1);
+                    editor.putInt("FANSENABLE", 1);
+                }
                 editor.apply();
 
                 String LoginToken = sp.getString("LOGINTOKEN", "");
@@ -98,8 +114,77 @@ public class StorydegitalActivity extends AppCompatActivity {
 
 
     }
+    //为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
+
+        public void onClick(View v) {
+            menuwindow.dismiss();
+            switch (v.getId()) {
+                case R.id.popupwindow_wxcycle:
+                    Toast.makeText(StorydegitalActivity.this, "点击了朋友圈", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_wechat:
+                    Toast.makeText(StorydegitalActivity.this, "点击了微信", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_qq:
+                    Toast.makeText(StorydegitalActivity.this, "qq", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_sinaweibo:
+                    Toast.makeText(StorydegitalActivity.this, "sina", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_url:
+                    Toast.makeText(StorydegitalActivity.this, "链接已复制到剪切板", Toast.LENGTH_SHORT).show();
+                    ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setText("ID:"+Id+",USERRID:"+UserId);
+                    break;
+                case R.id.popupwindow_sms:
+                          Uri smsToUri = Uri.parse( "smsto:" );
+                          Intent sendIntent =  new  Intent(Intent.ACTION_VIEW, smsToUri);
+                           /*sendIntent.putExtra("address", "123456");
+                            默认电话号码
+                             */
+                          sendIntent.putExtra( "sms_body" ,  "分享自:"+username.getText()+" 的“"+title+"”"+"\n来自Romaunt的分享\n"+"ID:"+Id+",USERRID:"+UserId
+                          +"\n(复制地址到浏览器中打开)");
+                          sendIntent.setType( "vnd.android-dir/mms-sms" );
+                          startActivityForResult(sendIntent, 1002 );
+                    break;
+                case R.id.popupwindow_douban:
+                    Toast.makeText(StorydegitalActivity.this, "douban", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.popupwindow_email:
+                    Intent email =  new  Intent(android.content.Intent.ACTION_SEND);
+                    email.setType( "plain/text" );
+                    String  emailSubject =  "分享自:"+username.getText()+" 的“"+title+"”";
+                    //设置邮件默认地址
+                    // email.putExtra(android.content.Intent.EXTRA_EMAIL, emailReciver);
+                    //设置邮件默认标题
+                    email.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
+                    //设置要默认发送的内容
+
+                    email.putExtra(android.content.Intent.EXTRA_TEXT, Content.getText()+"\n\n\n\n\n\n\n\n来自Romaunt的分享n\n"+"ID:"+Id+",USERRID:"+UserId
+                            +"\n(复制地址到浏览器中打开)");
+                    //调用系统的邮件系统
+                    startActivityForResult(Intent.createChooser(email,  "分享至" ), 1001 );
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+
+    };
 
     private void Initcompement() {
+        transmit = (ImageButton)findViewById(R.id.story_degital_transmit);
+        transmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuwindow = new SelectPicPopupWindow(StorydegitalActivity.this, itemsOnClick);
+                menuwindow.showAtLocation(StorydegitalActivity.this.findViewById(R.id.activity_storydegital_container), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                //设置layout在PopupWindow中显示的位置  )
+            }
+        });
         commentbtn=(ImageButton)findViewById(R.id.story_degital_comment);
         commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,7 +312,7 @@ public class StorydegitalActivity extends AppCompatActivity {
                     final int likeNUM = getStoryResponse.msg.likeCount;
                     Log.e("publicEnable", Integer.toString(getStoryResponse.msg.story.publicEnable));
                     content = getStoryResponse.msg.story.content;
-                    final String title = getStoryResponse.msg.story.title;
+                    title = getStoryResponse.msg.story.title;
                     final String flag = getStoryResponse.msg.story.flags;
                     isown = getStoryResponse.msg.story.isOwn;
                     time = datetotime(getStoryResponse.msg.story.createdAt);

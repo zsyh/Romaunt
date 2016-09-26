@@ -477,10 +477,14 @@ public class Activity_two extends BaseActivity implements AdapterView.OnItemClic
                 @Override
                 public void onError(Object error) {
                     mRefreshLayout.endRefreshing();
-//                dismissLoadingDialog();
+                    Toast.makeText(Activity_two.this, "网络连接失败，请检查您的网络", Toast.LENGTH_SHORT).show();
                 }
             });
             romauntNetWork.getPublicStoryList(loginToken, Long.toString(new Date().getTime()), "1", "10");
+        }
+        else{
+            mRefreshLayout.endRefreshing();
+            Toast.makeText(Activity_two.this, "您还没有登录，请先登录", Toast.LENGTH_SHORT).show();
         }
 
     }

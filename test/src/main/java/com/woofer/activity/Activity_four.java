@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +36,8 @@ import java.net.URL;
 import woofer.com.test.R;
 
 public class Activity_four extends Activity {
-    private final Handler handler = new Handler();
-    private WebView webView;
+    /*private final Handler handler = new Handler();
+    private WebView webView;*/
 
     private ImageView avatarimg;
     private long firstbacktime = 0;
@@ -45,6 +46,7 @@ public class Activity_four extends Activity {
     private TextView follingernumTV;
 
     private Button Loginbtn;
+    private Button addressbtn;
 
     private imagetextimage diybtn_myhomepage;
     private imagetextimage ditbtn_personaldata;
@@ -52,6 +54,8 @@ public class Activity_four extends Activity {
     private imagetextimage diybtn_collect;
     private imagetextimage diybtn_work;
     private imagetextimage diybtn_configAndlogout;
+
+    private LinearLayout fansandfollowingArea;
 
     private URL url;
     private BroadcastReceiver broadcastReceiverUserInfo;
@@ -117,6 +121,7 @@ public class Activity_four extends Activity {
         signTV.setText(Userinfosp.getString("USERSIGN", ""));
 
         followernumTV = (TextView)findViewById(R.id.act_four_followerNUM);
+
         follingernumTV = (TextView)findViewById(R.id.act_four_followingNUM);
 
         diybtn_myhomepage = (imagetextimage)findViewById(R.id.act_four_tit_one);
@@ -125,6 +130,8 @@ public class Activity_four extends Activity {
         diybtn_collect = (imagetextimage)findViewById(R.id.act_four_tit_four);
         diybtn_work = (imagetextimage)findViewById(R.id.act_four_tit_five);
         diybtn_configAndlogout = (imagetextimage)findViewById(R.id.act_four_tit_six);
+
+        fansandfollowingArea =(LinearLayout)findViewById(R.id.activity_four_Lin1);
 
 
     /*private class WebViewClientDemo extends WebViewClient {
@@ -168,7 +175,22 @@ public class Activity_four extends Activity {
                             Toast.makeText(Activity_four.this,"你尚未登录!",Toast.LENGTH_SHORT).show();
                             break;
                         }
-                        Intent intent = new Intent(Activity_four.this, PersonHomeActivity.class);
+                        SharedPreferences sp1 = Activity_four.this.getSharedPreferences("ENABLE", StorydegitalActivity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp1.edit();
+                        editor.putInt("FOLLOWINGENABLE", 1);
+                        editor.putInt("FANSENABLE", 1);
+                        editor.apply();
+                        Intent intent = new Intent(Activity_four.this, OtherUserHomePage.class);
+                        //Intent intent1 = new Intent(Activity_four.this, PersonHomeActivity.class);
+                        intent.putExtra("LoginToken", sp.getString("LOGINTOKEN",""));
+
+                        intent.putExtra("UserID", sp.getInt("userID",0));
+                        intent.putExtra("Avater", sp.getString("AVATERURL",""));
+                        intent.putExtra("Sign", sp.getString("USERSIGN",""));
+                        intent.putExtra("Username", sp.getString("USERNAME",""));
+                        intent.putExtra("Sex", sp.getInt("SEX",3));
+                        intent.putExtra("FOLLOWINGENABLE", sp.getInt("FOLLOWINGENABLE",3));
+                        intent.putExtra("FANSENABLE", sp.getInt("FOLLOWERENABLE",3));
                         startActivity(intent);
                         break;
                     case R.id.act_four_tit_two:
@@ -251,6 +273,14 @@ public class Activity_four extends Activity {
                 startActivity(intent);
             }
         });
+        addressbtn = (Button)findViewById(R.id.activity_four_addressbtn);
+        addressbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Activity_four.this,GithubAboutActivity.class);
+                startActivity(intent);
+            }
+        });
 
         avatarimg=(ImageView)findViewById(R.id.activity_four_img1);
         avatarimg.setOnClickListener(new View.OnClickListener() {
@@ -286,6 +316,7 @@ public class Activity_four extends Activity {
 
                     String logintoken = Userinfosp.getString("LOGINTOKEN","");
                     String userID=Userinfosp.getString("USERID","");
+                    Log.e("LOGINTOKEN",logintoken);
 
                     Object response = romauntNetWork.getUserInfoSync(logintoken, userID);
                     if(response==null){
@@ -302,6 +333,8 @@ public class Activity_four extends Activity {
                         final String signature = userInfoResponse.msg.user.sign;
                         final String avaterurl = userInfoResponse.msg.user.avatar;
                         final String username = userInfoResponse.msg.user.userName;
+                        final int fansNUM;
+                        final int followingNUM;
 
                         final int sex = userInfoResponse.msg.user.sex;
                         final int noticeEnable =userInfoResponse.msg.user.noticeEnable;
@@ -311,7 +344,18 @@ public class Activity_four extends Activity {
                         final int updateNotice =userInfoResponse.msg.user.updateNotice;
                         final int userid = userInfoResponse.msg.user.id;
 
-
+                        if(userInfoResponse.msg.follower!=null){
+                            fansNUM = userInfoResponse.msg.follower.size();
+                        }
+                        else{
+                            fansNUM = 0;
+                        }
+                        if(userInfoResponse.msg.following!=null){
+                            followingNUM = userInfoResponse.msg.following.size();
+                        }
+                        else{
+                            followingNUM = 0;
+                        }
                         SharedPreferences sp = getSharedPreferences("userinfo", SigninActivity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putInt("userID",userid);
@@ -330,6 +374,9 @@ public class Activity_four extends Activity {
                             public void run() {
                                 Loginbtn.setText(username);
                                 signTV.setText(signature);
+                                followernumTV.setText(Integer.toString(fansNUM));
+                                follingernumTV.setText(Integer.toString(followingNUM));
+
                             }
                         });
                     }
@@ -351,6 +398,7 @@ public class Activity_four extends Activity {
         }
 
         if(!Userinfosp.getString("TOKEN","").equals("")){
+            Log.e("TOKEN",Userinfosp.getString("TOKEN",""));
             //若已登录
             String username = Userinfosp.getString("USERNAME", "");
             String signatre = Userinfosp.getString("USERSIGN", "");
@@ -367,6 +415,9 @@ public class Activity_four extends Activity {
                     avatarimg.setImageBitmap(bmp);
 
                 } else {
+                    /**
+                     * 第一次登录某账号且本地没有改用户头像缓存时头像加载不出来？和文件流有关？
+                     * */
                     try {
                         url = new URL(avacterurl);
                     } catch (MalformedURLException e) {
@@ -380,12 +431,15 @@ public class Activity_four extends Activity {
                             }
                         }
                     }, myid);
+                    Bitmap bmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/cacheFile/cache" + myid + ".png");
+                    avatarimg.setImageBitmap(bmp);
                 }
             }
         }else{
             //若未登录
             Loginbtn.setClickable(true);
             Loginbtn.setText("   点此登录");
+            fansandfollowingArea.setVisibility(View.GONE);
         }
     }
 

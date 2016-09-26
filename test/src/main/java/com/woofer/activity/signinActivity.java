@@ -50,7 +50,7 @@ public class SigninActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signin);
 
          /*存储密码*/
-        sp = this.getSharedPreferences("userinfo",MainActivity.MODE_PRIVATE);
+        sp = this.getSharedPreferences("userinfo",SigninActivity.MODE_PRIVATE);
 
         phone =(EditText)findViewById(R.id.signin_phone);
 

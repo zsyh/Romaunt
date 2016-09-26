@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.woofer.activity.StorydegitalActivity">
+    tools:context="com.woofer.activity.StorydegitalActivity"
+
+    android:id="@+id/activity_storydegital_container">
 
     <com.woofer.titlebar.TitleBar
         android:layout_width="match_parent"
@@ -97,6 +99,8 @@
                 android:scaleType="fitXY"
                 android:background="#FFFFFF"
                 android:src="@drawable/selector_transmit"
+
+                android:id="@+id/story_degital_transmit"
                 />
             <TextView
                 android:layout_gravity="center"

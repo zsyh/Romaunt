@@ -191,7 +191,7 @@ public class CommentActivity extends AppCompatActivity {
 
                 Commentdate freshview = new Commentdate(count, Integer.parseInt(sp.getString("USERID", "")), username, str, comment, sp.getString("USERSIGN", ""),
                         sp.getString("AVATERURL", ""), commentResponse.msg.id);
-                list.add(0, freshview);//加载到list的最前面
+                list.add(freshview);//加载到list的最前面
 
                 if (count == 0) {
                     adapter = new CommentAdapter(CommentActivity.this, list, R.layout.comment_item_list, handler);

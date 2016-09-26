@@ -26,7 +26,10 @@ public class NormalAdapterViewAdapter extends BGAAdapterViewAdapter<RefreshModel
 
         viewHolderHelper.setText(R.id.activity_one_itemTV1, model.title).setText(R.id.itemTV5, model.detail)
                 .setText(R.id.activity_one_AuthorID, model.authorname).setText(R.id.activity_one_itemTV4, model.sign)
-        .setText(R.id.itemIV1,model.lable).setText(R.id.activity_one_itemTV2,model.time).setImageBitmap(R.id.activity_one_itemIV4,model.bitmap);
+        .setText(R.id.itemIV1,model.lable).setText(R.id.activity_one_itemTV2,model.time);
+        if (model.bitmap!=null){
+            viewHolderHelper.setImageBitmap(R.id.activity_one_itemIV4,model.bitmap);
+        }
     }
 
 }
